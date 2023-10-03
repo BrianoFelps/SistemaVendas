@@ -34,6 +34,7 @@ public class DaoCategoria extends BancoDeDadosMySQL{
     
     public ResultSet listarTodos(){
         try {
+            //se a descrição for nula, em vez de aparecer "null" aparece um espaço vazio.
             sql = "SELECT ID, NOME, IFNULL(DESCRICAO, ' ') FROM CATEGORIA";
             
             setStatement(getConexao().prepareStatement(sql));

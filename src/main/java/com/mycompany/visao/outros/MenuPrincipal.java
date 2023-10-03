@@ -4,6 +4,11 @@
  */
 package com.mycompany.visao.outros;
 
+import com.mycompany.ferramentas.BancoDeDadosMySQL;
+import com.mycompany.visao.categoria.CadCategoria;
+import com.mycompany.visao.categoria.ListCategoria;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author brian.7908
@@ -15,6 +20,15 @@ public class MenuPrincipal extends javax.swing.JFrame {
      */
     public MenuPrincipal() {
         initComponents();
+        
+        setLocationRelativeTo(null);
+        
+        setExtendedState(MAXIMIZED_BOTH);
+        
+        if (!BancoDeDadosMySQL.conectar()){
+            JOptionPane.showMessageDialog(null, "Não foi possível conectar ao banco de dados. O sistema será finalizado.");
+            System.exit(0);
+        }
     }
 
     /**
@@ -27,37 +41,37 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         MenuBar = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        mbtnCad = new javax.swing.JMenu();
+        miCadCatg = new javax.swing.JMenuItem();
+        mbtncons = new javax.swing.JMenu();
+        miConsCatg = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal");
 
-        jMenu1.setText("Cadastros");
+        mbtnCad.setText("Cadastros");
 
-        jMenuItem1.setText("Categoria");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        miCadCatg.setText("Categoria");
+        miCadCatg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                miCadCatgActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        mbtnCad.add(miCadCatg);
 
-        MenuBar.add(jMenu1);
+        MenuBar.add(mbtnCad);
 
-        jMenu2.setText("Consultas");
+        mbtncons.setText("Consultas");
 
-        jMenuItem2.setText("Categoria");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        miConsCatg.setText("Categoria");
+        miConsCatg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                miConsCatgActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem2);
+        mbtncons.add(miConsCatg);
 
-        MenuBar.add(jMenu2);
+        MenuBar.add(mbtncons);
 
         setJMenuBar(MenuBar);
 
@@ -75,13 +89,15 @@ public class MenuPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    private void miCadCatgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miCadCatgActionPerformed
+        CadCategoria cadcategoria = new CadCategoria();
+        cadcategoria.setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_miCadCatgActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    private void miConsCatgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsCatgActionPerformed
+       ListCategoria listcatg = new ListCategoria();
+       listcatg.setVisible(true);
+    }//GEN-LAST:event_miConsCatgActionPerformed
 
     /**
      * @param args the command line arguments
@@ -120,9 +136,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar MenuBar;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenu mbtnCad;
+    private javax.swing.JMenu mbtncons;
+    private javax.swing.JMenuItem miCadCatg;
+    private javax.swing.JMenuItem miConsCatg;
     // End of variables declaration//GEN-END:variables
 }
