@@ -7,6 +7,7 @@ package com.mycompany.visao.categoria;
 import com.mycompany.dao.DaoCategoria;
 //import com.mysql.cj.protocol.Resultset; da errado
 import java.sql.ResultSet;
+import java.util.ServiceLoader;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -50,6 +51,93 @@ public class ListCategoria extends javax.swing.JFrame {
             System.out.println(e.getMessage());
         }
     }
+    
+        public void listarPorId(int pId){
+        try{
+            DefaultTableModel dtm = new DefaultTableModel();
+            
+            dtm.addColumn("ID");
+            dtm.addColumn("Nome");
+            dtm.addColumn("Descrição");
+            
+            tableCategoria.setModel (dtm);
+            //data access object
+            DaoCategoria daocatg = new DaoCategoria();
+            
+            //é tipo um select do mysql, só que essa tabela fica na memoria do computador
+            ResultSet resultSet = daocatg.listarPorId(pId);
+            
+            dtm.setRowCount(0);
+            //next + enquanto tiver proximos registros, o laço de repetição será rodado
+            while (resultSet.next()){
+                String id = resultSet.getString(1);
+                String nome = resultSet.getString(2);
+                String descricao = resultSet.getString(3);
+                
+                dtm.addRow(new Object [] {id, nome, descricao});
+            }
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+                public void listarPorNome(String pNome){
+        try{
+            DefaultTableModel dtm = new DefaultTableModel();
+            
+            dtm.addColumn("ID");
+            dtm.addColumn("Nome");
+            dtm.addColumn("Descrição");
+            
+            tableCategoria.setModel (dtm);
+            //data access object
+            DaoCategoria daocatg = new DaoCategoria();
+            
+            //é tipo um select do mysql, só que essa tabela fica na memoria do computador
+            ResultSet resultSet = daocatg.listarPorNome(pNome);
+            
+            dtm.setRowCount(0);
+            //next + enquanto tiver proximos registros, o laço de repetição será rodado
+            while (resultSet.next()){
+                String id = resultSet.getString(1);
+                String nome = resultSet.getString(2);
+                String descricao = resultSet.getString(3);
+                
+                dtm.addRow(new Object [] {id, nome, descricao});
+            }
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+                
+             public void listarPorDescricao(String pDesc){
+        try{
+            DefaultTableModel dtm = new DefaultTableModel();
+            
+            dtm.addColumn("ID");
+            dtm.addColumn("Nome");
+            dtm.addColumn("Descrição");
+            
+            tableCategoria.setModel (dtm);
+            //data access object
+            DaoCategoria daocatg = new DaoCategoria();
+            
+            //é tipo um select do mysql, só que essa tabela fica na memoria do computador
+            ResultSet resultSet = daocatg.listarPorDescricao(pDesc);
+            
+            dtm.setRowCount(0);
+            //next + enquanto tiver proximos registros, o laço de repetição será rodado
+            while (resultSet.next()){
+                String id = resultSet.getString(1);
+                String nome = resultSet.getString(2);
+                String descricao = resultSet.getString(3);
+                
+                dtm.addRow(new Object [] {id, nome, descricao});
+            }
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+        
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
