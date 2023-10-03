@@ -11,6 +11,6 @@ package com.mycompany.sistemavendas;
 public class SistemaVendas {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        
     }
 }
