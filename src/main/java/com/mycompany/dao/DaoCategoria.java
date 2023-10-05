@@ -31,6 +31,42 @@ public class DaoCategoria extends BancoDeDadosMySQL{
             return false;
         }
     }
+    public Boolean alterar (int id, String novonome, String novadescricao){
+        try{
+            sql = "UPDATE CATEGORIA SET NOME = ?, DESCRICAO = ? WHERE ID = ?";
+                    
+                    setStatement(getConexao().prepareStatement(sql));
+                    
+                    getStatement().setInt(3, id);
+                    getStatement().setString(1, novonome);
+                    getStatement().setString(2, novadescricao);
+                    
+                    getStatement().executeUpdate();
+                    
+                    return true;
+        }catch (Exception e){
+        
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+    public Boolean excluir(int id){
+        try{
+            sql = "DELETE FROM CATEGORIA WHERE ID = ?";
+                    
+                    setStatement(getConexao().prepareStatement(sql));
+                    
+                    getStatement().setInt(1, id);
+                    
+                    getStatement().executeUpdate();
+                    
+                    return true;
+        }catch (Exception e){
+        
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
     
     public ResultSet listarTodos(){
         try {
@@ -95,7 +131,7 @@ public class DaoCategoria extends BancoDeDadosMySQL{
         int id = -1;
         
         try{
-            sql = "SELECT MAX (ID) + 1 FROM CATEGORIA";
+            sql = "SELECT MAX(ID) + 1 FROM CATEGORIA";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -107,6 +143,7 @@ public class DaoCategoria extends BancoDeDadosMySQL{
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
+        
         return id;
     }
 }

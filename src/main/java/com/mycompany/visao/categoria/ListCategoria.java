@@ -252,35 +252,35 @@ public class ListCategoria extends javax.swing.JFrame {
     }//GEN-LAST:event_jcbTipoFiltroActionPerformed
 
     private void tableCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCategoriaMouseClicked
-            if (evt.getClickCount() == 2){
-                ModCategoria modcatg = new ModCategoria ();
-                
-                modcatg.setId(Integer.parseInt(String.valueOf(tableCategoria.getValueAt(tableCategoria.getSelectedRow(), 0))));
-                modcatg.setNome(String.valueOf(tableCategoria.getValueAt(tableCategoria.getSelectedRow(), 1)));
-                modcatg.setDescricao(String.valueOf(tableCategoria.getValueAt(tableCategoria.getSelectedRow(), 2)));
-                
-                DadosTemporarios.tempObject = (ModCategoria) modcatg;
-                
-                CadCategoria cadcatg = new CadCategoria();
-                cadcatg.setVisible(true);
-            }
+        if (evt.getClickCount() == 2){
+            ModCategoria modcatg = new ModCategoria ();
+
+            modcatg.setId(Integer.parseInt(String.valueOf(tableCategoria.getValueAt(tableCategoria.getSelectedRow(), 0))));
+            modcatg.setNome(String.valueOf(tableCategoria.getValueAt(tableCategoria.getSelectedRow(), 1)));
+            modcatg.setDescricao(String.valueOf(tableCategoria.getValueAt(tableCategoria.getSelectedRow(), 2)));
+
+            DadosTemporarios.tempObject = (ModCategoria) modcatg;
+
+            CadCategoria cadcatg = new CadCategoria();
+            cadcatg.setVisible(true);
+        }
     }//GEN-LAST:event_tableCategoriaMouseClicked
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-                switch (jcbTipoFiltro.getSelectedIndex()){
+        switch (jcbTipoFiltro.getSelectedIndex()){
             case 0:
-                listarTodos();
-                break;
-            case 1: 
-                listarPorId(Integer.parseInt(tfFiltro.getText()));
-                break;
+            listarTodos();
+            break;
+            case 1:
+            listarPorId(Integer.parseInt(tfFiltro.getText()));
+            break;
             case 2:
-                listarPorNome(tfFiltro.getText());
-                break;
+            listarPorNome(tfFiltro.getText());
+            break;
             case 3:
-                listarPorDescricao(tfFiltro.getText());
-                break;
+            listarPorDescricao(tfFiltro.getText());
+            break;
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
