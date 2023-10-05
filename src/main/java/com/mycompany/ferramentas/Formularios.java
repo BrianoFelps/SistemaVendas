@@ -13,4 +13,6 @@ import javax.swing.JFrame;
 public class Formularios {
     public static JFrame CadCategoria;
     public static JFrame ListCategoria;
+    public static JFrame CadPais;
+    public static JFrame ListPais;
 }
