@@ -4,6 +4,11 @@
  */
 package com.mycompany.visao.categoria;
 
+import com.mycompany.dao.DaoCategoria;
+import com.mycompany.ferramentas.Constantes;
+import com.mycompany.ferramentas.DadosTemporarios;
+import com.mycompany.modelo.ModCategoria;
+
 /**
  *
  * @author brian.7908
@@ -16,9 +21,46 @@ public class CadCategoria extends javax.swing.JFrame {
     public CadCategoria() {
         initComponents();
         
+         if (!existeDadosTemporarios()) {
+            DaoCategoria daocatg = new DaoCategoria();
+            
+            int id = daocatg.buscarProximoId();
+            if (id>0)
+                tfId.setText(String.valueOf(id));
+            
+            btnAcao.setText(Constantes.BTN_SALVAR_TEXT);
+            btnExcluir.setVisible(true);
+            }else{
+            btnAcao.setText(Constantes.BTN_ALTERAR_TEXT);
+            btnExcluir.setVisible(true);
+        }
         setLocationRelativeTo(null);
+        
+        tfId.setEnabled(false);
+  }
+
+    private void initComponents() {
+       
     }
 
+
+    private Boolean existeDadosTemporarios(){
+        if(DadosTemporarios.tempObject instanceof ModCategoria){
+            int id = ((ModCategoria) DadosTemporarios.tempObject).getId();
+            String nome = ((ModCategoria) DadosTemporarios.tempObject).getNome();
+            String descricao = ((ModCategoria) DadosTemporarios.tempObject).getDesc();
+
+            tfId.setText(String.valueOf(id));
+            tfNome.setText(nome);
+            taDesc.setText(descricao);
+
+            DadosTemporarios.tempObject = null;
+            
+            return true;
+            }else 
+            return false;
+}
+        
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,8 +77,9 @@ public class CadCategoria extends javax.swing.JFrame {
         tfId = new javax.swing.JTextField();
         tfNome = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tfDesc = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
+        taDesc = new javax.swing.JTextArea();
+        btnAcao = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Menu Cadastro");
@@ -47,22 +90,30 @@ public class CadCategoria extends javax.swing.JFrame {
 
         LDesc.setText("Descrição");
 
+        tfId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfIdActionPerformed(evt);
+            }
+        });
+
         tfNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfNomeActionPerformed(evt);
             }
         });
 
-        tfDesc.setColumns(20);
-        tfDesc.setRows(5);
-        jScrollPane1.setViewportView(tfDesc);
+        taDesc.setColumns(20);
+        taDesc.setRows(5);
+        jScrollPane1.setViewportView(taDesc);
 
-        jButton1.setText("Salvar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnAcao.setText("Salvar");
+        btnAcao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnAcaoActionPerformed(evt);
             }
         });
+
+        btnExcluir.setText("Excluir");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -74,8 +125,7 @@ public class CadCategoria extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(LId)
-                            .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1))
+                            .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(tfNome, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -84,7 +134,11 @@ public class CadCategoria extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(LDesc)
-                                    .addComponent(LNome))
+                                    .addComponent(LNome)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(btnAcao)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnExcluir)))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
@@ -104,7 +158,9 @@ public class CadCategoria extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAcao)
+                    .addComponent(btnExcluir))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
@@ -128,13 +184,17 @@ public class CadCategoria extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnAcaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcaoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnAcaoActionPerformed
 
     private void tfNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNomeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfNomeActionPerformed
+
+    private void tfIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfIdActionPerformed
 
     /**
      * @param args the command line arguments
@@ -175,10 +235,11 @@ public class CadCategoria extends javax.swing.JFrame {
     private javax.swing.JLabel LDesc;
     private javax.swing.JLabel LId;
     private javax.swing.JLabel LNome;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnAcao;
+    private javax.swing.JButton btnExcluir;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea tfDesc;
+    private javax.swing.JTextArea taDesc;
     private javax.swing.JTextField tfId;
     private javax.swing.JTextField tfNome;
     // End of variables declaration//GEN-END:variables

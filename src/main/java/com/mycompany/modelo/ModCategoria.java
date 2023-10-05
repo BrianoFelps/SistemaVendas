@@ -37,6 +37,9 @@ public class ModCategoria {
         this.nome = nome;
     }
     
+    public String getDesc(String descricao){
+        return this.descricao;
+    }
     public void setDescricao(String descricao){
         this.descricao = descricao;
     }
