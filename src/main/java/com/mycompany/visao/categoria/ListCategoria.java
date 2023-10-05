@@ -190,6 +190,11 @@ public class ListCategoria extends javax.swing.JFrame {
         });
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -244,20 +249,6 @@ public class ListCategoria extends javax.swing.JFrame {
 
     private void jcbTipoFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTipoFiltroActionPerformed
         // TODO add your handling code here:
-        switch (jcbTipoFiltro.getSelectedIndex()){
-            case 0:
-                listarTodos();
-                break;
-            case 1: 
-                listarPorId(Integer.parseInt(tfFiltro.getText()));
-                break;
-            case 2:
-                listarPorNome(tfFiltro.getText());
-                break;
-            case 3:
-                listarPorDescricao(tfFiltro.getText());
-                break;
-        }
     }//GEN-LAST:event_jcbTipoFiltroActionPerformed
 
     private void tableCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCategoriaMouseClicked
@@ -274,6 +265,24 @@ public class ListCategoria extends javax.swing.JFrame {
                 cadcatg.setVisible(true);
             }
     }//GEN-LAST:event_tableCategoriaMouseClicked
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+                switch (jcbTipoFiltro.getSelectedIndex()){
+            case 0:
+                listarTodos();
+                break;
+            case 1: 
+                listarPorId(Integer.parseInt(tfFiltro.getText()));
+                break;
+            case 2:
+                listarPorNome(tfFiltro.getText());
+                break;
+            case 3:
+                listarPorDescricao(tfFiltro.getText());
+                break;
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
      * @param args the command line arguments
