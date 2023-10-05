@@ -5,6 +5,8 @@
 package com.mycompany.visao.categoria;
 
 import com.mycompany.dao.DaoCategoria;
+import com.mycompany.ferramentas.DadosTemporarios;
+import com.mycompany.modelo.ModCategoria;
 //import com.mysql.cj.protocol.Resultset; da errado
 import java.sql.ResultSet;
 import java.util.ServiceLoader;
@@ -173,6 +175,11 @@ public class ListCategoria extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tableCategoria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableCategoriaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableCategoria);
 
         jcbTipoFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "ID", "Nome", "Descrição" }));
@@ -237,7 +244,36 @@ public class ListCategoria extends javax.swing.JFrame {
 
     private void jcbTipoFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTipoFiltroActionPerformed
         // TODO add your handling code here:
+        switch (jcbTipoFiltro.getSelectedIndex()){
+            case 0:
+                listarTodos();
+                break;
+            case 1: 
+                listarPorId(Integer.parseInt(tfFiltro.getText()));
+                break;
+            case 2:
+                listarPorNome(tfFiltro.getText());
+                break;
+            case 3:
+                listarPorDescricao(tfFiltro.getText());
+                break;
+        }
     }//GEN-LAST:event_jcbTipoFiltroActionPerformed
+
+    private void tableCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCategoriaMouseClicked
+            if (evt.getClickCount() == 2){
+                ModCategoria modcatg = new ModCategoria ();
+                
+                modcatg.setId(Integer.parseInt(String.valueOf(tableCategoria.getValueAt(tableCategoria.getSelectedRow(), 0))));
+                modcatg.setNome(String.valueOf(tableCategoria.getValueAt(tableCategoria.getSelectedRow(), 1)));
+                modcatg.setDescricao(String.valueOf(tableCategoria.getValueAt(tableCategoria.getSelectedRow(), 2)));
+                
+                DadosTemporarios.tempObject = (ModCategoria) modcatg;
+                
+                CadCategoria cadcatg = new CadCategoria();
+                cadcatg.setVisible(true);
+            }
+    }//GEN-LAST:event_tableCategoriaMouseClicked
 
     /**
      * @param args the command line arguments

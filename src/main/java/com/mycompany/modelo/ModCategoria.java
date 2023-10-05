@@ -31,7 +31,10 @@ public class ModCategoria {
     }
     
     public String getNome(String nome){
-        return descricao;
+        return this.nome;
+    }
+    public void setNome(String nome){
+        this.nome = nome;
     }
     
     public void setDescricao(String descricao){
