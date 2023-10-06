@@ -21,7 +21,7 @@ public class DaoPais extends BancoDeDadosMySQL {
     
     public Boolean inserir (int id, String nome){
         try{
-            sql = "INSERT INTO PAIS (ID, NOME) VALUES (?, ?, ?)";
+            sql = "INSERT INTO PAIS (ID, NOME) VALUES (?, ?)";
             
                 setStatement(getConexao().prepareStatement(sql));
                 
@@ -78,7 +78,7 @@ public class DaoPais extends BancoDeDadosMySQL {
       public ResultSet listarTodos(){
         try {
             //se a descrição for nula, em vez de aparecer "null" aparece um espaço vazio.
-            sql = "SELECT ID, NOME,  FROM PAIS";
+            sql = "SELECT ID, NOME FROM PAIS";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -110,7 +110,7 @@ public class DaoPais extends BancoDeDadosMySQL {
         
             setStatement(getConexao().prepareStatement(sql));
             
-            getStatement().setString(2, nome + "%");
+            getStatement().setString(1, nome + "%");
             
             setResultado(getStatement().executeQuery());
         } catch (Exception e){

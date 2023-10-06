@@ -176,11 +176,10 @@ public class CadPais extends javax.swing.JFrame {
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         // TODO add your handling code here:
         int escolha =
-        JOptionPane.showConfirmDialog(null, "Deseja realmente excluir a categoria " + tfNome.getText() + "?");
+        JOptionPane.showConfirmDialog(null, "Deseja realmente excluir o país " + tfNome.getText() + "?");
 
         if (escolha == JOptionPane.YES_OPTION)
-            
-            daopais.excluir();
+            excluir();
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void tfNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNomeActionPerformed
@@ -201,7 +200,7 @@ public class CadPais extends javax.swing.JFrame {
         if(daopais.inserir(Integer.parseInt(tfId.getText()), tfNome.getText())){
             JOptionPane.showMessageDialog(null, "País salvo com sucesso!");
             
-            tfId.setText("");
+            tfId.setText("" + daopais.buscarProximoId());
             tfNome.setText("");
         } else {
             JOptionPane.showMessageDialog(null, "Não foi possível salvar o país!");
@@ -237,7 +236,7 @@ public class CadPais extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Não foi possível excluir o país!");
         }
         
-        ((ListCategoria) Formularios.ListCategoria).listarTodos();
+        ((ListPais) Formularios.ListPais).listarTodos();
         
         dispose();
     }

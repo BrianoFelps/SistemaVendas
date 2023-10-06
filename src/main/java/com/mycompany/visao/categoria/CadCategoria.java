@@ -216,7 +216,7 @@ public class CadCategoria extends javax.swing.JFrame {
             if (daocatg.inserir(Integer.parseInt(tfId.getText()), tfNome.getText(), taDesc.getText())){
                 JOptionPane.showMessageDialog(null, "Categoria salva com sucesso!");
             
-                tfId.setText ("");
+                tfId.setText("" + daocatg.buscarProximoId());
                 tfNome.setText("");
                 taDesc.setText("");
             }else{

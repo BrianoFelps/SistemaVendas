@@ -56,11 +56,7 @@ public class ListCategoria extends javax.swing.JFrame {
     
         public void listarPorId(int pId){
         try{
-            DefaultTableModel dtm = new DefaultTableModel();
-            
-            dtm.addColumn("ID");
-            dtm.addColumn("Nome");
-            dtm.addColumn("Descrição");
+            DefaultTableModel dtm = (DefaultTableModel) tableCategoria.getModel ();
             
             tableCategoria.setModel (dtm);
             //data access object
@@ -84,11 +80,7 @@ public class ListCategoria extends javax.swing.JFrame {
     }
                 public void listarPorNome(String pNome){
         try{
-            DefaultTableModel dtm = new DefaultTableModel();
-            
-            dtm.addColumn("ID");
-            dtm.addColumn("Nome");
-            dtm.addColumn("Descrição");
+            DefaultTableModel dtm = (DefaultTableModel) tableCategoria.getModel ();
             
             tableCategoria.setModel (dtm);
             //data access object
@@ -113,11 +105,7 @@ public class ListCategoria extends javax.swing.JFrame {
                 
              public void listarPorDescricao(String pDesc){
         try{
-            DefaultTableModel dtm = new DefaultTableModel();
-            
-            dtm.addColumn("ID");
-            dtm.addColumn("Nome");
-            dtm.addColumn("Descrição");
+            DefaultTableModel dtm = (DefaultTableModel) tableCategoria.getModel ();
             
             tableCategoria.setModel (dtm);
             //data access object
@@ -186,6 +174,12 @@ public class ListCategoria extends javax.swing.JFrame {
         jcbTipoFiltro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbTipoFiltroActionPerformed(evt);
+            }
+        });
+
+        tfFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfFiltroActionPerformed(evt);
             }
         });
 
@@ -283,6 +277,10 @@ public class ListCategoria extends javax.swing.JFrame {
             break;
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void tfFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfFiltroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfFiltroActionPerformed
 
     /**
      * @param args the command line arguments

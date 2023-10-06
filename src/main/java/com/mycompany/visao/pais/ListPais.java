@@ -38,8 +38,63 @@ public class ListPais extends javax.swing.JFrame {
             ResultSet resultset = daopais.listarTodos();
             
             dtm.setRowCount(0);
+            
+            while (resultset.next()){
+                String id = resultset.getString(1);
+                String nome = resultset.getString(2);
+                
+                dtm.addRow(new Object[] {id, nome});
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
         }
     }
+    
+        public void listarPorId(int pId){
+        try{
+            DefaultTableModel dtm = (DefaultTableModel) tablePais.getModel ();
+
+            tablePais.setModel(dtm);
+            
+            DaoPais daopais = new DaoPais();
+            
+            ResultSet resultset = daopais.listarPorId(pId);
+            
+            dtm.setRowCount(0);
+            
+            while(resultset.next()){
+                String id = resultset.getString(1);
+                String nome = resultset.getString(2);
+                
+                dtm.addRow(new Object [] {id, nome});
+            }
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        }
+        
+        public void listarPorNome(String pNome){
+                    try{
+                        DefaultTableModel dtm = (DefaultTableModel) tablePais.getModel ();
+
+                        tablePais.setModel(dtm);
+                        
+                        DaoPais daopais = new DaoPais();
+                        
+                        ResultSet resultset = daopais.listarPorNome(pNome);
+                        
+                        dtm.setRowCount(0);
+                    
+                        while (resultset.next()){
+                            String id = resultset.getString(1);
+                            String nome = resultset.getString(2);
+                            
+                            dtm.addRow(new Object [] {id, nome});
+                        }
+                    } catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
+                }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -87,6 +142,12 @@ public class ListPais extends javax.swing.JFrame {
         jcbTipoFiltro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbTipoFiltroActionPerformed(evt);
+            }
+        });
+
+        tfFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfFiltroActionPerformed(evt);
             }
         });
 
@@ -157,8 +218,9 @@ public class ListPais extends javax.swing.JFrame {
 
             DadosTemporarios.tempObject = (ModPais) modpais;
 
-            CadPais cadcatg = new CadPais();
-            cadcatg.setVisible(true);
+            CadPais cadpais = new CadPais();
+            cadpais
+           .setVisible(true);
         }
     }//GEN-LAST:event_tablePaisMouseClicked
 
@@ -178,11 +240,12 @@ public class ListPais extends javax.swing.JFrame {
             case 2:
             listarPorNome(tfFiltro.getText());
             break;
-            case 3:
-            listarPorDescricao(tfFiltro.getText());
-            break;
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void tfFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfFiltroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfFiltroActionPerformed
 
     /**
      * @param args the command line arguments
