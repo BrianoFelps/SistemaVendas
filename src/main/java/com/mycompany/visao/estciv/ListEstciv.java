@@ -28,14 +28,14 @@ public class ListEstciv extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableMarca = new javax.swing.JTable();
+        tableEstciv = new javax.swing.JTable();
         jcbTipoFiltro = new javax.swing.JComboBox<>();
         tfFiltro = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        tableMarca.setModel(new javax.swing.table.DefaultTableModel(
+        tableEstciv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -51,12 +51,12 @@ public class ListEstciv extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tableMarca.addMouseListener(new java.awt.event.MouseAdapter() {
+        tableEstciv.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableMarcaMouseClicked(evt);
+                tableEstcivMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tableMarca);
+        jScrollPane1.setViewportView(tableEstciv);
 
         jcbTipoFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "ID", "Nome" }));
         jcbTipoFiltro.addActionListener(new java.awt.event.ActionListener() {
@@ -127,12 +127,12 @@ public class ListEstciv extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tableMarcaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMarcaMouseClicked
+    private void tableEstcivMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableEstcivMouseClicked
         if (evt.getClickCount() == 2){
             ModMarca modmar = new ModMarca();
 
-            modmar.setId(Integer.parseInt(String.valueOf(tableMarca.getValueAt(tableMarca.getSelectedRow(), 0))));
-            modmar.setNome(String.valueOf(tableMarca.getValueAt(tableMarca.getSelectedRow(), 1)));
+            modmar.setId(Integer.parseInt(String.valueOf(tableEstciv.getValueAt(tableEstciv.getSelectedRow(), 0))));
+            modmar.setNome(String.valueOf(tableEstciv.getValueAt(tableEstciv.getSelectedRow(), 1)));
 
             DadosTemporarios.tempObject = (ModMarca)modmar;
 
@@ -140,7 +140,7 @@ public class ListEstciv extends javax.swing.JFrame {
             cadpais
             .setVisible(true);
         }
-    }//GEN-LAST:event_tableMarcaMouseClicked
+    }//GEN-LAST:event_tableEstcivMouseClicked
 
     private void jcbTipoFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTipoFiltroActionPerformed
         // TODO add your handling code here:
@@ -205,7 +205,7 @@ public class ListEstciv extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox<String> jcbTipoFiltro;
-    private javax.swing.JTable tableMarca;
+    private javax.swing.JTable tableEstciv;
     private javax.swing.JTextField tfFiltro;
     // End of variables declaration//GEN-END:variables
 }

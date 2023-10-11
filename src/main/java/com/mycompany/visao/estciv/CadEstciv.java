@@ -4,6 +4,13 @@
  */
 package com.mycompany.visao.estciv;
 
+import com.mycompany.dao.DaoEstciv;
+import com.mycompany.ferramentas.Constantes;
+import com.mycompany.ferramentas.DadosTemporarios;
+import com.mycompany.ferramentas.Formularios;
+import com.mycompany.modelo.ModEstciv;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author brian.7908
@@ -15,6 +22,38 @@ public class CadEstciv extends javax.swing.JFrame {
      */
     public CadEstciv() {
         initComponents();
+        
+        if (!existeDadosTemporarios()) {
+            DaoEstciv daoestc = new DaoEstciv();
+            
+            int id = daoestc.buscarProximoId();
+            if (id>0)
+                tfId.setText(String.valueOf(id));
+            
+            btnAcao.setText(Constantes.BTN_SALVAR_TEXT);
+            btnExcluir.setVisible(false);
+        }else{
+         btnAcao.setText(Constantes.BTN_ALTERAR_TEXT);
+            btnExcluir.setVisible(true);
+        }
+        setLocationRelativeTo(null);
+        
+        tfId.setEnabled(false);
+    }
+    
+    private Boolean existeDadosTemporarios(){
+         if(DadosTemporarios.tempObject instanceof ModEstciv){
+            int id = ((ModEstciv) DadosTemporarios.tempObject).getId();
+            String nome = ((ModEstciv) DadosTemporarios.tempObject).getNome();
+
+            tfId.setText(String.valueOf(id));
+            tfNome.setText(nome);
+
+            DadosTemporarios.tempObject = null;
+            
+                return true;
+            }else 
+                return false;
     }
 
     /**
@@ -149,6 +188,52 @@ public class CadEstciv extends javax.swing.JFrame {
         alterar();
     }//GEN-LAST:event_btnAcaoActionPerformed
 
+    private void inserir (){
+        DaoEstciv daoestc = new DaoEstciv();
+        
+        if(daoestc.inserir(Integer.parseInt(tfId.getText()), tfNome.getText())){
+            JOptionPane.showMessageDialog(null, "Estado civil salvo com sucesso!");
+            
+            tfId.setText("" + daoestc.buscarProximoId());
+            tfNome.setText("");
+        } else {
+            JOptionPane.showMessageDialog(null, "Não foi possível salvar o estado civil!");
+        }
+    }
+    
+    private void alterar (){
+        DaoEstciv daoestc = new DaoEstciv();
+        
+        if(daoestc.alterar(Integer.parseInt(tfId.getText()), tfNome.getText())){
+            JOptionPane.showMessageDialog(null, "Estado civil alterado com sucesso!");
+            
+            tfId.setText("");
+            tfNome.setText("");
+        } else {
+            JOptionPane.showMessageDialog(null, "Não foi possível alterar o estado civil!");
+        }
+        
+        ((ListEstciv) Formularios.ListEstciv).listarTodos();
+        
+        dispose();
+    }
+    
+    private void excluir (){
+        DaoEstciv daoestc = new DaoEstciv();
+        
+        if(daoestc.excluir(Integer.parseInt(tfId.getText()))){
+            JOptionPane.showMessageDialog(null, "Estado civil " + tfNome.getText() + " excluído com sucesso!");
+            
+            tfId.setText("");
+            tfNome.setText("");
+        } else {
+            JOptionPane.showMessageDialog(null, "Não foi possível excluir o estado civil!");
+        }
+        
+        ((ListEstciv) Formularios.ListEstciv).listarTodos();
+        
+        dispose();
+    }
     /**
      * @param args the command line arguments
      */
