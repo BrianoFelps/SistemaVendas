@@ -16,14 +16,14 @@ import java.sql.ResultSet;
  *
  * @author brian.7908
  */
-public class DaoPais extends BancoDeDadosMySQL {
+public class DaoMarca extends BancoDeDadosMySQL {
     private String sql;
     
     public Boolean inserir (int id, String nome){
         try{
-            sql = "INSERT INTO PAIS (ID, NOME) VALUES (?, ?)";
+            sql = "INSERT INTO MARCA (ID, NOME) VALUES (?, ?)";
             
-                setStatement(getConexao().prepareStatement(sql));
+            setStatement(getConexao().prepareStatement(sql));
                 
                 getStatement().setInt(1, id);
                 getStatement().setString(2, nome);
@@ -39,9 +39,9 @@ public class DaoPais extends BancoDeDadosMySQL {
         }
     }
     
-   public Boolean alterar (int id, String novonome){
+    public Boolean alterar (int id, String novonome){
        try{
-           sql = "UPDATE PAIS SET NOME = ? WHERE ID = ?";
+           sql = "UPDATE MARCA SET NOME = ? WHERE ID = ?";
            
            setStatement(getConexao().prepareStatement(sql));
            
@@ -57,9 +57,10 @@ public class DaoPais extends BancoDeDadosMySQL {
            return false;
        }
    }
-     public Boolean excluir(int id){
+    
+    public Boolean excluir(int id){
         try{
-            sql = "DELETE FROM PAIS WHERE ID = ?";
+            sql = "DELETE FROM MARCA WHERE ID = ?";
                     
                     setStatement(getConexao().prepareStatement(sql));
                     
@@ -74,24 +75,11 @@ public class DaoPais extends BancoDeDadosMySQL {
             return false;
         }
     }
-     
-     public ResultSet listarNomes(){
-         try{
-             sql = "SELECT NOME FROM PAIS";
-             
-             setStatement(getConexao().prepareStatement(sql));
-            
-            setResultado(getStatement().executeQuery());
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-         }
-         return getResultado();
-      }
-     
-      public ResultSet listarTodos(){
+    
+    public ResultSet listarTodos(){
         try {
             //se a descrição for nula, em vez de aparecer "null" aparece um espaço vazio.
-            sql = "SELECT ID, NOME FROM PAIS";
+            sql = "SELECT ID, NOME FROM MARCA";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -101,10 +89,10 @@ public class DaoPais extends BancoDeDadosMySQL {
         }   
         return getResultado();
      }
-      
+    
       public ResultSet listarPorId(int id){
         try{
-            sql = "SELECT ID, NOME FROM PAIS WHERE ID = ?";
+            sql = "SELECT ID, NOME FROM MARCA WHERE ID = ?";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -119,7 +107,7 @@ public class DaoPais extends BancoDeDadosMySQL {
       
       public ResultSet listarPorNome(String nome){
         try{
-        sql = "SELECT ID, NOME FROM PAIS WHERE NOME LIKE ?";
+        sql = "SELECT ID, NOME FROM MARCA WHERE NOME LIKE ?";
         
             setStatement(getConexao().prepareStatement(sql));
             
@@ -132,11 +120,11 @@ public class DaoPais extends BancoDeDadosMySQL {
         return getResultado();
     }
       
-      public int buscarProximoId (){
+       public int buscarProximoId (){
         int id = -1;
         
         try{
-            sql = "SELECT MAX(ID) + 1 FROM PAIS";
+            sql = "SELECT MAX(ID) + 1 FROM MARCA";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -150,6 +138,5 @@ public class DaoPais extends BancoDeDadosMySQL {
         }
         
         return id;
-    }
+    } 
 }
-

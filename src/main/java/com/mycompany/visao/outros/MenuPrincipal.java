@@ -8,6 +8,8 @@ import com.mycompany.ferramentas.BancoDeDadosMySQL;
 import com.mycompany.ferramentas.Formularios;
 import com.mycompany.visao.categoria.CadCategoria;
 import com.mycompany.visao.categoria.ListCategoria;
+import com.mycompany.visao.marca.CadMarca;
+import com.mycompany.visao.marca.ListMarca;
 import com.mycompany.visao.pais.CadPais;
 import com.mycompany.visao.pais.ListPais;
 import javax.swing.JOptionPane;
@@ -47,9 +49,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         mbtnCad = new javax.swing.JMenu();
         miCadCatg = new javax.swing.JMenuItem();
         CadPais = new javax.swing.JMenuItem();
+        miMarca = new javax.swing.JMenuItem();
         mbtncons = new javax.swing.JMenu();
         miConsCatg = new javax.swing.JMenuItem();
         ListPais = new javax.swing.JMenuItem();
+        ConsMarca = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal");
@@ -72,6 +76,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         mbtnCad.add(CadPais);
 
+        miMarca.setText("Marca");
+        miMarca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miMarcaActionPerformed(evt);
+            }
+        });
+        mbtnCad.add(miMarca);
+
         MenuBar.add(mbtnCad);
 
         mbtncons.setText("Consultas");
@@ -91,6 +103,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
         mbtncons.add(ListPais);
+
+        ConsMarca.setText("Marcas");
+        ConsMarca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConsMarcaActionPerformed(evt);
+            }
+        });
+        mbtncons.add(ConsMarca);
 
         MenuBar.add(mbtncons);
 
@@ -143,6 +163,23 @@ public class MenuPrincipal extends javax.swing.JFrame {
             Formularios.ListPais.setVisible(true);
     }//GEN-LAST:event_ListPaisActionPerformed
 
+    private void miMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miMarcaActionPerformed
+        // TODO add your handling code here:
+        if (Formularios.CadMarca == null)
+            Formularios.CadMarca = new CadMarca();
+        
+        Formularios.CadMarca.setVisible(true);
+        
+    }//GEN-LAST:event_miMarcaActionPerformed
+
+    private void ConsMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsMarcaActionPerformed
+        // TODO add your handling code here:
+        if (Formularios.ListMarca == null)
+            Formularios.ListMarca = new ListMarca();
+        
+        Formularios.ListMarca.setVisible(true);
+    }//GEN-LAST:event_ConsMarcaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -180,11 +217,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem CadPais;
+    private javax.swing.JMenuItem ConsMarca;
     private javax.swing.JMenuItem ListPais;
     private javax.swing.JMenuBar MenuBar;
     private javax.swing.JMenu mbtnCad;
     private javax.swing.JMenu mbtncons;
     private javax.swing.JMenuItem miCadCatg;
     private javax.swing.JMenuItem miConsCatg;
+    private javax.swing.JMenuItem miMarca;
     // End of variables declaration//GEN-END:variables
 }

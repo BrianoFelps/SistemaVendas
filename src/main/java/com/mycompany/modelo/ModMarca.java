@@ -8,14 +8,15 @@ package com.mycompany.modelo;
  *
  * @author brian.7908
  */
-public class ModEstado {
-        private int id;
-        private int idpais;
-        private String nome;
+public class ModMarca {
+    private int id;
+    private String nome;
 
-    public ModEstado(int id, int idpais, String nome) {
+    public ModMarca(){
+    }
+    
+    public ModMarca(int id, String nome) {
         this.id = id;
-        this.idpais = idpais;
         this.nome = nome;
     }
 
@@ -27,14 +28,6 @@ public class ModEstado {
         this.id = id;
     }
 
-    public int getIdpais() {
-        return idpais;
-    }
-
-    public void setIdpais(int idpais) {
-        this.idpais = idpais;
-    }
-
     public String getNome() {
         return nome;
     }
@@ -42,12 +35,9 @@ public class ModEstado {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
-
     
-        @Override
-        public String toString(){
-            return "Estado{" + "id=" + id + ", id país=" + idpais+ ", nome =" + nome + "}";
-        }
-        
+    @Override
+    public String toString(){
+        return "Marca{" + "id=" + id + ", nome=" + nome + "}";
+    }
 }

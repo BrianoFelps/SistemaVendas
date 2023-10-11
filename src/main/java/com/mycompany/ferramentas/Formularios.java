@@ -15,4 +15,9 @@ public class Formularios {
     public static JFrame ListCategoria;
     public static JFrame CadPais;
     public static JFrame ListPais;
+    public static JFrame CadEstado;
+    public static JFrame ListEstado;
+    public static JFrame CadMarca;
+    public static JFrame ListMarca;
+    
 }
