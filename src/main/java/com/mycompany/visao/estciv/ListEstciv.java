@@ -4,6 +4,12 @@
  */
 package com.mycompany.visao.estciv;
 
+import com.mycompany.dao.DaoEstciv;
+import com.mycompany.ferramentas.DadosTemporarios;
+import com.mycompany.modelo.ModEstciv;
+import java.sql.ResultSet;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author brian.7908
@@ -15,8 +21,80 @@ public class ListEstciv extends javax.swing.JFrame {
      */
     public ListEstciv() {
         initComponents();
+        
+        setLocationRelativeTo(null);
+        
+        listarTodos();
     }
 
+     public void listarTodos(){
+        try{
+            DefaultTableModel dtm = (DefaultTableModel) tableEstciv.getModel();
+            
+            tableEstciv.setModel(dtm);
+            
+            DaoEstciv daoestc = new DaoEstciv();
+            
+            ResultSet resultset = daoestc.listarTodos();
+            
+            dtm.setRowCount(0);
+            
+            while (resultset.next()){
+                String id = resultset.getString(1);
+                String nome = resultset.getString(2);
+                
+                dtm.addRow(new Object[] {id, nome});
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+    
+        public void listarPorId(int pId){
+        try{
+           DefaultTableModel dtm = (DefaultTableModel) tableEstciv.getModel();
+            
+            tableEstciv.setModel(dtm);
+            
+            DaoEstciv daoestc = new DaoEstciv();
+            
+            ResultSet resultset = daoestc.listarPorId(pId);
+            
+            dtm.setRowCount(0);
+            
+            while(resultset.next()){
+                String id = resultset.getString(1);
+                String nome = resultset.getString(2);
+                
+                dtm.addRow(new Object [] {id, nome});
+            }
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        }
+        
+        public void listarPorNome(String pNome){
+                    try{
+                      DefaultTableModel dtm = (DefaultTableModel) tableEstciv.getModel();
+            
+                       tableEstciv.setModel(dtm);
+            
+                        DaoEstciv daoestc = new DaoEstciv();
+                        
+                        ResultSet resultset = daoestc.listarPorNome(pNome);
+                        
+                        dtm.setRowCount(0);
+                    
+                        while (resultset.next()){
+                            String id = resultset.getString(1);
+                            String nome = resultset.getString(2);
+                            
+                            dtm.addRow(new Object [] {id, nome});
+                        }
+                    } catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
+                }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -129,16 +207,15 @@ public class ListEstciv extends javax.swing.JFrame {
 
     private void tableEstcivMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableEstcivMouseClicked
         if (evt.getClickCount() == 2){
-            ModMarca modmar = new ModMarca();
+            ModEstciv modestc = new ModEstciv();
 
-            modmar.setId(Integer.parseInt(String.valueOf(tableEstciv.getValueAt(tableEstciv.getSelectedRow(), 0))));
-            modmar.setNome(String.valueOf(tableEstciv.getValueAt(tableEstciv.getSelectedRow(), 1)));
+            modestc.setId(Integer.parseInt(String.valueOf(tableEstciv.getValueAt(tableEstciv.getSelectedRow(), 0))));
+           modestc.setNome(String.valueOf(tableEstciv.getValueAt(tableEstciv.getSelectedRow(), 1)));
 
-            DadosTemporarios.tempObject = (ModMarca)modmar;
+            DadosTemporarios.tempObject = (ModEstciv)modestc;
 
-            CadMarca cadpais = new CadMarca();
-            cadpais
-            .setVisible(true);
+            CadEstciv cadestc = new CadEstciv();
+            cadestc.setVisible(true);
         }
     }//GEN-LAST:event_tableEstcivMouseClicked
 
