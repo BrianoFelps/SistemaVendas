@@ -8,6 +8,7 @@ import com.mycompany.ferramentas.BancoDeDadosMySQL;
 import com.mycompany.ferramentas.Formularios;
 import com.mycompany.visao.categoria.CadCategoria;
 import com.mycompany.visao.categoria.ListCategoria;
+import com.mycompany.visao.estado.ListEstado;
 import com.mycompany.visao.estciv.CadEstciv;
 import com.mycompany.visao.estciv.ListEstciv;
 import com.mycompany.visao.marca.CadMarca;
@@ -58,6 +59,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         ListPais = new javax.swing.JMenuItem();
         ConsMarca = new javax.swing.JMenuItem();
         listEstciv = new javax.swing.JMenuItem();
+        ListEstado = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal");
@@ -131,6 +133,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
         mbtncons.add(listEstciv);
+
+        ListEstado.setText("Estado");
+        ListEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ListEstadoActionPerformed(evt);
+            }
+        });
+        mbtncons.add(ListEstado);
 
         MenuBar.add(mbtncons);
 
@@ -216,6 +226,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
         Formularios.ListEstciv.setVisible(true);                                         
     }//GEN-LAST:event_listEstcivActionPerformed
 
+    private void ListEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListEstadoActionPerformed
+        // TODO add your handling code here:
+        if (Formularios.ListEstado == null)
+            Formularios.ListEstado = new ListEstado();
+        
+        Formularios.ListEstado.setVisible(true);          
+    }//GEN-LAST:event_ListEstadoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -255,6 +273,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem CadEstciv;
     private javax.swing.JMenuItem CadPais;
     private javax.swing.JMenuItem ConsMarca;
+    private javax.swing.JMenuItem ListEstado;
     private javax.swing.JMenuItem ListPais;
     private javax.swing.JMenuBar MenuBar;
     private javax.swing.JMenuItem listEstciv;

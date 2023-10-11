@@ -9,10 +9,11 @@ package com.mycompany.modelo;
  * @author brian.7908
  */
 public class ModEstado {
-        private int id;
-        private int idpais;
+        private int id, idpais;
         private String nome;
 
+    public ModEstado() {
+    }
     public ModEstado(int id, int idpais, String nome) {
         this.id = id;
         this.idpais = idpais;

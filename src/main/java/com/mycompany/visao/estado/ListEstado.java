@@ -2,132 +2,126 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.mycompany.visao.categoria;
+package com.mycompany.visao.estado;
 
-import com.mycompany.dao.DaoCategoria;
+import com.mycompany.dao.DaoEstado;
 import com.mycompany.ferramentas.DadosTemporarios;
-import com.mycompany.modelo.ModCategoria;
-//import com.mysql.cj.protocol.Resultset; da errado
+import com.mycompany.modelo.ModEstado;
 import java.sql.ResultSet;
-import java.util.ServiceLoader;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author brian.7908
  */
-public class ListCategoria extends javax.swing.JFrame {
+public class ListEstado extends javax.swing.JFrame {
 
     /**
-     * Creates new form ListCategoria
+     * Creates new form ListEstado
      */
-    public ListCategoria() {
+    public ListEstado() {
         initComponents();
         
         setLocationRelativeTo(null);
         
         listarTodos();
     }
-
+    
     public void listarTodos(){
-        try{
-            DefaultTableModel dtm = (DefaultTableModel) tableCategoria.getModel ();
+         try{
+             DefaultTableModel dtm = (DefaultTableModel) tableEstd.getModel();
             
-            tableCategoria.setModel (dtm);
-            //data access object
-            DaoCategoria daocatg = new DaoCategoria();
+            tableEstd.setModel(dtm);
             
-            //é tipo um select do mysql, só que essa tabela fica na memoria do computador
-            ResultSet resultSet = daocatg.listarTodos();
+             DaoEstado daoest = new DaoEstado();
+            
+             ResultSet resultset = daoest.listarTodos();
             
             dtm.setRowCount(0);
-            //next + enquanto tiver proximos registros, o laço de repetição será rodado
-            while (resultSet.next()){
-                String id = resultSet.getString(1);
-                String nome = resultSet.getString(2);
-                String descricao = resultSet.getString(3);
+            
+            while (resultset.next()){
+                String id = resultset.getString(1);
+                String pais = resultset.getString(2);
+                String estuf = resultset.getString(3);
                 
-                dtm.addRow(new Object [] {id, nome, descricao});
+                dtm.addRow(new Object[] {id, pais, estuf});
             }
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
     }
     
-        public void listarPorId(int pId){
+     public void listarPorId(int pId){
         try{
-            DefaultTableModel dtm = (DefaultTableModel) tableCategoria.getModel ();
+            DefaultTableModel dtm = (DefaultTableModel) tableEstd.getModel ();
+
+            tableEstd.setModel(dtm);
             
-            tableCategoria.setModel (dtm);
-            //data access object
-            DaoCategoria daocatg = new DaoCategoria();
+            DaoEstado daoest = new DaoEstado();
             
-            //é tipo um select do mysql, só que essa tabela fica na memoria do computador
-            ResultSet resultSet = daocatg.listarPorId(pId);
+            ResultSet resultset = daoest.listarPorId(pId);
             
             dtm.setRowCount(0);
-            //next + enquanto tiver proximos registros, o laço de repetição será rodado
-            while (resultSet.next()){
-                String id = resultSet.getString(1);
-                String nome = resultSet.getString(2);
-                String descricao = resultSet.getString(3);
+            
+            while(resultset.next()){
+                String id = resultset.getString(1);
+                String pais = resultset.getString(2);
+                String estuf = resultset.getString(3);
                 
-                dtm.addRow(new Object [] {id, nome, descricao});
+                dtm.addRow(new Object [] {id, pais, estuf});
             }
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
-    }
-                public void listarPorNome(String pNome){
-        try{
-            DefaultTableModel dtm = (DefaultTableModel) tableCategoria.getModel ();
-            
-            tableCategoria.setModel (dtm);
-            //data access object
-            DaoCategoria daocatg = new DaoCategoria();
-            
-            //é tipo um select do mysql, só que essa tabela fica na memoria do computador
-            ResultSet resultSet = daocatg.listarPorNome(pNome);
-            
-            dtm.setRowCount(0);
-            //next + enquanto tiver proximos registros, o laço de repetição será rodado
-            while (resultSet.next()){
-                String id = resultSet.getString(1);
-                String nome = resultSet.getString(2);
-                String descricao = resultSet.getString(3);
-                
-                dtm.addRow(new Object [] {id, nome, descricao});
-            }
-        } catch (Exception e){
-            System.out.println(e.getMessage());
         }
-    }
-                
-             public void listarPorDescricao(String pDesc){
-        try{
-            DefaultTableModel dtm = (DefaultTableModel) tableCategoria.getModel ();
-            
-            tableCategoria.setModel (dtm);
-            //data access object
-            DaoCategoria daocatg = new DaoCategoria();
-            
-            //é tipo um select do mysql, só que essa tabela fica na memoria do computador
-            ResultSet resultSet = daocatg.listarPorDescricao(pDesc);
-            
-            dtm.setRowCount(0);
-            //next + enquanto tiver proximos registros, o laço de repetição será rodado
-            while (resultSet.next()){
-                String id = resultSet.getString(1);
-                String nome = resultSet.getString(2);
-                String descricao = resultSet.getString(3);
-                
-                dtm.addRow(new Object [] {id, nome, descricao});
-            }
-        } catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-    }
-        
+     
+     public void listarPorNome(String pNome){
+                    try{
+                        DefaultTableModel dtm = (DefaultTableModel) tableEstd.getModel ();
+
+                        tableEstd.setModel(dtm);
+                        
+                        DaoEstado daoest = new DaoEstado();
+                        
+                        ResultSet resultset = daoest.listarPorNome(pNome);
+                        
+                        dtm.setRowCount(0);
+                    
+                        while (resultset.next()){
+                            String id = resultset.getString(1);
+                             String pais = resultset.getString(2);
+                            String estuf = resultset.getString(3);
+                            
+                            dtm.addRow(new Object [] {id, pais, estuf});
+                        }
+                    } catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
+                }
+     
+      public void listarPorPais(String nmPais){
+                    try{
+                        DefaultTableModel dtm = (DefaultTableModel) tableEstd.getModel ();
+
+                        tableEstd.setModel(dtm);
+                        
+                        DaoEstado daoest = new DaoEstado();
+                        
+                        ResultSet resultset = daoest.listarPorPais(nmPais);
+                        
+                        dtm.setRowCount(0);
+                    
+                        while (resultset.next()){
+                            String id = resultset.getString(1);
+                            String pais = resultset.getString(2);
+                            String estuf = resultset.getString(3);
+                            
+                            dtm.addRow(new Object [] {id, pais, estuf});
+                        }
+                    } catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
+                }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -139,20 +133,19 @@ public class ListCategoria extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableCategoria = new javax.swing.JTable();
+        tableEstd = new javax.swing.JTable();
         jcbTipoFiltro = new javax.swing.JComboBox<>();
         tfFiltro = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Menu Consulta");
 
-        tableCategoria.setModel(new javax.swing.table.DefaultTableModel(
+        tableEstd.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "Nome", "Descrição"
+                "ID", "País", "Estado (UF)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -163,14 +156,14 @@ public class ListCategoria extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tableCategoria.addMouseListener(new java.awt.event.MouseAdapter() {
+        tableEstd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableCategoriaMouseClicked(evt);
+                tableEstdMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tableCategoria);
+        jScrollPane1.setViewportView(tableEstd);
 
-        jcbTipoFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "ID", "Nome", "Descrição" }));
+        jcbTipoFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "ID", "Estado (UF)", "País" }));
         jcbTipoFiltro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbTipoFiltroActionPerformed(evt);
@@ -210,7 +203,7 @@ public class ListCategoria extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jcbTipoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -241,24 +234,28 @@ public class ListCategoria extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void tableEstdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableEstdMouseClicked
+        if (evt.getClickCount() == 2){
+            ModEstado modest = new ModEstado();
+
+            modest.setId(Integer.parseInt(String.valueOf(tableEstd.getValueAt(tableEstd.getSelectedRow(), 0))));
+            modest.setIdpais(Integer.parseInt(String.valueOf(tableEstd.getValueAt(tableEstd.getSelectedRow(), 1))));
+            modest.setNome(String.valueOf(tableEstd.getValueAt(tableEstd.getSelectedRow(), 2)));
+
+            DadosTemporarios.tempObject = (ModEstado) modest;
+
+            CadEstado cadest = new CadEstado();
+            cadest.setVisible(true);
+        }
+    }//GEN-LAST:event_tableEstdMouseClicked
+
     private void jcbTipoFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTipoFiltroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jcbTipoFiltroActionPerformed
 
-    private void tableCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCategoriaMouseClicked
-        if (evt.getClickCount() == 2){
-            ModCategoria modcatg = new ModCategoria ();
-
-            modcatg.setId(Integer.parseInt(String.valueOf(tableCategoria.getValueAt(tableCategoria.getSelectedRow(), 0))));
-            modcatg.setNome(String.valueOf(tableCategoria.getValueAt(tableCategoria.getSelectedRow(), 1)));
-            modcatg.setDescricao(String.valueOf(tableCategoria.getValueAt(tableCategoria.getSelectedRow(), 2)));
-
-            DadosTemporarios.tempObject = (ModCategoria) modcatg;
-
-            CadCategoria cadcatg = new CadCategoria();
-            cadcatg.setVisible(true);
-        }
-    }//GEN-LAST:event_tableCategoriaMouseClicked
+    private void tfFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfFiltroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfFiltroActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
@@ -273,14 +270,10 @@ public class ListCategoria extends javax.swing.JFrame {
             listarPorNome(tfFiltro.getText());
             break;
             case 3:
-            listarPorDescricao(tfFiltro.getText());
+            listarPorPais(tfFiltro.getText());
             break;
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
-
-    private void tfFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfFiltroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfFiltroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -299,20 +292,20 @@ public class ListCategoria extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ListCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListEstado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ListCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListEstado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ListCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListEstado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ListCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListEstado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ListCategoria().setVisible(true);
+                new ListEstado().setVisible(true);
             }
         });
     }
@@ -322,7 +315,7 @@ public class ListCategoria extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox<String> jcbTipoFiltro;
-    private javax.swing.JTable tableCategoria;
+    private javax.swing.JTable tableEstd;
     private javax.swing.JTextField tfFiltro;
     // End of variables declaration//GEN-END:variables
 }

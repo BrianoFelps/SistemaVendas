@@ -21,5 +21,4 @@ public class Formularios {
     public static JFrame ListMarca;
     public static JFrame CadEstciv;
     public static JFrame ListEstciv;
-    
 }
