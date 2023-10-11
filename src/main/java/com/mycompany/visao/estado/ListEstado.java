@@ -4,7 +4,9 @@
  */
 package com.mycompany.visao.estado;
 
+import com.google.protobuf.StringValue;
 import com.mycompany.dao.DaoEstado;
+import com.mycompany.dao.DaoPais;
 import com.mycompany.ferramentas.DadosTemporarios;
 import com.mycompany.modelo.ModEstado;
 import java.sql.ResultSet;
@@ -235,17 +237,31 @@ public class ListEstado extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tableEstdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableEstdMouseClicked
+        try{
         if (evt.getClickCount() == 2){
             ModEstado modest = new ModEstado();
 
             modest.setId(Integer.parseInt(String.valueOf(tableEstd.getValueAt(tableEstd.getSelectedRow(), 0))));
-            modest.setIdpais(Integer.parseInt(String.valueOf(tableEstd.getValueAt(tableEstd.getSelectedRow(), 1))));
             modest.setNome(String.valueOf(tableEstd.getValueAt(tableEstd.getSelectedRow(), 2)));
 
+            DaoPais daopais = new DaoPais();
+            ResultSet resultset = daopais.listarPorNome(String.valueOf(tableEstd.getValueAt(tableEstd.getSelectedRow(), 1)));
+            
+            int idPais = -1;
+            
+            while(resultset.next())
+                idPais = resultset.getInt("ID");
+            
+            modest.setIdpais(idPais);
+            
             DadosTemporarios.tempObject = (ModEstado) modest;
-
-            CadEstado cadest = new CadEstado();
+            
+            
+            CadEstado cadest = new CadEstado();;
             cadest.setVisible(true);
+        }
+        }catch (Exception e){
+            System.err.println(e.getMessage());
         }
     }//GEN-LAST:event_tableEstdMouseClicked
 

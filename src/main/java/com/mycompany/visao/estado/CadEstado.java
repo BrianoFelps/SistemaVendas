@@ -46,6 +46,8 @@ public class CadEstado extends javax.swing.JFrame {
         
         tfId.setEnabled(false);
         
+        tfidpais.setVisible(false);
+        
     }
     
       private Boolean existeDadosTemporarios(){
