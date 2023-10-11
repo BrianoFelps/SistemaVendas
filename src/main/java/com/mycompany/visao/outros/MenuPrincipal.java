@@ -8,6 +8,8 @@ import com.mycompany.ferramentas.BancoDeDadosMySQL;
 import com.mycompany.ferramentas.Formularios;
 import com.mycompany.visao.categoria.CadCategoria;
 import com.mycompany.visao.categoria.ListCategoria;
+import com.mycompany.visao.estciv.CadEstciv;
+import com.mycompany.visao.estciv.ListEstciv;
 import com.mycompany.visao.marca.CadMarca;
 import com.mycompany.visao.marca.ListMarca;
 import com.mycompany.visao.pais.CadPais;
@@ -50,10 +52,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
         miCadCatg = new javax.swing.JMenuItem();
         CadPais = new javax.swing.JMenuItem();
         miMarca = new javax.swing.JMenuItem();
+        CadEstciv = new javax.swing.JMenuItem();
         mbtncons = new javax.swing.JMenu();
         miConsCatg = new javax.swing.JMenuItem();
         ListPais = new javax.swing.JMenuItem();
         ConsMarca = new javax.swing.JMenuItem();
+        listEstciv = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal");
@@ -84,11 +88,19 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         mbtnCad.add(miMarca);
 
+        CadEstciv.setText("Estado civil");
+        CadEstciv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CadEstcivActionPerformed(evt);
+            }
+        });
+        mbtnCad.add(CadEstciv);
+
         MenuBar.add(mbtnCad);
 
         mbtncons.setText("Consultas");
 
-        miConsCatg.setText("Categoria");
+        miConsCatg.setText("Categorias");
         miConsCatg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 miConsCatgActionPerformed(evt);
@@ -96,7 +108,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         mbtncons.add(miConsCatg);
 
-        ListPais.setText("País");
+        ListPais.setText("Países");
         ListPais.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ListPaisActionPerformed(evt);
@@ -111,6 +123,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
         mbtncons.add(ConsMarca);
+
+        listEstciv.setText("Estados civis");
+        listEstciv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listEstcivActionPerformed(evt);
+            }
+        });
+        mbtncons.add(listEstciv);
 
         MenuBar.add(mbtncons);
 
@@ -180,6 +200,22 @@ public class MenuPrincipal extends javax.swing.JFrame {
         Formularios.ListMarca.setVisible(true);
     }//GEN-LAST:event_ConsMarcaActionPerformed
 
+    private void CadEstcivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadEstcivActionPerformed
+        // TODO add your handling code here:
+         if (Formularios.CadEstciv == null)
+            Formularios.CadEstciv = new CadEstciv();
+        
+        Formularios.CadEstciv.setVisible(true);
+    }//GEN-LAST:event_CadEstcivActionPerformed
+
+    private void listEstcivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listEstcivActionPerformed
+        // TODO add your handling code here:
+          if (Formularios.ListEstciv == null)
+            Formularios.ListEstciv = new ListEstciv();
+        
+        Formularios.ListEstciv.setVisible(true);                                         
+    }//GEN-LAST:event_listEstcivActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -216,10 +252,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem CadEstciv;
     private javax.swing.JMenuItem CadPais;
     private javax.swing.JMenuItem ConsMarca;
     private javax.swing.JMenuItem ListPais;
     private javax.swing.JMenuBar MenuBar;
+    private javax.swing.JMenuItem listEstciv;
     private javax.swing.JMenu mbtnCad;
     private javax.swing.JMenu mbtncons;
     private javax.swing.JMenuItem miCadCatg;
