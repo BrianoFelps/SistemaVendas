@@ -259,6 +259,8 @@ public class CadCategoria extends javax.swing.JFrame {
             
             dispose();
         }
+        
+         
     /**
      * @param args the command line arguments
      */

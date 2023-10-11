@@ -8,6 +8,7 @@ import com.mycompany.ferramentas.BancoDeDadosMySQL;
 import com.mycompany.ferramentas.Formularios;
 import com.mycompany.visao.categoria.CadCategoria;
 import com.mycompany.visao.categoria.ListCategoria;
+import com.mycompany.visao.estado.CadEstado;
 import com.mycompany.visao.estado.ListEstado;
 import com.mycompany.visao.estciv.CadEstciv;
 import com.mycompany.visao.estciv.ListEstciv;
@@ -54,6 +55,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         CadPais = new javax.swing.JMenuItem();
         miMarca = new javax.swing.JMenuItem();
         CadEstciv = new javax.swing.JMenuItem();
+        CadEstado = new javax.swing.JMenuItem();
         mbtncons = new javax.swing.JMenu();
         miConsCatg = new javax.swing.JMenuItem();
         ListPais = new javax.swing.JMenuItem();
@@ -97,6 +99,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
         mbtnCad.add(CadEstciv);
+
+        CadEstado.setText("Estado");
+        CadEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CadEstadoActionPerformed(evt);
+            }
+        });
+        mbtnCad.add(CadEstado);
 
         MenuBar.add(mbtnCad);
 
@@ -234,6 +244,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
         Formularios.ListEstado.setVisible(true);          
     }//GEN-LAST:event_ListEstadoActionPerformed
 
+    private void CadEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadEstadoActionPerformed
+        // TODO add your handling code here:
+         if (Formularios.CadEstado == null)
+            Formularios.CadEstado = new CadEstado();
+        
+        Formularios.CadEstado.setVisible(true);    
+    }//GEN-LAST:event_CadEstadoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -270,6 +288,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem CadEstado;
     private javax.swing.JMenuItem CadEstciv;
     private javax.swing.JMenuItem CadPais;
     private javax.swing.JMenuItem ConsMarca;
