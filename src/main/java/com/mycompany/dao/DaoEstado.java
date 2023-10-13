@@ -33,12 +33,14 @@ public class DaoEstado extends BancoDeDadosMySQL {
             return false;
         }
     }
-    public Boolean alterar (int id, int idpais, String novonome){
+    public Boolean alterar (int id, int novoidpais, String novonome){
         try{
-            sql = "UPDATE ESTADO SET NOME = ?, SET ID_PAIS = ? WHERE ID = ?";
+            sql = "UPDATE ESTADO SET ID_PAIS = ?, NOME = ? WHERE ID = ?";
             
-                getStatement().setString(1, novonome);
-                getStatement().setInt(2, idpais);
+            setStatement(getConexao().prepareStatement(sql));
+            
+                getStatement().setString(2, novonome);
+                getStatement().setInt(1, novoidpais);
                 getStatement().setInt(3, id);
                 
                 getStatement().executeUpdate();

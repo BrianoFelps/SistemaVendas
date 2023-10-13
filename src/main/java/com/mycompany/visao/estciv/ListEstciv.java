@@ -111,7 +111,7 @@ public class ListEstciv extends javax.swing.JFrame {
         tfFiltro = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         tableEstciv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

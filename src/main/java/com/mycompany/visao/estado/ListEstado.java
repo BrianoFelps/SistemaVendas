@@ -256,8 +256,7 @@ public class ListEstado extends javax.swing.JFrame {
             
             DadosTemporarios.tempObject = (ModEstado) modest;
             
-            
-            CadEstado cadest = new CadEstado();;
+            CadEstado cadest = new CadEstado();
             cadest.setVisible(true);
         }
         }catch (Exception e){

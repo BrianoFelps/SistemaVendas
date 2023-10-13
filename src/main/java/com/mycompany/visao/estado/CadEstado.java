@@ -46,7 +46,7 @@ public class CadEstado extends javax.swing.JFrame {
         
         tfId.setEnabled(false);
         
-        tfidpais.setVisible(false);
+        tfidpais.setVisible(true);
         
     }
     
@@ -60,6 +60,23 @@ public class CadEstado extends javax.swing.JFrame {
             tfidpais.setText(String.valueOf(idpais));
             tfEstado.setText(nmest);
 
+            //
+            try{
+                DaoPais daoPais = new DaoPais();
+                ResultSet resultSet = daoPais.listarPorId(idpais);
+                resultSet.next();
+                String pais = resultSet.getString("NOME");
+                int index = 0;
+                for(int i = 0; i < JcbPais.getItemCount(); i++){
+                    if(JcbPais.getItemAt(i).equals(pais)){
+                        index = i;
+                        break;
+                    }
+                }
+                JcbPais.setSelectedIndex(index);
+            }catch(Exception e){}
+            //
+            
             DadosTemporarios.tempObject = null;
             
                 return true;
@@ -206,7 +223,7 @@ public class CadEstado extends javax.swing.JFrame {
 
     private void btnAcaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcaoActionPerformed
         // TODO add your handling code here:
-         if(btnAcao.getText().equals(Constantes.BTN_SALVAR_TEXT))
+         if (btnAcao.getText().equals(Constantes.BTN_SALVAR_TEXT))
             inserir();
         else if (btnAcao.getText().equals(Constantes.BTN_ALTERAR_TEXT))
             alterar();
@@ -232,8 +249,7 @@ public class CadEstado extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Estado salvo com sucesso!");
             
                 tfId.setText("" + daoest.buscarProximoId());
-                tfidpais.setText("");
-                tfEstado.setText("");
+                tfEstado.setText(" ");
             }else{
                 JOptionPane.showMessageDialog(null, "Não foi possível salvar o estado!");
             }
@@ -245,9 +261,9 @@ public class CadEstado extends javax.swing.JFrame {
             if (daoest.alterar(Integer.parseInt(tfId.getText()), Integer.parseInt(tfidpais.getText()), tfEstado.getText())){
                 JOptionPane.showMessageDialog(null, "Estado alterado com sucesso!");
             
-                tfId.setText ("");
-                tfidpais.setText("");
-                tfEstado.setText("");
+                tfId.setText (" ");
+                tfidpais.setText(" ");
+                tfEstado.setText(" ");
             }else{
                 JOptionPane.showMessageDialog(null, "Não foi possível alterar o estado!");
             }

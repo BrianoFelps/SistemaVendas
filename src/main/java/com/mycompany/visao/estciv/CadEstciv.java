@@ -73,7 +73,7 @@ public class CadEstciv extends javax.swing.JFrame {
         btnAcao = new javax.swing.JButton();
         LId = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         LNome.setText("Nome");
 
@@ -114,7 +114,7 @@ public class CadEstciv extends javax.swing.JFrame {
                     .addComponent(tfNome, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(LNome)
-                        .addContainerGap(349, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(LId)
@@ -123,7 +123,7 @@ public class CadEstciv extends javax.swing.JFrame {
                                 .addComponent(btnAcao)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnExcluir)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 224, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
