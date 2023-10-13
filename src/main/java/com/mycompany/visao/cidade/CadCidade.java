@@ -46,7 +46,7 @@ public class CadCidade extends javax.swing.JFrame {
         
         tfId.setEnabled(false);
         
-        tfidest.setVisible(true);
+        tfidest.setVisible(false);
     }
     
     private Boolean existeDadosTemporarios(){
