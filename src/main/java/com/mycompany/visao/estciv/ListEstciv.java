@@ -112,6 +112,7 @@ public class ListEstciv extends javax.swing.JFrame {
         btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Listagem de estado civil");
 
         tableEstciv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

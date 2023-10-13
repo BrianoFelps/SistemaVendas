@@ -74,6 +74,7 @@ public class CadEstciv extends javax.swing.JFrame {
         LId = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Cadastro de estado civil");
 
         LNome.setText("Nome");
 

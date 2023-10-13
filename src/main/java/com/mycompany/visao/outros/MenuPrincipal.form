@@ -49,6 +49,14 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CadEstadoActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="CadCidade">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Cidade"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CadCidadeActionPerformed"/>
+              </Events>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="mbtncons">
@@ -90,10 +98,18 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="ListEstado">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Estado"/>
+                <Property name="text" type="java.lang.String" value="Estados"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ListEstadoActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="ListCidade">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Cidades"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ListCidadeActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

@@ -8,6 +8,8 @@ import com.mycompany.ferramentas.BancoDeDadosMySQL;
 import com.mycompany.ferramentas.Formularios;
 import com.mycompany.visao.categoria.CadCategoria;
 import com.mycompany.visao.categoria.ListCategoria;
+import com.mycompany.visao.cidade.CadCidade;
+import com.mycompany.visao.cidade.ListCidade;
 import com.mycompany.visao.estado.CadEstado;
 import com.mycompany.visao.estado.ListEstado;
 import com.mycompany.visao.estciv.CadEstciv;
@@ -56,12 +58,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
         miMarca = new javax.swing.JMenuItem();
         CadEstciv = new javax.swing.JMenuItem();
         CadEstado = new javax.swing.JMenuItem();
+        CadCidade = new javax.swing.JMenuItem();
         mbtncons = new javax.swing.JMenu();
         miConsCatg = new javax.swing.JMenuItem();
         ListPais = new javax.swing.JMenuItem();
         ConsMarca = new javax.swing.JMenuItem();
         listEstciv = new javax.swing.JMenuItem();
         ListEstado = new javax.swing.JMenuItem();
+        ListCidade = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal");
@@ -108,6 +112,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         mbtnCad.add(CadEstado);
 
+        CadCidade.setText("Cidade");
+        CadCidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CadCidadeActionPerformed(evt);
+            }
+        });
+        mbtnCad.add(CadCidade);
+
         MenuBar.add(mbtnCad);
 
         mbtncons.setText("Consultas");
@@ -144,13 +156,21 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         mbtncons.add(listEstciv);
 
-        ListEstado.setText("Estado");
+        ListEstado.setText("Estados");
         ListEstado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ListEstadoActionPerformed(evt);
             }
         });
         mbtncons.add(ListEstado);
+
+        ListCidade.setText("Cidades");
+        ListCidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ListCidadeActionPerformed(evt);
+            }
+        });
+        mbtncons.add(ListCidade);
 
         MenuBar.add(mbtncons);
 
@@ -252,6 +272,22 @@ public class MenuPrincipal extends javax.swing.JFrame {
         Formularios.CadEstado.setVisible(true);    
     }//GEN-LAST:event_CadEstadoActionPerformed
 
+    private void CadCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadCidadeActionPerformed
+        // TODO add your handling code here:
+        if (Formularios.CadCidade == null)
+            Formularios.CadCidade = new CadCidade();
+        
+        Formularios.CadCidade.setVisible(true);  
+    }//GEN-LAST:event_CadCidadeActionPerformed
+
+    private void ListCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListCidadeActionPerformed
+        // TODO add your handling code here:
+         if (Formularios.ListCidade == null)
+            Formularios.ListCidade = new ListCidade();
+        
+        Formularios.ListCidade.setVisible(true);    
+    }//GEN-LAST:event_ListCidadeActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -288,10 +324,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem CadCidade;
     private javax.swing.JMenuItem CadEstado;
     private javax.swing.JMenuItem CadEstciv;
     private javax.swing.JMenuItem CadPais;
     private javax.swing.JMenuItem ConsMarca;
+    private javax.swing.JMenuItem ListCidade;
     private javax.swing.JMenuItem ListEstado;
     private javax.swing.JMenuItem ListPais;
     private javax.swing.JMenuBar MenuBar;

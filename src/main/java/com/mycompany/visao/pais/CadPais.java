@@ -79,7 +79,7 @@ public class CadPais extends javax.swing.JFrame {
         jLabel1.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro do país");
+        setTitle("Cadastro de país");
 
         LNome.setText("Nome");
 

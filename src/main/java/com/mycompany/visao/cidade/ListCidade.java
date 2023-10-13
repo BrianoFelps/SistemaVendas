@@ -2,13 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.mycompany.visao.estado;
+package com.mycompany.visao.cidade;
 
-import com.google.protobuf.StringValue;
-import com.mycompany.dao.DaoEstado;
-import com.mycompany.dao.DaoPais;
+import com.mycompany.dao.DaoCidade;
 import com.mycompany.ferramentas.DadosTemporarios;
-import com.mycompany.modelo.ModEstado;
+import com.mycompany.modelo.ModCidade;
 import java.sql.ResultSet;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,12 +14,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author brian.7908
  */
-public class ListEstado extends javax.swing.JFrame {
+public class ListCidade extends javax.swing.JFrame {
 
     /**
-     * Creates new form ListEstado
+     * Creates new form ListCidade
      */
-    public ListEstado() {
+    public ListCidade() {
         initComponents();
         
         setLocationRelativeTo(null);
@@ -31,22 +29,22 @@ public class ListEstado extends javax.swing.JFrame {
     
     public void listarTodos(){
          try{
-             DefaultTableModel dtm = (DefaultTableModel) tableEstd.getModel();
+             DefaultTableModel dtm = (DefaultTableModel) tableCid.getModel();
             
-            tableEstd.setModel(dtm);
+             tableCid.setModel(dtm);
             
-             DaoEstado daoest = new DaoEstado();
+             DaoCidade daocid = new DaoCidade();
             
-             ResultSet resultset = daoest.listarTodos();
+             ResultSet resultset = daocid.listarTodos();
             
             dtm.setRowCount(0);
             
             while (resultset.next()){
                 String id = resultset.getString(1);
-                String pais = resultset.getString(2);
-                String estuf = resultset.getString(3);
+                String est = resultset.getString(2);
+                String cid = resultset.getString(3);
                 
-                dtm.addRow(new Object[] {id, pais, estuf});
+                dtm.addRow(new Object[] {id, est, cid});
             }
         } catch (Exception e){
             System.out.println(e.getMessage());
@@ -55,22 +53,22 @@ public class ListEstado extends javax.swing.JFrame {
     
      public void listarPorId(int pId){
         try{
-            DefaultTableModel dtm = (DefaultTableModel) tableEstd.getModel ();
+            DefaultTableModel dtm = (DefaultTableModel) tableCid.getModel ();
 
-            tableEstd.setModel(dtm);
+            tableCid.setModel(dtm);
             
-            DaoEstado daoest = new DaoEstado();
+            DaoCidade daocid = new DaoCidade();
             
-            ResultSet resultset = daoest.listarPorId(pId);
+            ResultSet resultset = daocid.listarPorId(pId);
             
             dtm.setRowCount(0);
             
             while(resultset.next()){
                 String id = resultset.getString(1);
-                String pais = resultset.getString(2);
-                String estuf = resultset.getString(3);
+                String est = resultset.getString(2);
+                String cid = resultset.getString(3);
                 
-                dtm.addRow(new Object [] {id, pais, estuf});
+                dtm.addRow(new Object [] {id, est, cid});
             }
         } catch (Exception e){
             System.out.println(e.getMessage());
@@ -79,51 +77,53 @@ public class ListEstado extends javax.swing.JFrame {
      
      public void listarPorNome(String pNome){
                     try{
-                        DefaultTableModel dtm = (DefaultTableModel) tableEstd.getModel ();
+                        DefaultTableModel dtm = (DefaultTableModel) tableCid.getModel ();
 
-                        tableEstd.setModel(dtm);
+                        tableCid.setModel(dtm);
                         
-                        DaoEstado daoest = new DaoEstado();
+                        DaoCidade daocid = new DaoCidade();
                         
-                        ResultSet resultset = daoest.listarPorNome(pNome);
+                        ResultSet resultset = daocid.listarPorNome(pNome);
                         
                         dtm.setRowCount(0);
                     
                         while (resultset.next()){
                             String id = resultset.getString(1);
-                             String pais = resultset.getString(2);
-                            String estuf = resultset.getString(3);
+                            String est = resultset.getString(2);
+                            String cid = resultset.getString(3);
                             
-                            dtm.addRow(new Object [] {id, pais, estuf});
+                            dtm.addRow(new Object [] {id, est, cid});
                         }
                     } catch (Exception e){
                         System.out.println(e.getMessage());
                     }
                 }
      
-      public void listarPorPais(String nmPais){
+      public void listarPorEst(String nmEst){
                     try{
-                        DefaultTableModel dtm = (DefaultTableModel) tableEstd.getModel ();
+                        DefaultTableModel dtm = (DefaultTableModel) tableCid.getModel ();
 
-                        tableEstd.setModel(dtm);
+                        tableCid.setModel(dtm);
                         
-                        DaoEstado daoest = new DaoEstado();
+                        DaoCidade daocid = new DaoCidade();
                         
-                        ResultSet resultset = daoest.listarPorPais(nmPais);
+                        ResultSet resultset = daocid.listarPorEstado(nmEst);
                         
                         dtm.setRowCount(0);
                     
                         while (resultset.next()){
                             String id = resultset.getString(1);
-                            String pais = resultset.getString(2);
-                            String estuf = resultset.getString(3);
+                            String est = resultset.getString(2);
+                            String cid = resultset.getString(3);
                             
-                            dtm.addRow(new Object [] {id, pais, estuf});
+                            dtm.addRow(new Object [] {id, est, cid});
                         }
                     } catch (Exception e){
                         System.out.println(e.getMessage());
                     }
                 }
+    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -135,20 +135,20 @@ public class ListEstado extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableEstd = new javax.swing.JTable();
+        tableCid = new javax.swing.JTable();
         jcbTipoFiltro = new javax.swing.JComboBox<>();
         tfFiltro = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Listagem de estados");
+        setTitle("Listagem de cidades");
 
-        tableEstd.setModel(new javax.swing.table.DefaultTableModel(
+        tableCid.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "País", "Estado (UF)"
+                "ID", "Estado", "Cidade"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -159,14 +159,14 @@ public class ListEstado extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tableEstd.addMouseListener(new java.awt.event.MouseAdapter() {
+        tableCid.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableEstdMouseClicked(evt);
+                tableCidMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tableEstd);
+        jScrollPane1.setViewportView(tableCid);
 
-        jcbTipoFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "ID", "Estado (UF)", "País" }));
+        jcbTipoFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "ID", "Estado (UF)", "Cidade" }));
         jcbTipoFiltro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbTipoFiltroActionPerformed(evt);
@@ -193,7 +193,7 @@ public class ListEstado extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 726, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 725, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jcbTipoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -237,33 +237,33 @@ public class ListEstado extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tableEstdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableEstdMouseClicked
+    private void tableCidMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCidMouseClicked
         try{
-        if (evt.getClickCount() == 2){
-            ModEstado modest = new ModEstado();
+            if (evt.getClickCount() == 2){
+                ModCidade modcid = new ModCidade();
 
-            modest.setId(Integer.parseInt(String.valueOf(tableEstd.getValueAt(tableEstd.getSelectedRow(), 0))));
-            modest.setNome(String.valueOf(tableEstd.getValueAt(tableEstd.getSelectedRow(), 2)));
+                modcid.setId(Integer.parseInt(String.valueOf(tableCid.getValueAt(tableCid.getSelectedRow(), 0))));
+                modcid.setNome(String.valueOf(tableCid.getValueAt(tableCid.getSelectedRow(), 2)));
 
-            DaoPais daopais = new DaoPais();
-            ResultSet resultset = daopais.listarPorNome(String.valueOf(tableEstd.getValueAt(tableEstd.getSelectedRow(), 1)));
-            
-            int idPais = -1;
-            
-            while(resultset.next())
-                idPais = resultset.getInt("ID");
-            
-            modest.setIdpais(idPais);
-            
-            DadosTemporarios.tempObject = (ModEstado) modest;
-            
-            CadEstado cadest = new CadEstado();
-            cadest.setVisible(true);
-        }
+                DaoCidade daocid = new DaoCidade();
+                ResultSet resultset = daocid.listarPorNome(String.valueOf(tableCid.getValueAt(tableCid.getSelectedRow(), 1)));
+
+                int idEst = -1;
+
+                while(resultset.next())
+                    idEst = resultset.getInt("ID");
+
+                modcid.setIdest(idEst);
+
+                DadosTemporarios.tempObject = (ModCidade) modcid;
+
+                CadCidade cadcid = new CadCidade();
+                cadcid.setVisible(true);
+            }
         }catch (Exception e){
             System.err.println(e.getMessage());
         }
-    }//GEN-LAST:event_tableEstdMouseClicked
+    }//GEN-LAST:event_tableCidMouseClicked
 
     private void jcbTipoFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTipoFiltroActionPerformed
         // TODO add your handling code here:
@@ -283,10 +283,10 @@ public class ListEstado extends javax.swing.JFrame {
             listarPorId(Integer.parseInt(tfFiltro.getText()));
             break;
             case 2:
-            listarPorNome(tfFiltro.getText());
+            listarPorEst(tfFiltro.getText());
             break;
             case 3:
-            listarPorPais(tfFiltro.getText());
+            listarPorNome(tfFiltro.getText());
             break;
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
@@ -308,20 +308,20 @@ public class ListEstado extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ListEstado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListCidade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ListEstado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListCidade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ListEstado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListCidade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ListEstado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListCidade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ListEstado().setVisible(true);
+                new ListCidade().setVisible(true);
             }
         });
     }
@@ -331,7 +331,7 @@ public class ListEstado extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox<String> jcbTipoFiltro;
-    private javax.swing.JTable tableEstd;
+    private javax.swing.JTable tableCid;
     private javax.swing.JTextField tfFiltro;
     // End of variables declaration//GEN-END:variables
 }
