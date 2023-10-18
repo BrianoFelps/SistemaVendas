@@ -5,6 +5,7 @@
 package com.mycompany.visao.cidade;
 
 import com.mycompany.dao.DaoCidade;
+import com.mycompany.dao.DaoEstado;
 import com.mycompany.ferramentas.DadosTemporarios;
 import com.mycompany.modelo.ModCidade;
 import java.sql.ResultSet;
@@ -245,8 +246,8 @@ public class ListCidade extends javax.swing.JFrame {
                 modcid.setId(Integer.parseInt(String.valueOf(tableCid.getValueAt(tableCid.getSelectedRow(), 0))));
                 modcid.setNome(String.valueOf(tableCid.getValueAt(tableCid.getSelectedRow(), 2)));
 
-                DaoCidade daocid = new DaoCidade();
-                ResultSet resultset = daocid.listarPorNome(String.valueOf(tableCid.getValueAt(tableCid.getSelectedRow(), 1)));
+                DaoEstado daoest = new DaoEstado();
+                ResultSet resultset = daoest.listarPorNome(String.valueOf(tableCid.getValueAt(tableCid.getSelectedRow(), 1)));
 
                 int idEst = -1;
 

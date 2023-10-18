@@ -80,7 +80,7 @@ public class DaoEndereco extends BancoDeDadosMySQL{
     
     public ResultSet listarTodos(){
         try{
-            sql = "SELECT E.ID = ?, C.NOME = ?, E.NOME_RUA = ?, E.CEP = ?, E.NUM_RESID = ? FROM ENDERECO E JOIN CIDADE C ON E.ID_CIDADE = C.ID";
+            sql = "SELECT E.ID, C.NOME, E.NOME_RUA, E.CEP, E.NUM_RESID FROM ENDERECO E JOIN CIDADE C ON E.ID_CIDADE = C.ID";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -93,7 +93,7 @@ public class DaoEndereco extends BancoDeDadosMySQL{
     
     public ResultSet listarPorId(int id){
         try{
-            sql = "SELECT E.ID = ?, C.NOME = ?, E.NOME_RUA = ?, E.CEP = ?, E.NUM_RESID = ? FROM ENDERECO E JOIN CIDADE C ON E.ID_CIDADE = C.ID WHERE E.ID = ?";
+            sql = "SELECT E.ID, C.NOME, E.NOME_RUA , E.CEP, E.NUM_RESID FROM ENDERECO E JOIN CIDADE C ON E.ID_CIDADE = C.ID WHERE E.ID = ?";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -108,7 +108,7 @@ public class DaoEndereco extends BancoDeDadosMySQL{
     
     public ResultSet listarPorRua(String nome){
         try{
-        sql = "SELECT E.ID = ?, C.NOME = ?, E.NOME_RUA = ?, E.CEP = ?, E.NUM_RESID = ? FROM ENDERECO E JOIN CIDADE C ON E.ID_CIDADE = C.ID WHERE E.NOME_RUA LIKE ?";
+        sql = "SELECT E.ID, C.NOME, E.NOME_RUA, E.CEP , E.NUM_RESID FROM ENDERECO E JOIN CIDADE C ON E.ID_CIDADE = C.ID WHERE E.NOME_RUA LIKE ?";
         
             setStatement(getConexao().prepareStatement(sql));
             
@@ -123,7 +123,7 @@ public class DaoEndereco extends BancoDeDadosMySQL{
     
     public ResultSet listarPorCidade(String cidnome){
         try{
-            sql = "SELECT E.ID = ?, C.NOME = ?, E.NOME_RUA = ?, E.CEP = ?, E.NUM_RESID = ? FROM ENDERECO E JOIN CIDADE C ON E.ID_CIDADE = C.ID WHERE C.NOME LIKE ?";
+            sql = "SELECT E.ID, C.NOME, E.NOME_RUA, E.CEP, E.NUM_RESID FROM ENDERECO E JOIN CIDADE C ON E.ID_CIDADE = C.ID WHERE C.NOME LIKE ?";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -138,7 +138,7 @@ public class DaoEndereco extends BancoDeDadosMySQL{
     
     public ResultSet listarPorCep(int cep){
         try{
-            sql = "SELECT E.ID = ?, C.NOME = ?, E.NOME_RUA = ?, E.CEP = ?, E.NUM_RESID = ? FROM ENDERECO E JOIN CIDADE C ON E.ID_CIDADE = C.ID WHERE E.CEP = ?";
+            sql = "SELECT E.ID, C.NOME, E.NOME_RUA, E.CEP, E.NUM_RESID FROM ENDERECO E JOIN CIDADE C ON E.ID_CIDADE = C.ID WHERE E.CEP = ?";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -153,7 +153,7 @@ public class DaoEndereco extends BancoDeDadosMySQL{
     
     public ResultSet listarPorNum(int num){
         try{
-            sql = "SELECT E.ID = ?, C.NOME = ?, E.NOME_RUA = ?, E.CEP = ?, E.NUM_RESID = ? FROM ENDERECO E JOIN CIDADE C ON E.ID_CIDADE = C.ID WHERE E.NUM_RESID = ?";
+            sql = "SELECT E.ID, C.NOME, E.NOME_RUA, E.CEP, E.NUM_RESID FROM ENDERECO E JOIN CIDADE C ON E.ID_CIDADE = C.ID WHERE E.NUM_RESID = ?";
             
             setStatement(getConexao().prepareStatement(sql));
             

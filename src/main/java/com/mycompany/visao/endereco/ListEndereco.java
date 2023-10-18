@@ -4,6 +4,7 @@
  */
 package com.mycompany.visao.endereco;
 
+import com.mycompany.dao.DaoCidade;
 import com.mycompany.dao.DaoEndereco;
 import com.mycompany.ferramentas.DadosTemporarios;
 import com.mycompany.modelo.ModEndereco;
@@ -302,12 +303,12 @@ public class ListEndereco extends javax.swing.JFrame {
             ModEndereco modend = new ModEndereco ();
 
             modend.setId(Integer.parseInt(String.valueOf(tableEndereco.getValueAt(tableEndereco.getSelectedRow(), 0))));
-            modend.setRua(String.valueOf(tableEndereco.getValueAt(tableEndereco.getSelectedRow(), 1)));
+            modend.setRua(String.valueOf(tableEndereco.getValueAt(tableEndereco.getSelectedRow(), 2)));
             modend.setCep(Integer.parseInt(String.valueOf(tableEndereco.getValueAt(tableEndereco.getSelectedRow(), 3))));
             modend.setNum(Integer.parseInt(String.valueOf(tableEndereco.getValueAt(tableEndereco.getSelectedRow(), 4))));
             
-            DaoEndereco daoend = new DaoEndereco();
-            ResultSet resultset = daoend.listarPorRua(String.valueOf(tableEndereco.getValueAt(tableEndereco.getSelectedRow(), 2)));
+            DaoCidade daocid = new DaoCidade();
+            ResultSet resultset = daocid.listarPorNome(String.valueOf(tableEndereco.getValueAt(tableEndereco.getSelectedRow(), 1)));
             
             int idCid = -1;
             
