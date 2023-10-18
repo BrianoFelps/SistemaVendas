@@ -140,7 +140,7 @@ public class DaoPessoa extends BancoDeDadosMySQL {
         return getResultado();
     }
     
-    public ResultSet listarPorEstCiv(String cidnome){
+    public ResultSet listarPorEstCiv(String ec){
         try{
             sql = "SELECT P.ID, E.NOME_RUA, EC.NOME, P.NOME, P.SOBRENOME, P.GENERO, P.TELEFONE, P.EMAIL"
                     + " FROM PESSOA P "
@@ -151,7 +151,7 @@ public class DaoPessoa extends BancoDeDadosMySQL {
             
             setStatement(getConexao().prepareStatement(sql));
             
-            getStatement().setString(1, cidnome + "%");
+            getStatement().setString(1, ec + "%");
             
             setResultado(getStatement().executeQuery());
         } catch (Exception e){

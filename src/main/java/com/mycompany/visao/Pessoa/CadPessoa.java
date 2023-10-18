@@ -26,7 +26,8 @@ public class CadPessoa extends javax.swing.JFrame {
     public CadPessoa() {
         initComponents();
         
-        carregarCidades();
+        carregarEnderecos();
+        carregarEC();
         
          if (!existeDadosTemporarios()) {
             DaoEndereco daoend = new DaoEndereco();
@@ -41,13 +42,15 @@ public class CadPessoa extends javax.swing.JFrame {
             btnAcao.setText(Constantes.BTN_ALTERAR_TEXT);
             btnExcluir.setVisible(true);
         }
-         recuperaIdCid();
+         recuperaIdEnd();
+         recuperaIdEC();
          
          setLocationRelativeTo(null);
         
         tfId.setEnabled(false);
         
-        tfidcid.setVisible(true);
+        tfidend.setVisible(true);
+        tfidec.setVisible(true);
     }
 
      private Boolean existeDadosTemporarios(){
@@ -191,6 +194,12 @@ public class CadPessoa extends javax.swing.JFrame {
         tfTel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfTelActionPerformed(evt);
+            }
+        });
+
+        jcbec.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbecActionPerformed(evt);
             }
         });
 
@@ -363,7 +372,7 @@ public class CadPessoa extends javax.swing.JFrame {
 
     private void JcbEndItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JcbEndItemStateChanged
         // TODO add your handling code here:
-        recuperaIdCid();
+        recuperaIdEnd();
     }//GEN-LAST:event_JcbEndItemStateChanged
 
     private void JcbEndActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JcbEndActionPerformed
@@ -381,6 +390,11 @@ public class CadPessoa extends javax.swing.JFrame {
     private void tfGenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfGenActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfGenActionPerformed
+
+    private void jcbecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbecActionPerformed
+        // TODO add your handling code here:
+        recuperaIdEC();
+    }//GEN-LAST:event_jcbecActionPerformed
 
      private void inserir(){
             DaoPessoa daopes = new DaoPessoa();
