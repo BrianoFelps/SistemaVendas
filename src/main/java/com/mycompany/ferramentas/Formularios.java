@@ -25,5 +25,8 @@ public class Formularios {
     public static JFrame ListCidade;
     public static JFrame CadEndereco;
     public static JFrame ListEndereco;
-    
+    public static JFrame CadPessoa;
+    public static JFrame ListPessoa;
+    public static JFrame CadCliente;
+    public static JFrame ListCliente;
 }
