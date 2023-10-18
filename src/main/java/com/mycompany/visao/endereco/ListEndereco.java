@@ -132,7 +132,7 @@ public class ListEndereco extends javax.swing.JFrame {
                     }
                 }
       
-        public void listarPorCEP(int pCep){
+        public void listarPorCEP(String pCep){
         try{
             DefaultTableModel dtm = (DefaultTableModel) tableEndereco.getModel ();
 
@@ -158,7 +158,7 @@ public class ListEndereco extends javax.swing.JFrame {
         }
         }
         
-          public void listarPorNum(int pNum){
+          public void listarPorNum(String pNum){
         try{
             DefaultTableModel dtm = (DefaultTableModel) tableEndereco.getModel ();
 
@@ -351,10 +351,10 @@ public class ListEndereco extends javax.swing.JFrame {
             listarPorRua(tfFiltro.getText());
             break;
             case 4:
-            listarPorCEP(Integer.parseInt(tfFiltro.getText()));
+            listarPorCEP(tfFiltro.getText());
             break;
             case 5:
-            listarPorNum(Integer.parseInt(tfFiltro.getText()));
+            listarPorNum(tfFiltro.getText());
             break;
         }
     }//GEN-LAST:event_btnBuscarActionPerformed

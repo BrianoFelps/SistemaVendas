@@ -136,13 +136,13 @@ public class DaoEndereco extends BancoDeDadosMySQL{
         return getResultado();
     }
     
-    public ResultSet listarPorCep(int cep){
+    public ResultSet listarPorCep(String cep){
         try{
-            sql = "SELECT E.ID, C.NOME, E.NOME_RUA, E.CEP, E.NUM_RESID FROM ENDERECO E JOIN CIDADE C ON E.ID_CIDADE = C.ID WHERE E.CEP = ?";
+            sql = "SELECT E.ID, C.NOME, E.NOME_RUA, E.CEP, E.NUM_RESID FROM ENDERECO E JOIN CIDADE C ON E.ID_CIDADE = C.ID WHERE E.CEP LIKE ?";
             
             setStatement(getConexao().prepareStatement(sql));
             
-            getStatement().setInt(1, cep);
+            getStatement().setString(1, cep + "%");
             
             setResultado (getStatement().executeQuery());
         } catch (Exception e){
@@ -151,13 +151,13 @@ public class DaoEndereco extends BancoDeDadosMySQL{
         return getResultado();
     }
     
-    public ResultSet listarPorNum(int num){
+    public ResultSet listarPorNum(String num){
         try{
-            sql = "SELECT E.ID, C.NOME, E.NOME_RUA, E.CEP, E.NUM_RESID FROM ENDERECO E JOIN CIDADE C ON E.ID_CIDADE = C.ID WHERE E.NUM_RESID = ?";
+            sql = "SELECT E.ID, C.NOME, E.NOME_RUA, E.CEP, E.NUM_RESID FROM ENDERECO E JOIN CIDADE C ON E.ID_CIDADE = C.ID WHERE E.NUM_RESID LIKE ?";
             
             setStatement(getConexao().prepareStatement(sql));
             
-            getStatement().setInt(1, num);
+            getStatement().setString(1, num + "%");
             
             setResultado (getStatement().executeQuery());
         } catch (Exception e){
