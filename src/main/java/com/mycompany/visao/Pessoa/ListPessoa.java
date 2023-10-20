@@ -425,9 +425,7 @@ public class ListPessoa extends javax.swing.JFrame {
 
                 while(resultset.next())
                 idEnd = resultset.getInt("ID");
-
-                modpes.setIdend(idEnd);
-
+                
                  DaoEstciv daoec = new DaoEstciv();
                 resultset = daoec.listarPorNome(String.valueOf(tablePessoa.getValueAt(tablePessoa.getSelectedRow(), 2)));
                 
@@ -436,6 +434,7 @@ public class ListPessoa extends javax.swing.JFrame {
                 while(resultset.next())
                     idEC = resultset.getInt("ID");
                 
+                modpes.setIdend(idEnd);
                 modpes.setIdestciv(idEC);
                 
                 DadosTemporarios.tempObject = (ModPessoa) modpes;

@@ -80,7 +80,7 @@ public class CadPessoa extends javax.swing.JFrame {
                 DaoEndereco daoend = new DaoEndereco();
                 ResultSet resultSet = daoend.listarPorId(idend);
                 resultSet.next();
-                String end = resultSet.getString("E.NOME");
+                String end = resultSet.getString("E.NOME_RUA");
                 int index = 0;
                 for(int i = 0; i < JcbEnd.getItemCount(); i++){
                     if(JcbEnd.getItemAt(i).equals(end)){
@@ -446,7 +446,7 @@ public class CadPessoa extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Não foi possível alterar a pessoa!");
             }
             
-            ((ListPessoa) Formularios.ListEndereco).listarTodos();
+            ((ListPessoa) Formularios.ListPessoa).listarTodos();
             
             dispose();
         }

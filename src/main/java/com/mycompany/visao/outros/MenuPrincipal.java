@@ -355,9 +355,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void ListPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListPessoaActionPerformed
         // TODO add your handling code here:
         if (Formularios.ListPessoa == null)
-            Formularios.ListPessoa = new ListPessoa();
-        
-        Formularios.ListPessoa.setVisible(true);    
+        Formularios.ListPessoa = new ListPessoa();
+
+        Formularios.ListPessoa.setVisible(true);
     }//GEN-LAST:event_ListPessoaActionPerformed
 
     /**
