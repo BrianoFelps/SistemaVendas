@@ -27,12 +27,13 @@ public class CadPessoa extends javax.swing.JFrame {
         initComponents();
         
         carregarEnderecos();
+        
         carregarEC();
         
          if (!existeDadosTemporarios()) {
-            DaoEndereco daoend = new DaoEndereco();
+            DaoPessoa daopes = new DaoPessoa();
             
-            int id = daoend.buscarProximoId();
+            int id = daopes.buscarProximoId();
             if (id>0)
                 tfId.setText(String.valueOf(id));
             
@@ -79,10 +80,10 @@ public class CadPessoa extends javax.swing.JFrame {
                 DaoEndereco daoend = new DaoEndereco();
                 ResultSet resultSet = daoend.listarPorId(idend);
                 resultSet.next();
-                String cid = resultSet.getString("E.NOME");
+                String end = resultSet.getString("E.NOME");
                 int index = 0;
                 for(int i = 0; i < JcbEnd.getItemCount(); i++){
-                    if(JcbEnd.getItemAt(i).equals(cid)){
+                    if(JcbEnd.getItemAt(i).equals(end)){
                         index = i;
                         break;
                     }
@@ -163,6 +164,12 @@ public class CadPessoa extends javax.swing.JFrame {
         LNome.setText("Endereço");
 
         LDesc.setText("Nome");
+
+        tfId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfIdActionPerformed(evt);
+            }
+        });
 
         tfidend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -352,7 +359,7 @@ public class CadPessoa extends javax.swing.JFrame {
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         // TODO add your handling code here:
         int escolha =
-        JOptionPane.showConfirmDialog(null, "Deseja realmente excluir a cidade " + tfNome.getText() + "?");
+        JOptionPane.showConfirmDialog(null, "Deseja realmente excluir a pessoa " + tfNome.getText() + "?");
 
         if (escolha == JOptionPane.YES_OPTION)
         excluir();
@@ -395,6 +402,10 @@ public class CadPessoa extends javax.swing.JFrame {
         // TODO add your handling code here:
         recuperaIdEC();
     }//GEN-LAST:event_jcbecActionPerformed
+
+    private void tfIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfIdActionPerformed
 
      private void inserir(){
             DaoPessoa daopes = new DaoPessoa();

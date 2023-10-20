@@ -4,7 +4,11 @@
  */
 package com.mycompany.visao.Pessoa;
 
+import com.mycompany.dao.DaoEndereco;
+import com.mycompany.dao.DaoEstciv;
 import com.mycompany.dao.DaoPessoa;
+import com.mycompany.ferramentas.DadosTemporarios;
+import com.mycompany.modelo.ModPessoa;
 import java.sql.ResultSet;
 import javax.swing.table.DefaultTableModel;
 
@@ -156,12 +160,12 @@ public class ListPessoa extends javax.swing.JFrame {
             while(resultset.next()){
                 String id = resultset.getString(1);
                 String rua = resultset.getString(2);
-                            String ec = resultset.getString(3);
-                            String nome = resultset.getString(4);
-                            String sob = resultset.getString(5);
-                            String gen = resultset.getString(6);
-                            String tel = resultset.getString(7);
-                            String ema = resultset.getString(8);
+                String ec = resultset.getString(3);
+                String nome = resultset.getString(4);
+                String sob = resultset.getString(5);
+                String gen = resultset.getString(6);
+                String tel = resultset.getString(7);
+                String ema = resultset.getString(8);
                 
                 dtm.addRow(new Object[] {id, rua, ec, nome, sob, gen, tel, ema});
             }
@@ -197,8 +201,8 @@ public class ListPessoa extends javax.swing.JFrame {
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
-        
         }
+          
           public void listarPorGen(String pGen){
         try{
             DefaultTableModel dtm = (DefaultTableModel) tablePessoa.getModel();
@@ -207,7 +211,7 @@ public class ListPessoa extends javax.swing.JFrame {
             
                         DaoPessoa daopes = new DaoPessoa();
             
-            ResultSet resultset = daopes.listarPorSob(pSob);
+            ResultSet resultset = daopes.listarPorGen(pGen);
             
             dtm.setRowCount(0);
             
@@ -228,7 +232,7 @@ public class ListPessoa extends javax.swing.JFrame {
         }
         
         }
-          public void listarPorSob(String pSob){
+          public void listarPorTel(String pTel){
         try{
             DefaultTableModel dtm = (DefaultTableModel) tablePessoa.getModel();
             
@@ -236,7 +240,7 @@ public class ListPessoa extends javax.swing.JFrame {
             
                         DaoPessoa daopes = new DaoPessoa();
             
-            ResultSet resultset = daopes.listarPorSob(pSob);
+            ResultSet resultset = daopes.listarPorTel(pTel);
             
             dtm.setRowCount(0);
             
@@ -257,7 +261,7 @@ public class ListPessoa extends javax.swing.JFrame {
         }
         
         }
-          public void listarPorSob(String pSob){
+          public void listarPorEma(String pEma){
         try{
             DefaultTableModel dtm = (DefaultTableModel) tablePessoa.getModel();
             
@@ -265,7 +269,7 @@ public class ListPessoa extends javax.swing.JFrame {
             
                         DaoPessoa daopes = new DaoPessoa();
             
-            ResultSet resultset = daopes.listarPorSob(pSob);
+            ResultSet resultset = daopes.listarPorEmail(pEma);
             
             dtm.setRowCount(0);
             
@@ -404,27 +408,40 @@ public class ListPessoa extends javax.swing.JFrame {
     private void tablePessoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePessoaMouseClicked
         try{
             if (evt.getClickCount() == 2){
-                ModEndereco modend = new ModEndereco ();
+                ModPessoa modpes = new ModPessoa ();
 
-                modend.setId(Integer.parseInt(String.valueOf(tableEndereco.getValueAt(tableEndereco.getSelectedRow(), 0))));
-                modend.setRua(String.valueOf(tableEndereco.getValueAt(tableEndereco.getSelectedRow(), 2)));
-                modend.setCep(Integer.parseInt(String.valueOf(tableEndereco.getValueAt(tableEndereco.getSelectedRow(), 3))));
-                modend.setNum(Integer.parseInt(String.valueOf(tableEndereco.getValueAt(tableEndereco.getSelectedRow(), 4))));
+                modpes.setId(Integer.parseInt(String.valueOf(tablePessoa.getValueAt(tablePessoa.getSelectedRow(), 0))));
+                modpes.setNom(String.valueOf(tablePessoa.getValueAt(tablePessoa.getSelectedRow(), 3)));
+                modpes.setSob(String.valueOf(tablePessoa.getValueAt(tablePessoa.getSelectedRow(), 4)));
+                modpes.setGen(String.valueOf(tablePessoa.getValueAt(tablePessoa.getSelectedRow(), 5)));
+                modpes.setTel(String.valueOf(tablePessoa.getValueAt(tablePessoa.getSelectedRow(), 6)));
+                modpes.setEma(String.valueOf(tablePessoa.getValueAt(tablePessoa.getSelectedRow(), 7)));
+               
 
-                DaoCidade daocid = new DaoCidade();
-                ResultSet resultset = daocid.listarPorNome(String.valueOf(tableEndereco.getValueAt(tableEndereco.getSelectedRow(), 1)));
-
-                int idCid = -1;
+                DaoEndereco daoend = new DaoEndereco();
+                ResultSet resultset = daoend.listarPorRua(String.valueOf(tablePessoa.getValueAt(tablePessoa.getSelectedRow(), 1)));
+                
+                int idEnd = -1;
 
                 while(resultset.next())
-                idCid = resultset.getInt("ID");
+                idEnd = resultset.getInt("ID");
 
-                modend.setIdcid(idCid);
+                modpes.setIdend(idEnd);
 
-                DadosTemporarios.tempObject = (ModEndereco) modend;
+                 DaoEstciv daoec = new DaoEstciv();
+                resultset = daoec.listarPorNome(String.valueOf(tablePessoa.getValueAt(tablePessoa.getSelectedRow(), 2)));
+                
+                int idEC = -1;
+                
+                while(resultset.next())
+                    idEC = resultset.getInt("ID");
+                
+                modpes.setIdestciv(idEC);
+                
+                DadosTemporarios.tempObject = (ModPessoa) modpes;
 
-                CadEndereco cadend = new CadEndereco();
-                cadend.setVisible(true);
+                CadPessoa cadpes = new CadPessoa();
+                cadpes.setVisible(true);
             }
         }   catch (Exception e){
             System.err.println(e.getMessage());
@@ -449,16 +466,25 @@ public class ListPessoa extends javax.swing.JFrame {
             listarPorId(Integer.parseInt(tfFiltro.getText()));
             break;
             case 2:
-            ListarPorCidade(tfFiltro.getText());
-            break;
-            case 3:
             listarPorRua(tfFiltro.getText());
             break;
+            case 3:
+            ListarPorEC(tfFiltro.getText());
+            break;
             case 4:
-            listarPorCEP(tfFiltro.getText());
+            listarPorNome(tfFiltro.getText());
             break;
             case 5:
-            listarPorNum(tfFiltro.getText());
+            listarPorSob(tfFiltro.getText());
+            break;
+            case 6:
+            listarPorGen(tfFiltro.getText());
+            break;
+            case 7:
+            listarPorTel(tfFiltro.getText());
+            break;
+            case 8:
+            listarPorEma(tfFiltro.getText());
             break;
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
