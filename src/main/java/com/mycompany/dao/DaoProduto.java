@@ -83,7 +83,7 @@ public class DaoProduto extends BancoDeDadosMySQL {
     
      public ResultSet listarTodos(){
         try{
-            sql = "SELECT P.ID, C.NOME, M.NOME, P.NOME, P.DESCRICAO, P.PRECO FROM PRODUTO P JOIN CATEGORIA C ON P.ID_CATG = C.ID JOIN MARCA M ON P.ID_MARCA = M.ID ORDER BY P.ID";
+            sql = "SELECT P.ID, C.NOME, M.NOME, P.NOME, P.DESCRICAO, P.PRECO FROM PRODUTO P JOIN CATEGORIA C ON P.ID_CATG = C.ID JOIN MARCA M ON P.ID_MARCA LIKE M.ID ORDER BY P.ID";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -97,7 +97,7 @@ public class DaoProduto extends BancoDeDadosMySQL {
     
     public ResultSet listarPorId(int id){
         try{
-            sql = "SELECT P.ID, C.NOME, M.NOME, P.NOME, P.DESCRICAO, P.PRECO FROM PRODUTO P JOIN CATEGORIA C ON P.ID_CATG = C.ID JOIN MARCA M ON P.ID_MARCA = M.ID WHERE P.ID = ? ORDER BY P.ID";
+            sql = "SELECT P.ID, C.NOME, M.NOME, P.NOME, P.DESCRICAO, P.PRECO FROM PRODUTO P JOIN CATEGORIA C ON P.ID_CATG = C.ID JOIN MARCA M ON P.ID_MARCA = M.ID WHERE P.ID LIKE ? ORDER BY P.ID";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -112,7 +112,7 @@ public class DaoProduto extends BancoDeDadosMySQL {
     
     public ResultSet listarPorCatg(String nmcatg){
         try{
-        sql = "SELECT P.ID, C.NOME, M.NOME, P.NOME, P.DESCRICAO, P.PRECO FROM PRODUTO P JOIN CATEGORIA C ON P.ID_CATG = C.ID JOIN MARCA M ON P.ID_MARCA = M.ID WHERE C.NOME = ? ORDER BY P.ID";
+        sql = "SELECT P.ID, C.NOME, M.NOME, P.NOME, P.DESCRICAO, P.PRECO FROM PRODUTO P JOIN CATEGORIA C ON P.ID_CATG = C.ID JOIN MARCA M ON P.ID_MARCA = M.ID WHERE C.NOME LIKE ? ORDER BY P.ID";
 
         
             setStatement(getConexao().prepareStatement(sql));
@@ -128,7 +128,7 @@ public class DaoProduto extends BancoDeDadosMySQL {
     
     public ResultSet listarPorMarca(String mar){
         try{
-            sql = "SELECT P.ID, C.NOME, M.NOME, P.NOME, P.DESCRICAO, P.PRECO FROM PRODUTO P JOIN CATEGORIA C ON P.ID_CATG = C.ID JOIN MARCA M ON P.ID_MARCA = M.ID WHERE M.NOME = ? ORDER BY P.ID";
+            sql = "SELECT P.ID, C.NOME, M.NOME, P.NOME, P.DESCRICAO, P.PRECO FROM PRODUTO P JOIN CATEGORIA C ON P.ID_CATG = C.ID JOIN MARCA M ON P.ID_MARCA = M.ID WHERE M.NOME LIKE ? ORDER BY P.ID";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -143,13 +143,7 @@ public class DaoProduto extends BancoDeDadosMySQL {
     
     public ResultSet listarPorNome(String nome){
         try{
-            sql = "SELECT P.ID, E.NOME_RUA, EC.NOME, P.NOME, P.SOBRENOME, P.GENERO, P.TELEFONE, P.EMAIL "
-                    + "FROM PESSOA P "
-                    + "JOIN ENDERECO E "
-                    + "ON P.ID_ENDERECO = E.ID JOIN ESTADO_CIVIL EC "
-                    + "ON P.ID_EST_CIV = EC.ID "
-                    + "WHERE P.NOME LIKE ? "
-                     + "ORDER BY P.ID";
+            sql = "SELECT P.ID, C.NOME, M.NOME, P.NOME, P.DESCRICAO, P.PRECO FROM PRODUTO P JOIN CATEGORIA C ON P.ID_CATG = C.ID JOIN MARCA M ON P.ID_MARCA = M.ID WHERE P.NOME LIKE ? ORDER BY P.ID";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -162,19 +156,14 @@ public class DaoProduto extends BancoDeDadosMySQL {
         return getResultado();
     }
     
-    public ResultSet listarPorSob(String sobn){
+    public ResultSet listarPorDesc(String desc){
         try{
-            sql = "SELECT P.ID, E.NOME_RUA, EC.NOME, P.NOME, P.SOBRENOME, P.GENERO, P.TELEFONE, P.EMAIL "
-                    + "FROM PESSOA P "
-                    + "JOIN ENDERECO E "
-                    + "ON P.ID_ENDERECO = E.ID JOIN ESTADO_CIVIL EC "
-                    + "ON P.ID_EST_CIV = EC.ID "
-                    + "WHERE P.SOBRENOME LIKE ? "
-                     + "ORDER BY P.ID";
+            sql = "SELECT P.ID, C.NOME, M.NOME, P.NOME, P.DESCRICAO, P.PRECO FROM PRODUTO P JOIN CATEGORIA C ON P.ID_CATG = C.ID JOIN MARCA M ON P.ID_MARCA = M.ID WHERE P.DESCRICAO LIKE ? ORDER BY P.ID";
+
             
             setStatement(getConexao().prepareStatement(sql));
             
-            getStatement().setString(1, sobn + "%");
+            getStatement().setString(1, desc + "%");
             
             setResultado (getStatement().executeQuery());
         } catch (Exception e){
@@ -183,61 +172,13 @@ public class DaoProduto extends BancoDeDadosMySQL {
         return getResultado();
     }
     
-    public ResultSet listarPorGen(String gen){
+    public ResultSet listarPorPre(String prc){
         try{
-            sql = "SELECT P.ID, E.NOME_RUA, EC.NOME, P.NOME, P.SOBRENOME, P.GENERO, P.TELEFONE, P.EMAIL "
-                    + "FROM PESSOA P "
-                    + "JOIN ENDERECO E "
-                    + "ON P.ID_ENDERECO = E.ID JOIN ESTADO_CIVIL EC "
-                    + "ON P.ID_EST_CIV = EC.ID "
-                    + "WHERE P.GENERO LIKE ? "
-                     + "ORDER BY P.ID";
+            sql = "SELECT P.ID, C.NOME, M.NOME, P.NOME, P.DESCRICAO, P.PRECO FROM PRODUTO P JOIN CATEGORIA C ON P.ID_CATG = C.ID JOIN MARCA M ON P.ID_MARCA = M.ID WHERE P.PRECO LIKE ? ORDER BY P.ID";
             
             setStatement(getConexao().prepareStatement(sql));
             
-            getStatement().setString(1, gen + "%");
-            
-            setResultado (getStatement().executeQuery());
-        } catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        return getResultado();
-    }
-    
-    public ResultSet listarPorTel(String tel){
-        try{
-            sql = "SELECT P.ID, E.NOME_RUA, EC.NOME, P.NOME, P.SOBRENOME, P.GENERO, P.TELEFONE, P.EMAIL "
-                    + "FROM PESSOA P "
-                    + "JOIN ENDERECO E "
-                    + "ON P.ID_ENDERECO = E.ID JOIN ESTADO_CIVIL EC "
-                    + "ON P.ID_EST_CIV = EC.ID "
-                    + "WHERE P.TELEFONE LIKE ? "
-                     + "ORDER BY P.ID";
-            
-            setStatement(getConexao().prepareStatement(sql));
-            
-            getStatement().setString(1, tel + "%");
-            
-            setResultado (getStatement().executeQuery());
-        } catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        return getResultado();
-    }
-    
-    public ResultSet listarPorEmail(String email){
-        try{
-            sql = "SELECT P.ID, E.NOME_RUA, EC.NOME, P.NOME, P.SOBRENOME, P.GENERO, P.TELEFONE, P.EMAIL "
-                    + "FROM PESSOA P "
-                    + "JOIN ENDERECO E "
-                    + "ON P.ID_ENDERECO = E.ID JOIN ESTADO_CIVIL EC "
-                    + "ON P.ID_EST_CIV = EC.ID "
-                    + "WHERE P.EMAIL LIKE ? " 
-                    + "ORDER BY P.ID";
-            
-            setStatement(getConexao().prepareStatement(sql));
-            
-            getStatement().setString(1, email + "%");
+            getStatement().setString(1, prc + "%");
             
             setResultado (getStatement().executeQuery());
         } catch (Exception e){
@@ -250,7 +191,7 @@ public class DaoProduto extends BancoDeDadosMySQL {
         int id = -1;
         
         try{
-            sql = "SELECT MAX(ID) + 1 FROM PESSOA";
+            sql = "SELECT MAX(ID) + 1 FROM PRODUTO";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -264,5 +205,4 @@ public class DaoProduto extends BancoDeDadosMySQL {
         }
         return id;
     }
-}
 }
