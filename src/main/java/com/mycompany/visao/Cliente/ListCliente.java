@@ -4,6 +4,13 @@
  */
 package com.mycompany.visao.Cliente;
 
+import com.mycompany.dao.DaoCliente;
+import com.mycompany.dao.DaoPessoa;
+import com.mycompany.ferramentas.DadosTemporarios;
+import com.mycompany.modelo.ModCliente;
+import java.sql.ResultSet;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author brian.7908
@@ -15,8 +22,81 @@ public class ListCliente extends javax.swing.JFrame {
      */
     public ListCliente() {
         initComponents();
+         
+        setLocationRelativeTo(null);
+        
+        listarTodos();
     }
 
+     public void listarTodos(){
+         try{
+             DefaultTableModel dtm = (DefaultTableModel) tableCliente.getModel();
+            
+            tableCliente.setModel(dtm);
+            
+             DaoCliente daocliente = new DaoCliente();
+            
+             ResultSet resultset = daocliente.listarTodos();
+            
+            dtm.setRowCount(0);
+            
+            while (resultset.next()){
+                String id = resultset.getString(1);
+                String idcli = resultset.getString(2);
+                
+                dtm.addRow(new Object[] {id, idcli});
+            }
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+    
+     public void listarPorId(int pId){
+        try{
+            DefaultTableModel dtm = (DefaultTableModel) tableCliente.getModel();
+            
+            tableCliente.setModel(dtm);
+            
+             DaoCliente daocliente = new DaoCliente();
+            
+            ResultSet resultset = daocliente.listarPorId(pId);
+            
+            dtm.setRowCount(0);
+            
+            while(resultset.next()){
+                String id = resultset.getString(1);
+                String idcli = resultset.getString(2);
+                
+                dtm.addRow(new Object[] {id, idcli});
+            }
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        }
+     
+     public void listarPorNome(String pNome){
+                    try{
+                        DefaultTableModel dtm = (DefaultTableModel) tableCliente.getModel();
+            
+                        tableCliente.setModel(dtm);
+            
+                        DaoCliente daocliente = new DaoCliente();
+                        
+                        ResultSet resultset = daocliente.listarPorNome(pNome);
+                        
+                        dtm.setRowCount(0);
+                    
+                        while (resultset.next()){
+                            String id = resultset.getString(1);
+                            String idcli = resultset.getString(2);
+                
+                            dtm.addRow(new Object[] {id, idcli});
+                        }
+                    } catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
+                }
+     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,21 +106,159 @@ public class ListCliente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableCliente = new javax.swing.JTable();
+        jcbTipoFiltro = new javax.swing.JComboBox<>();
+        tfFiltro = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Listagem de clientes");
+
+        tableCliente.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Nome"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tableCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableClienteMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tableCliente);
+
+        jcbTipoFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "ID", "Nome" }));
+        jcbTipoFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbTipoFiltroActionPerformed(evt);
+            }
+        });
+
+        tfFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfFiltroActionPerformed(evt);
+            }
+        });
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 726, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jcbTipoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(tfFiltro))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnBuscar)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jcbTipoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBuscar)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tableClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableClienteMouseClicked
+        try{
+            if (evt.getClickCount() == 2){
+                ModCliente modCli = new ModCliente();
+
+                modCli.setId(Integer.parseInt(String.valueOf(tableCliente.getValueAt(tableCliente.getSelectedRow(), 0))));
+
+                DaoPessoa daoPes = new DaoPessoa();
+                ResultSet resultset = daoPes.listarPorNome(String.valueOf(tableCliente.getValueAt(tableCliente.getSelectedRow(), 1)));
+
+                int idPes = -1;
+
+                while(resultset.next())
+                idPes = resultset.getInt("ID");
+
+                modCli.setIdpes(idPes);
+
+                DadosTemporarios.tempObject = (ModCliente) modCli;
+
+                CadCliente cadCli = new CadCliente();
+                cadCli.setVisible(true);
+            }
+        }catch (Exception e){
+            System.err.println(e.getMessage());
+        }
+    }//GEN-LAST:event_tableClienteMouseClicked
+
+    private void jcbTipoFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTipoFiltroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbTipoFiltroActionPerformed
+
+    private void tfFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfFiltroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfFiltroActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        switch (jcbTipoFiltro.getSelectedIndex()){
+            case 0:
+            listarTodos();
+            break;
+            case 1:
+            listarPorId(Integer.parseInt(tfFiltro.getText()));
+            break;
+            case 2:
+            listarPorNome(tfFiltro.getText());
+            break;
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +296,11 @@ public class ListCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<String> jcbTipoFiltro;
+    private javax.swing.JTable tableCliente;
+    private javax.swing.JTextField tfFiltro;
     // End of variables declaration//GEN-END:variables
 }

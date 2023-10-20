@@ -15,14 +15,14 @@ public class DaoCliente extends BancoDeDadosMySQL{
     private String sql;
     
     
-public Boolean inserir (int id, int idcli){
+public Boolean inserir (int id, int idpes){
         try{
             sql = "INSERT INTO CLIENTE (ID, ID_PESSOA) VALUES (?, ?) ";
             
             setStatement(getConexao().prepareStatement(sql));
             
             getStatement().setInt(1, id);
-                    getStatement().setInt(2, idcli);
+                    getStatement().setInt(2, idpes);
 
                     
                     getStatement().executeUpdate();
@@ -35,13 +35,13 @@ public Boolean inserir (int id, int idcli){
         }
     }
 
-    public Boolean alterar (int id, int novoidcli){
+    public Boolean alterar (int id, int novoidpes){
         try{
             sql = "UPDATE CLIENTE SET ID_PESSOA = ? WHERE ID = ?";
             
             setStatement(getConexao().prepareStatement(sql));
             
-                getStatement().setInt(1, novoidcli);
+                getStatement().setInt(1, novoidpes);
                 getStatement().setInt(2, id);
                 
                 getStatement().executeUpdate();
@@ -72,7 +72,7 @@ public Boolean inserir (int id, int idcli){
     
     public ResultSet listarTodos(){
         try{
-            sql = "SELECT C.ID, P.NOME FROM CLIENTE C JOIN PESSOA P ON C.ID_PESSOA = P.ID";
+            sql = "SELECT C.ID, P.NOME FROM CLIENTE C JOIN PESSOA P ON C.ID_PESSOA = P.ID ORDER BY C.ID";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -85,7 +85,7 @@ public Boolean inserir (int id, int idcli){
     
     public ResultSet listarPorId(int id){
         try{
-            sql = "SELECT E.ID, C.NOME, E.NOME_RUA , E.CEP, E.NUM_RESID FROM ENDERECO E JOIN CIDADE C ON E.ID_CIDADE = C.ID WHERE E.ID = ?";
+            sql = "SELECT C.ID, P.NOME FROM CLIENTE C JOIN PESSOA P ON C.ID_PESSOA = P.ID WHERE C.ID = ? ORDER BY C.ID";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -98,9 +98,9 @@ public Boolean inserir (int id, int idcli){
         return getResultado();
     }
     
-    public ResultSet listarPorRua(String nome){
+    public ResultSet listarPorNome(String nome){
         try{
-        sql = "SELECT E.ID, C.NOME, E.NOME_RUA, E.CEP , E.NUM_RESID FROM ENDERECO E JOIN CIDADE C ON E.ID_CIDADE = C.ID WHERE E.NOME_RUA LIKE ?";
+        sql = "SELECT C.ID, P.NOME FROM CLIENTE C JOIN PESSOA P ON C.ID_PESSOA = P.ID WHERE P.NOME LIKE ? ORDER BY C.ID";
         
             setStatement(getConexao().prepareStatement(sql));
             
@@ -113,56 +113,11 @@ public Boolean inserir (int id, int idcli){
         return getResultado();
     }
     
-    public ResultSet listarPorCidade(String cidnome){
-        try{
-            sql = "SELECT E.ID, C.NOME, E.NOME_RUA, E.CEP, E.NUM_RESID FROM ENDERECO E JOIN CIDADE C ON E.ID_CIDADE = C.ID WHERE C.NOME LIKE ?";
-            
-            setStatement(getConexao().prepareStatement(sql));
-            
-            getStatement().setString(1, cidnome + "%");
-            
-            setResultado(getStatement().executeQuery());
-        } catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        return getResultado();
-    }
-    
-    public ResultSet listarPorCep(String cep){
-        try{
-            sql = "SELECT E.ID, C.NOME, E.NOME_RUA, E.CEP, E.NUM_RESID FROM ENDERECO E JOIN CIDADE C ON E.ID_CIDADE = C.ID WHERE E.CEP LIKE ?";
-            
-            setStatement(getConexao().prepareStatement(sql));
-            
-            getStatement().setString(1, cep + "%");
-            
-            setResultado (getStatement().executeQuery());
-        } catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        return getResultado();
-    }
-    
-    public ResultSet listarPorNum(String num){
-        try{
-            sql = "SELECT E.ID, C.NOME, E.NOME_RUA, E.CEP, E.NUM_RESID FROM ENDERECO E JOIN CIDADE C ON E.ID_CIDADE = C.ID WHERE E.NUM_RESID LIKE ?";
-            
-            setStatement(getConexao().prepareStatement(sql));
-            
-            getStatement().setString(1, num + "%");
-            
-            setResultado (getStatement().executeQuery());
-        } catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        return getResultado();
-    }
-    
      public int buscarProximoId (){
         int id = -1;
         
         try{
-            sql = "SELECT MAX(ID) + 1 FROM ENDERECO";
+            sql = "SELECT MAX(ID) + 1 FROM CLIENTE";
             
             setStatement(getConexao().prepareStatement(sql));
             
