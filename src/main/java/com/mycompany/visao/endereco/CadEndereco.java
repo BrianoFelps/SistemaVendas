@@ -6,6 +6,8 @@ package com.mycompany.visao.endereco;
 
 import com.mycompany.dao.DaoCidade;
 import com.mycompany.dao.DaoEndereco;
+import com.mycompany.dao.DaoEstciv;
+import com.mycompany.dao.DaoPessoa;
 import com.mycompany.ferramentas.Constantes;
 import com.mycompany.ferramentas.DadosTemporarios;
 import com.mycompany.ferramentas.Formularios;
@@ -23,6 +25,7 @@ public class CadEndereco extends javax.swing.JFrame {
      * Creates new form CadEndereco
      */
     public CadEndereco() {
+        
         initComponents();
         
         carregarCidades();
@@ -34,12 +37,19 @@ public class CadEndereco extends javax.swing.JFrame {
             if (id>0)
                 tfId.setText(String.valueOf(id));
             
+//            DaoPessoa daopes = new DaoPessoa();
+//            
+//            int id1 = daopes.buscarProximoId();
+//            if (id1>0)
+//                tfId1.setText(String.valueOf(id1));
+            
             btnAcao.setText(Constantes.BTN_SALVAR_TEXT);
             btnExcluir.setVisible(false);
             }else{
             btnAcao.setText(Constantes.BTN_ALTERAR_TEXT);
             btnExcluir.setVisible(true);
         }
+          
          recuperaIdCid();
          
         setLocationRelativeTo(null);
@@ -98,18 +108,18 @@ public class CadEndereco extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         tfRua = new javax.swing.JTextField();
-        btnExcluir = new javax.swing.JButton();
         LId = new javax.swing.JLabel();
         LNome = new javax.swing.JLabel();
         LDesc = new javax.swing.JLabel();
         tfId = new javax.swing.JTextField();
         tfidcid = new javax.swing.JTextField();
-        btnAcao = new javax.swing.JButton();
         JcbCid = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         tfCEP = new javax.swing.JTextField();
         tfNum = new javax.swing.JTextField();
+        btnAcao = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de endereço");
@@ -117,13 +127,6 @@ public class CadEndereco extends javax.swing.JFrame {
         tfRua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfRuaActionPerformed(evt);
-            }
-        });
-
-        btnExcluir.setText("Excluir");
-        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExcluirActionPerformed(evt);
             }
         });
 
@@ -136,12 +139,6 @@ public class CadEndereco extends javax.swing.JFrame {
         tfidcid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfidcidActionPerformed(evt);
-            }
-        });
-
-        btnAcao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAcaoActionPerformed(evt);
             }
         });
 
@@ -166,6 +163,19 @@ public class CadEndereco extends javax.swing.JFrame {
             }
         });
 
+        btnAcao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAcaoActionPerformed(evt);
+            }
+        });
+
+        btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -176,22 +186,17 @@ public class CadEndereco extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(tfRua)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(JcbCid, 0, 405, Short.MAX_VALUE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(LDesc)
-                                            .addComponent(LNome)
-                                            .addComponent(LId)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(btnAcao)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(btnExcluir))
-                                            .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, Short.MAX_VALUE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tfidcid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(LDesc, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(LNome, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(LId, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tfId, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(JcbCid, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(tfidcid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 567, Short.MAX_VALUE)))
                         .addGap(64, 64, 64))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,6 +207,12 @@ public class CadEndereco extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addComponent(tfNum, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnAcao)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnExcluir)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,17 +232,20 @@ public class CadEndereco extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tfRua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfCEP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnExcluir)
-                    .addComponent(btnAcao))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tfCEP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                        .addComponent(btnAcao))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnExcluir)))
                 .addContainerGap())
         );
 
@@ -239,14 +253,14 @@ public class CadEndereco extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -262,7 +276,7 @@ public class CadEndereco extends javax.swing.JFrame {
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         // TODO add your handling code here:
         int escolha =
-        JOptionPane.showConfirmDialog(null, "Deseja realmente excluir a cidade " + tfRua.getText() + "?");
+        JOptionPane.showConfirmDialog(null, "Deseja realmente excluir a rua  " + tfRua.getText() + "?");
 
         if (escolha == JOptionPane.YES_OPTION)
         excluir();
@@ -295,32 +309,34 @@ public class CadEndereco extends javax.swing.JFrame {
 
     private void inserir(){
             DaoEndereco daoend = new DaoEndereco();
+            DaoPessoa daopes = new DaoPessoa();
             
             if (daoend.inserir(Integer.parseInt(tfId.getText()), Integer.parseInt(tfidcid.getText()), tfRua.getText(),  Integer.parseInt(tfCEP.getText()),  Integer.parseInt(tfNum.getText()))){
-                JOptionPane.showMessageDialog(null, "Endereço salvo com sucesso!");
-            
+                
                 tfId.setText("" + daoend.buscarProximoId());
                 tfRua.setText(" ");
                 tfCEP.setText(" ");
                 tfNum.setText(" ");
+                
             }else{
                 JOptionPane.showMessageDialog(null, "Não foi possível salvar o endereço!");
             }
-        }
+            }
         
         private void alterar(){
             DaoEndereco daoend = new DaoEndereco();
             
             if (daoend.alterar(Integer.parseInt(tfId.getText()), Integer.parseInt(tfidcid.getText()), tfRua.getText(),  Integer.parseInt(tfCEP.getText()),  Integer.parseInt(tfNum.getText()))){
-                JOptionPane.showMessageDialog(null, "Estado alterado com sucesso!");
+                JOptionPane.showMessageDialog(null, "Endereço alterado com sucesso!");
             
                 tfId.setText (" ");
                 tfidcid.setText(" ");
                 tfRua.setText(" ");
                 tfCEP.setText(" ");
                 tfNum.setText(" ");
+                
             }else{
-                JOptionPane.showMessageDialog(null, "Não foi possível alterar o estado!");
+                JOptionPane.showMessageDialog(null, "Não foi possível alterar o endereço!");
             }
             
             ((ListEndereco) Formularios.ListEndereco).listarTodos();
@@ -330,9 +346,9 @@ public class CadEndereco extends javax.swing.JFrame {
         
         private void excluir(){
             DaoEndereco daoend = new DaoEndereco();
+            DaoPessoa daopes = new DaoPessoa();
             
             if (daoend.excluir(Integer.parseInt(tfId.getText()))){
-                JOptionPane.showMessageDialog(null, "Endereço " + tfRua.getText() + " excluído com sucesso!");
             
                 tfId.setText ("");
                 tfidcid.setText("");

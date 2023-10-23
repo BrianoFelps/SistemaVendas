@@ -89,9 +89,8 @@ public class ModPessoa {
     public void setEma(String ema) {
         this.ema = ema;
     }
-    
-     @Override
-        public String toString(){
-            return "Pessoa{" + "id=" + id + ", id est civ=" + idestciv + ", id endereco =" + idend + ", Nome= " + nom + ", sobrenome= " + sob + ", gênero=" + gen + ", telefone=" + tel + ", email=" + ema + "}";
-        }
+    @Override
+    public String toString() {
+        return "ModPessoa{" + "id=" + id + ", idEndereco=" + idend + ", idEstadoCivil=" + idestciv + ", nome=" + nom + ", sobrenome=" + sob + ", genero=" + gen + ", telefone=" + tel + ", email=" + ema + '}';
+    }
 }

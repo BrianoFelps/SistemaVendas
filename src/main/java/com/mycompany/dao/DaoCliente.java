@@ -17,13 +17,12 @@ public class DaoCliente extends BancoDeDadosMySQL{
     
 public Boolean inserir (int id, int idpes){
         try{
-            sql = "INSERT INTO CLIENTE (ID, ID_PESSOA) VALUES (?, ?) ";
+            sql = "INSERT INTO CLIENTE (ID, ID_PESSOA) VALUES (?, ?)";
             
             setStatement(getConexao().prepareStatement(sql));
             
             getStatement().setInt(1, id);
                     getStatement().setInt(2, idpes);
-
                     
                     getStatement().executeUpdate();
                     
