@@ -170,7 +170,7 @@ public class DaoEndereco extends BancoDeDadosMySQL{
         int id = -1;
         
         try{
-            sql = "SELECT MAX(ID) + 1 FROM ENDERECO";
+            sql = "SELECT IFNULL (MAX(ID), 0) + 1 FROM ENDERECO";
             
             setStatement(getConexao().prepareStatement(sql));
             

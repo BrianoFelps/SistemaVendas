@@ -61,14 +61,18 @@ public class CadPessoa extends javax.swing.JFrame {
          setLocationRelativeTo(null);
         
         tfId.setEnabled(false);
+        tfidec.setEnabled(false);
+        tfidcid.setEnabled(false);
+        tfIdCli.setEnabled(false);
+        tfIdEndereco.setEnabled(false);
         
         tfIdEndereco.setVisible(true);
         tfidec.setVisible(true);
         
         setExtendedState(MAXIMIZED_BOTH);
         
-       tfIdEndereco.setVisible(false);
-        tfidcid.setVisible(false);
+       tfIdEndereco.setVisible(true);
+        tfidcid.setVisible(true);
         tfIdCli.setVisible(true);
     }
 
@@ -92,6 +96,22 @@ public class CadPessoa extends javax.swing.JFrame {
             tfEmail.setText(email);
            
 
+            try{
+             DaoEstciv daoec = new DaoEstciv();
+                ResultSet resultSet = daoec.listarPorId(idec);
+                resultSet.next();
+                String ec = resultSet.getString("NOME");
+                int index = 0;
+                for(int i = 0; i < jcbec.getItemCount(); i++){
+                    if(jcbec.getItemAt(i).equals(ec)){
+                        index = i;
+                        break;
+                    }
+            }
+                jcbec.setSelectedIndex(index);
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+            }
             //
             
             try{
@@ -110,20 +130,8 @@ public class CadPessoa extends javax.swing.JFrame {
             }catch(Exception e){
                 System.out.println(e.getMessage());
             }
+            //
             
-            try{
-             DaoEstciv daoec = new DaoEstciv();
-                ResultSet resultSet = daoec.listarPorId(idec);
-                resultSet.next();
-                String cid = resultSet.getString("NOME");
-                int index = 0;
-                for(int i = 0; i < jcbec.getItemCount(); i++){
-                    if(jcbec.getItemAt(i).equals(cid)){
-                        index = i;
-                        break;
-                    }
-            }jcbec.setSelectedIndex(index);
-            }catch(Exception e){}
             //
             int index = 0;
             for(int i = 0; i < jcbGenero.getItemCount(); i++){
@@ -364,6 +372,12 @@ public class CadPessoa extends javax.swing.JFrame {
 
         LDesc2.setText("Rua");
 
+        tfIdEndereco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfIdEnderecoActionPerformed(evt);
+            }
+        });
+
         tfidcid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfidcidActionPerformed(evt);
@@ -503,16 +517,22 @@ public class CadPessoa extends javax.swing.JFrame {
 
     private void btnAcaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcaoActionPerformed
         // TODO add your handling code here:
-        if(camposObrigatoriosPreenchidos(new JTextField[]{tfRua, tfCEP, tfNome, tfSob, tfTel, tfEmail})){
-        if (btnAcao.getText().equals(Constantes.BTN_SALVAR_TEXT)){
+        DaoPessoa daoPes = new DaoPessoa();
+        DaoCliente daoCli = new DaoCliente();
+        DaoEndereco daoEnd = new DaoEndereco();
+        
+        if(camposObrigatoriosPreenchidos(new JTextField[]{tfRua, tfCEP, tfNum, tfNome, tfSob, tfTel, tfEmail})){
+        if (btnAcao.getText() == Constantes.BTN_SALVAR_TEXT){
         inserirEndereco();
         inserir();
-        inserirCliente();
-        
+//        inserirCliente();
+        tfId.setText(String.valueOf(daoPes.buscarProximoId()));
+        tfIdCli.setText(String.valueOf(daoCli.buscarProximoId()));
+        tfIdEndereco.setText(String.valueOf(daoEnd.buscarProximoId()));
+
         }else if (btnAcao.getText().equals(Constantes.BTN_ALTERAR_TEXT)){
-        alterarEndereco();
-        alterar();
-            
+         alterarEndereco();
+         alterar();
     }//GEN-LAST:event_btnAcaoActionPerformed
         }
     }
@@ -538,10 +558,6 @@ public class CadPessoa extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfRuaActionPerformed
 
-    private void tfidcidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfidcidActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfidcidActionPerformed
-
     private void JcbCidItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JcbCidItemStateChanged
         // TODO add your handling code here:
         recuperaIdCid();
@@ -560,15 +576,20 @@ public class CadPessoa extends javax.swing.JFrame {
         Formularios.CadPessoa = null;
     }//GEN-LAST:event_formWindowClosed
 
+    private void tfidcidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfidcidActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfidcidActionPerformed
+
+    private void tfIdEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfIdEnderecoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfIdEnderecoActionPerformed
+
      private void inserir(){
             DaoPessoa daopes = new DaoPessoa();
-            DaoEndereco daoEnd = new DaoEndereco();
             
             if (daopes.inserir(Integer.parseInt(tfId.getText()), Integer.parseInt(tfIdEndereco.getText()), Integer.parseInt(tfidec.getText()), tfNome.getText(), tfSob.getText(), (String) jcbGenero.getSelectedItem(), tfTel.getText(), tfEmail.getText())){
                 JOptionPane.showMessageDialog(null, "Pessoa salva com sucesso!");
             
-                tfId.setText("" + daopes.buscarProximoId());
-                tfIdEndereco.setText("" + daoEnd.buscarProximoId());
                 tfNome.setText("");
                 tfSob.setText("");
                 tfTel.setText("");
@@ -584,6 +605,7 @@ public class CadPessoa extends javax.swing.JFrame {
          
          if (daoEnd.inserir(Integer.parseInt(tfId.getText()), Integer.parseInt(tfidcid.getText()), tfRua.getText(),  Integer.parseInt(tfCEP.getText()),  Integer.parseInt(tfNum.getText()))){{}
                 JOptionPane.showMessageDialog(null, "Endereço salvo com sucesso!");
+                
                 tfRua.setText(" ");
                 tfCEP.setText(" ");
                 tfNum.setText(" ");
@@ -596,7 +618,7 @@ public class CadPessoa extends javax.swing.JFrame {
      private void inserirCliente(){
          DaoCliente daoCli = new DaoCliente();
          
-         if (daoCli.inserir(Integer.parseInt(tfIdCli.getText()), Integer.parseInt(tfId.getText()))){
+         if (daoCli.inserir(daoCli.buscarProximoId(), Integer.parseInt(tfId.getText()))){
               JOptionPane.showMessageDialog(null, "Cliente salvo com sucesso!");
          }else{
          JOptionPane.showMessageDialog(null, "Não foi possível salvar o cliente!");
@@ -609,7 +631,7 @@ public class CadPessoa extends javax.swing.JFrame {
             if (daopes.alterar(Integer.parseInt(tfId.getText()), Integer.parseInt(tfIdEndereco.getText()), Integer.parseInt(tfidec.getText()), tfNome.getText(), tfSob.getText(), (String) jcbGenero.getSelectedItem(), tfTel.getText(), tfEmail.getText())){
                 JOptionPane.showMessageDialog(null, "Pessoa alterada com sucesso!");
             
-                tfId.setText ("" + daopes.buscarProximoId());
+//                tfId.setText ("" + daopes.buscarProximoId());
                 tfNome.setText("");
                 tfSob.setText("");
                 tfTel.setText("");
@@ -628,14 +650,14 @@ public class CadPessoa extends javax.swing.JFrame {
              DaoEndereco daoend = new DaoEndereco();
             
             if (daoend.alterar(Integer.parseInt(tfId.getText()), Integer.parseInt(tfidcid.getText()), tfRua.getText(),  Integer.parseInt(tfCEP.getText()),  Integer.parseInt(tfNum.getText()))){
-//                JOptionPane.showMessageDialog(null, "Endereço alterado com sucesso!");
+                JOptionPane.showMessageDialog(null, "Endereço alterado com sucesso!");
             
                 tfRua.setText(" ");
                 tfCEP.setText(" ");
                 tfNum.setText(" ");
                 
             }else{
-                JOptionPane.showMessageDialog(null, "Não foi possível alterar a pessoa!");
+                JOptionPane.showMessageDialog(null, "Não foi possível alterar o endereço!");
             }
         }
         

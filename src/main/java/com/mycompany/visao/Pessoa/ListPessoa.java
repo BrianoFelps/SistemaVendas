@@ -4,10 +4,14 @@
  */
 package com.mycompany.visao.Pessoa;
 
+import com.mycompany.dao.DaoCliente;
 import com.mycompany.dao.DaoEndereco;
 import com.mycompany.dao.DaoEstciv;
 import com.mycompany.dao.DaoPessoa;
 import com.mycompany.ferramentas.DadosTemporarios;
+import com.mycompany.ferramentas.Formularios;
+import com.mycompany.modelo.ModCliente;
+import com.mycompany.modelo.ModEndereco;
 import com.mycompany.modelo.ModPessoa;
 import java.sql.ResultSet;
 import javax.swing.table.DefaultTableModel;
@@ -43,22 +47,25 @@ public class ListPessoa extends javax.swing.JFrame {
             
             while (resultset.next()){
                 String id = resultset.getString(1);
-                String rua = resultset.getString(2);
-                String ec = resultset.getString(3);
-                String nome = resultset.getString(4);
-                String sob = resultset.getString(5);
-                String gen = resultset.getString(6);
-                String tel = resultset.getString(7);
-                String ema = resultset.getString(8);
+                String cidade = resultset.getString(2);
+                String rua = resultset.getString(3);
+                String cep = resultset.getString(4);
+                String numr = resultset.getString(5);
+                String nome = resultset.getString(6);
+                String sob = resultset.getString(7);
+                String gen = resultset.getString(8);
+                String tel = resultset.getString(9);
+                String ema = resultset.getString(10);
+                String ec = resultset.getString(11);
                 
-                dtm.addRow(new Object[] {id, rua, ec, nome, sob, gen, tel, ema});
+                dtm.addRow(new Object[] {id, cidade, rua, cep, numr, nome, sob, gen, tel, ema, ec});
             }
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
     }
     
-     public void listarPorId(int pId){
+     public void listarPorId(){
         try{
             DefaultTableModel dtm = (DefaultTableModel) tablePessoa.getModel();
             
@@ -66,28 +73,31 @@ public class ListPessoa extends javax.swing.JFrame {
             
              DaoPessoa daopes = new DaoPessoa();
             
-            ResultSet resultset = daopes.listarPorId(pId);
+            ResultSet resultset = daopes.listarPorId(Integer.parseInt(tfFiltro.getText()));
             
             dtm.setRowCount(0);
             
             while(resultset.next()){
                 String id = resultset.getString(1);
-                String rua = resultset.getString(2);
-                String ec = resultset.getString(3);
-                String nome = resultset.getString(4);
-                String sob = resultset.getString(5);
-                String gen = resultset.getString(6);
-                String tel = resultset.getString(7);
-                String ema = resultset.getString(8);
+                String cidade = resultset.getString(2);
+                String rua = resultset.getString(3);
+                String cep = resultset.getString(4);
+                String numr = resultset.getString(5);
+                String nome = resultset.getString(6);
+                String sob = resultset.getString(7);
+                String gen = resultset.getString(8);
+                String tel = resultset.getString(9);
+                String ema = resultset.getString(10);
+                String ec = resultset.getString(11);
                 
-                dtm.addRow(new Object[] {id, rua, ec, nome, sob, gen, tel, ema});
+                dtm.addRow(new Object[] {id, cidade, rua, cep, numr, nome, sob, gen, tel, ema, ec});
             }
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
         }
      
-     public void listarPorRua(String pRua){
+     public void listarPorRua(){
                     try{
                         DefaultTableModel dtm = (DefaultTableModel) tablePessoa.getModel();
             
@@ -95,28 +105,31 @@ public class ListPessoa extends javax.swing.JFrame {
             
                         DaoPessoa daopes = new DaoPessoa();
                         
-                        ResultSet resultset = daopes.listarPorRua(pRua);
+                        ResultSet resultset = daopes.listarPorRua(tfFiltro.getText());
                         
                         dtm.setRowCount(0);
                     
-                        while (resultset.next()){
-                            String id = resultset.getString(1);
-                            String rua = resultset.getString(2);
-                            String ec = resultset.getString(3);
-                            String nome = resultset.getString(4);
-                            String sob = resultset.getString(5);
-                            String gen = resultset.getString(6);
-                            String tel = resultset.getString(7);
-                            String ema = resultset.getString(8);
+                        while(resultset.next()){
+                String id = resultset.getString(1);
+                String cidade = resultset.getString(2);
+                String rua = resultset.getString(3);
+                String cep = resultset.getString(4);
+                String numr = resultset.getString(5);
+                String nome = resultset.getString(6);
+                String sob = resultset.getString(7);
+                String gen = resultset.getString(8);
+                String tel = resultset.getString(9);
+                String ema = resultset.getString(10);
+                String ec = resultset.getString(11);
                 
-                dtm.addRow(new Object[] {id, rua, ec, nome, sob, gen, tel, ema});
+                dtm.addRow(new Object[] {id, cidade, rua, cep, numr, nome, sob, gen, tel, ema, ec});
                         }
                     } catch (Exception e){
                         System.out.println(e.getMessage());
                     }
                 }
      
-      public void ListarPorEC(String pEC){
+     public void listarPorCEP(){
                     try{
                         DefaultTableModel dtm = (DefaultTableModel) tablePessoa.getModel();
             
@@ -124,28 +137,95 @@ public class ListPessoa extends javax.swing.JFrame {
             
                         DaoPessoa daopes = new DaoPessoa();
                         
-                        ResultSet resultset = daopes.listarPorEstCiv(pEC);
+                        ResultSet resultset = daopes.listarPorCEP(tfFiltro.getText());
                         
                         dtm.setRowCount(0);
                     
-                        while (resultset.next()){
-                            String id = resultset.getString(1);
-                            String rua = resultset.getString(2);
-                            String ec = resultset.getString(3);
-                            String nome = resultset.getString(4);
-                            String sob = resultset.getString(5);
-                            String gen = resultset.getString(6);
-                            String tel = resultset.getString(7);
-                            String ema = resultset.getString(8);
+                        while(resultset.next()){
+                String id = resultset.getString(1);
+                String cidade = resultset.getString(2);
+                String rua = resultset.getString(3);
+                String cep = resultset.getString(4);
+                String numr = resultset.getString(5);
+                String nome = resultset.getString(6);
+                String sob = resultset.getString(7);
+                String gen = resultset.getString(8);
+                String tel = resultset.getString(9);
+                String ema = resultset.getString(10);
+                String ec = resultset.getString(11);
                 
-                dtm.addRow(new Object[] {id, rua, ec, nome, sob, gen, tel, ema});
+                dtm.addRow(new Object[] {id, cidade, rua, cep, numr, nome, sob, gen, tel, ema, ec});
+                        }
+                    } catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
+                }
+     
+     public void listarPorNumR(){
+                    try{
+                        DefaultTableModel dtm = (DefaultTableModel) tablePessoa.getModel();
+            
+                        tablePessoa.setModel(dtm);
+            
+                        DaoPessoa daopes = new DaoPessoa();
+                        
+                        ResultSet resultset = daopes.listarPorNumResid(tfFiltro.getText());
+                        
+                        dtm.setRowCount(0);
+                    
+                        while(resultset.next()){
+                String id = resultset.getString(1);
+                String cidade = resultset.getString(2);
+                String rua = resultset.getString(3);
+                String cep = resultset.getString(4);
+                String numr = resultset.getString(5);
+                String nome = resultset.getString(6);
+                String sob = resultset.getString(7);
+                String gen = resultset.getString(8);
+                String tel = resultset.getString(9);
+                String ema = resultset.getString(10);
+                String ec = resultset.getString(11);
+                
+                dtm.addRow(new Object[] {id, cidade, rua, cep, numr, nome, sob, gen, tel, ema, ec});
+                        }
+                    } catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
+                }
+     
+      public void ListarPorEC(){
+                    try{
+                        DefaultTableModel dtm = (DefaultTableModel) tablePessoa.getModel();
+            
+                        tablePessoa.setModel(dtm);
+            
+                        DaoPessoa daopes = new DaoPessoa();
+                        
+                        ResultSet resultset = daopes.listarPorEstCiv(tfFiltro.getText());
+                        
+                        dtm.setRowCount(0);
+                    
+                        while(resultset.next()){
+                String id = resultset.getString(1);
+                String cidade = resultset.getString(2);
+                String rua = resultset.getString(3);
+                String cep = resultset.getString(4);
+                String numr = resultset.getString(5);
+                String nome = resultset.getString(6);
+                String sob = resultset.getString(7);
+                String gen = resultset.getString(8);
+                String tel = resultset.getString(9);
+                String ema = resultset.getString(10);
+                String ec = resultset.getString(11);
+                
+                dtm.addRow(new Object[] {id, cidade, rua, cep, numr, nome, sob, gen, tel, ema, ec});
                         }
                     } catch (Exception e){
                         System.out.println(e.getMessage());
                     }
                 }
       
-        public void listarPorNome(String pNom){
+        public void listarPorNome(){
         try{
             DefaultTableModel dtm = (DefaultTableModel) tablePessoa.getModel();
             
@@ -153,28 +233,31 @@ public class ListPessoa extends javax.swing.JFrame {
             
                         DaoPessoa daopes = new DaoPessoa();
             
-            ResultSet resultset = daopes.listarPorNome(pNom);
+            ResultSet resultset = daopes.listarPorNome(tfFiltro.getText());
             
             dtm.setRowCount(0);
             
-            while(resultset.next()){
+               while(resultset.next()){
                 String id = resultset.getString(1);
-                String rua = resultset.getString(2);
-                String ec = resultset.getString(3);
-                String nome = resultset.getString(4);
-                String sob = resultset.getString(5);
-                String gen = resultset.getString(6);
-                String tel = resultset.getString(7);
-                String ema = resultset.getString(8);
+                String cidade = resultset.getString(2);
+                String rua = resultset.getString(3);
+                String cep = resultset.getString(4);
+                String numr = resultset.getString(5);
+                String nome = resultset.getString(6);
+                String sob = resultset.getString(7);
+                String gen = resultset.getString(8);
+                String tel = resultset.getString(9);
+                String ema = resultset.getString(10);
+                String ec = resultset.getString(11);
                 
-                dtm.addRow(new Object[] {id, rua, ec, nome, sob, gen, tel, ema});
+                dtm.addRow(new Object[] {id, cidade, rua, cep, numr, nome, sob, gen, tel, ema, ec});
             }
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
         }
         
-          public void listarPorSob(String pSob){
+          public void listarPorSob(){
         try{
             DefaultTableModel dtm = (DefaultTableModel) tablePessoa.getModel();
             
@@ -182,28 +265,31 @@ public class ListPessoa extends javax.swing.JFrame {
             
                         DaoPessoa daopes = new DaoPessoa();
             
-            ResultSet resultset = daopes.listarPorSob(pSob);
+            ResultSet resultset = daopes.listarPorSob(tfFiltro.getText());
             
             dtm.setRowCount(0);
             
-            while(resultset.next()){
+           while(resultset.next()){
                 String id = resultset.getString(1);
-                String rua = resultset.getString(2);
-                            String ec = resultset.getString(3);
-                            String nome = resultset.getString(4);
-                            String sob = resultset.getString(5);
-                            String gen = resultset.getString(6);
-                            String tel = resultset.getString(7);
-                            String ema = resultset.getString(8);
+                String cidade = resultset.getString(2);
+                String rua = resultset.getString(3);
+                String cep = resultset.getString(4);
+                String numr = resultset.getString(5);
+                String nome = resultset.getString(6);
+                String sob = resultset.getString(7);
+                String gen = resultset.getString(8);
+                String tel = resultset.getString(9);
+                String ema = resultset.getString(10);
+                String ec = resultset.getString(11);
                 
-                dtm.addRow(new Object[] {id, rua, ec, nome, sob, gen, tel, ema});
+                dtm.addRow(new Object[] {id, cidade, rua, cep, numr, nome, sob, gen, tel, ema, ec});
             }
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
         }
           
-          public void listarPorGen(String pGen){
+          public void listarPorGen(){
         try{
             DefaultTableModel dtm = (DefaultTableModel) tablePessoa.getModel();
             
@@ -211,28 +297,31 @@ public class ListPessoa extends javax.swing.JFrame {
             
                         DaoPessoa daopes = new DaoPessoa();
             
-            ResultSet resultset = daopes.listarPorGen(pGen);
+            ResultSet resultset = daopes.listarPorGen(tfFiltro.getText());
             
             dtm.setRowCount(0);
             
             while(resultset.next()){
                 String id = resultset.getString(1);
-                String rua = resultset.getString(2);
-                            String ec = resultset.getString(3);
-                            String nome = resultset.getString(4);
-                            String sob = resultset.getString(5);
-                            String gen = resultset.getString(6);
-                            String tel = resultset.getString(7);
-                            String ema = resultset.getString(8);
+                String cidade = resultset.getString(2);
+                String rua = resultset.getString(3);
+                String cep = resultset.getString(4);
+                String numr = resultset.getString(5);
+                String nome = resultset.getString(6);
+                String sob = resultset.getString(7);
+                String gen = resultset.getString(8);
+                String tel = resultset.getString(9);
+                String ema = resultset.getString(10);
+                String ec = resultset.getString(11);
                 
-                dtm.addRow(new Object[] {id, rua, ec, nome, sob, gen, tel, ema});
+                dtm.addRow(new Object[] {id, cidade, rua, cep, numr, nome, sob, gen, tel, ema, ec});
             }
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
         
         }
-          public void listarPorTel(String pTel){
+          public void listarPorTel(){
         try{
             DefaultTableModel dtm = (DefaultTableModel) tablePessoa.getModel();
             
@@ -240,28 +329,31 @@ public class ListPessoa extends javax.swing.JFrame {
             
                         DaoPessoa daopes = new DaoPessoa();
             
-            ResultSet resultset = daopes.listarPorTel(pTel);
+            ResultSet resultset = daopes.listarPorTel(tfFiltro.getText());
             
             dtm.setRowCount(0);
             
             while(resultset.next()){
                 String id = resultset.getString(1);
-                String rua = resultset.getString(2);
-                            String ec = resultset.getString(3);
-                            String nome = resultset.getString(4);
-                            String sob = resultset.getString(5);
-                            String gen = resultset.getString(6);
-                            String tel = resultset.getString(7);
-                            String ema = resultset.getString(8);
+                String cidade = resultset.getString(2);
+                String rua = resultset.getString(3);
+                String cep = resultset.getString(4);
+                String numr = resultset.getString(5);
+                String nome = resultset.getString(6);
+                String sob = resultset.getString(7);
+                String gen = resultset.getString(8);
+                String tel = resultset.getString(9);
+                String ema = resultset.getString(10);
+                String ec = resultset.getString(11);
                 
-                dtm.addRow(new Object[] {id, rua, ec, nome, sob, gen, tel, ema});
+                dtm.addRow(new Object[] {id, cidade, rua, cep, numr, nome, sob, gen, tel, ema, ec});
             }
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
         
         }
-          public void listarPorEma(String pEma){
+          public void listarPorEma(){
         try{
             DefaultTableModel dtm = (DefaultTableModel) tablePessoa.getModel();
             
@@ -269,21 +361,24 @@ public class ListPessoa extends javax.swing.JFrame {
             
                         DaoPessoa daopes = new DaoPessoa();
             
-            ResultSet resultset = daopes.listarPorEmail(pEma);
+            ResultSet resultset = daopes.listarPorEmail(tfFiltro.getText());
             
             dtm.setRowCount(0);
             
             while(resultset.next()){
                 String id = resultset.getString(1);
-                String rua = resultset.getString(2);
-                            String ec = resultset.getString(3);
-                            String nome = resultset.getString(4);
-                            String sob = resultset.getString(5);
-                            String gen = resultset.getString(6);
-                            String tel = resultset.getString(7);
-                            String ema = resultset.getString(8);
+                String cidade = resultset.getString(2);
+                String rua = resultset.getString(3);
+                String cep = resultset.getString(4);
+                String numr = resultset.getString(5);
+                String nome = resultset.getString(6);
+                String sob = resultset.getString(7);
+                String gen = resultset.getString(8);
+                String tel = resultset.getString(9);
+                String ema = resultset.getString(10);
+                String ec = resultset.getString(11);
                 
-                dtm.addRow(new Object[] {id, rua, ec, nome, sob, gen, tel, ema});
+                dtm.addRow(new Object[] {id, cidade, rua, cep, numr, nome, sob, gen, tel, ema, ec});
             }
         } catch (Exception e){
             System.out.println(e.getMessage());
@@ -310,13 +405,18 @@ public class ListPessoa extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Listagem de pessoas");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         tablePessoa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "Cidade", "Rua", "CEP", "Núm. Res.", "Estado Civil", "Nome", "Sobrenome", "Gênero", "Telefone", "E-mail"
+                "ID", "Cidade", "Rua", "CEP", "Núm. Res.", "Nome", "Sobrenome", "Gênero", "Telefone", "E-mail", "Estado Civil"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -334,7 +434,7 @@ public class ListPessoa extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tablePessoa);
 
-        jcbTipoFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "ID", "Rua", "Estado Civil", "Nome", "Sobrenome", "Gênero", "Telefone", "E-mail" }));
+        jcbTipoFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "ID", "Rua", "CEP", "Núm. Resid.", "Nome", "Sobrenome", "Gênero", "Telefone", "E-mail", "Estado Civil" }));
         jcbTipoFiltro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbTipoFiltroActionPerformed(evt);
@@ -411,33 +511,61 @@ public class ListPessoa extends javax.swing.JFrame {
                 ModPessoa modpes = new ModPessoa ();
 
                 modpes.setId(Integer.parseInt(String.valueOf(tablePessoa.getValueAt(tablePessoa.getSelectedRow(), 0))));
-                modpes.setNom(String.valueOf(tablePessoa.getValueAt(tablePessoa.getSelectedRow(), 3)));
-                modpes.setSob(String.valueOf(tablePessoa.getValueAt(tablePessoa.getSelectedRow(), 4)));
-                modpes.setGen(String.valueOf(tablePessoa.getValueAt(tablePessoa.getSelectedRow(), 5)));
-                modpes.setTel(String.valueOf(tablePessoa.getValueAt(tablePessoa.getSelectedRow(), 6)));
-                modpes.setEma(String.valueOf(tablePessoa.getValueAt(tablePessoa.getSelectedRow(), 7)));
+                modpes.setNom(String.valueOf(tablePessoa.getValueAt(tablePessoa.getSelectedRow(), 5)));
+                modpes.setSob(String.valueOf(tablePessoa.getValueAt(tablePessoa.getSelectedRow(), 6)));
+                modpes.setGen(String.valueOf(tablePessoa.getValueAt(tablePessoa.getSelectedRow(), 7)));
+                modpes.setTel(String.valueOf(tablePessoa.getValueAt(tablePessoa.getSelectedRow(), 8)));
+                modpes.setEma(String.valueOf(tablePessoa.getValueAt(tablePessoa.getSelectedRow(), 9)));
                
-
+                //
                 DaoEndereco daoend = new DaoEndereco();
-                ResultSet resultset = daoend.listarPorRua(String.valueOf(tablePessoa.getValueAt(tablePessoa.getSelectedRow(), 1)));
+//                ResultSet resultset = daoend.listarPorId(Integer.parseInt(String.valueOf(tablePessoa.getValueAt(tablePessoa.getSelectedRow(), 0).toString())));
+                ResultSet resultset = daoend.listarPorId(Integer.parseInt(tablePessoa.getValueAt(tablePessoa.getSelectedRow(), 0).toString()));
                 
                 int idEnd = -1;
 
                 while(resultset.next())
                 idEnd = resultset.getInt("ID");
                 
+                modpes.setIdend(idEnd);
+                //
+                
+                //
                  DaoEstciv daoec = new DaoEstciv();
-                resultset = daoec.listarPorNome(String.valueOf(tablePessoa.getValueAt(tablePessoa.getSelectedRow(), 2)));
+                resultset = daoec.listarPorNome(String.valueOf(tablePessoa.getValueAt(tablePessoa.getSelectedRow(), 10)));
                 
                 int idEC = -1;
                 
                 while(resultset.next())
                     idEC = resultset.getInt("ID");
-                
-                modpes.setIdend(idEnd);
+
                 modpes.setIdestciv(idEC);
+                //
+                
+                //
+                 ModEndereco modEndereco = new ModEndereco();
+                
+                modEndereco.setRua(String.valueOf(tablePessoa.getValueAt(tablePessoa.getSelectedRow(), 2)));
+                modEndereco.setCep(Integer.parseInt(String.valueOf(tablePessoa.getValueAt(tablePessoa.getSelectedRow(), 3))));
+                modEndereco.setNum(Integer.parseInt(String.valueOf(tablePessoa.getValueAt(tablePessoa.getSelectedRow(), 4))));
+                //
+                
+                //
+                DaoCliente daoCli = new DaoCliente();
+                resultset = daoCli.listarPorIdPessoa(Integer.parseInt(String.valueOf(tablePessoa.getValueAt(tablePessoa.getSelectedRow(), 0))));
+                
+                ModCliente modCli = new ModCliente();
+                
+                int idCli = -1;
+                while(resultset.next())
+                    idCli = resultset.getInt("ID");
+                
+                modCli.setId(idCli);
+                //
                 
                 DadosTemporarios.tempObject = (ModPessoa) modpes;
+                DadosTemporarios.tempObject2 = (ModEndereco) modEndereco;
+                DadosTemporarios.tempObject3 = (ModCliente) modCli;
 
                 CadPessoa cadpes = new CadPessoa();
                 cadpes.setVisible(true);
@@ -462,31 +590,42 @@ public class ListPessoa extends javax.swing.JFrame {
             listarTodos();
             break;
             case 1:
-            listarPorId(Integer.parseInt(tfFiltro.getText()));
+            listarPorId();
             break;
             case 2:
-            listarPorRua(tfFiltro.getText());
+            listarPorRua();
             break;
             case 3:
-            ListarPorEC(tfFiltro.getText());
+            listarPorCEP();
             break;
             case 4:
-            listarPorNome(tfFiltro.getText());
+            listarPorNumR();
             break;
             case 5:
-            listarPorSob(tfFiltro.getText());
+            listarPorNome();
             break;
             case 6:
-            listarPorGen(tfFiltro.getText());
+            listarPorSob();
             break;
             case 7:
-            listarPorTel(tfFiltro.getText());
+            listarPorGen();
             break;
             case 8:
-            listarPorEma(tfFiltro.getText());
+                listarPorTel();
             break;
+             case 9:
+                listarPorEma();
+                break;
+            case 10:
+                ListarPorEC();
+                break;
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        Formularios.ListPessoa = null;
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments

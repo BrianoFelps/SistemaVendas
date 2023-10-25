@@ -97,6 +97,28 @@ public Boolean inserir (int id, int idpes){
         return getResultado();
     }
     
+    public ResultSet listarPorIdPessoa(int idPessoa){
+        try{
+            sql = 
+                " SELECT                            " +
+                "   ID AS ID,                       " +
+                "   ID_PESSOA AS CIDADE             " +
+                " FROM                              " +
+                "   CLIENTE                         " +
+                " WHERE ID_PESSOA = ?               " ;
+            
+            setStatement(getConexao().prepareStatement(sql));
+            
+            getStatement().setInt(1, idPessoa);
+            
+            setResultado(getStatement().executeQuery());
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        
+        return getResultado();
+    }
+    
     public ResultSet listarPorNome(String nome){
         try{
         sql = "SELECT C.ID, P.NOME FROM CLIENTE C JOIN PESSOA P ON C.ID_PESSOA = P.ID WHERE P.NOME LIKE ? ORDER BY C.ID";

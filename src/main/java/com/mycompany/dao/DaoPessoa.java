@@ -21,7 +21,7 @@ public class DaoPessoa extends BancoDeDadosMySQL {
     
     public Boolean inserir (int id, int idend, int idestciv, String nom, String sob, String gen, String tel, String ema){
         try{
-            sql = "INSERT INTO PESSOA (ID, ID_ENDERECO, ID_EST_CIV, NOME, SOBRENOME, GENERO, TELEFONE, EMAIL) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ";
+            sql = "INSERT INTO PESSOA (ID, ID_ENDERECO, ID_EST_CIV, NOME, SOBRENOME, GENERO, TELEFONE, EMAIL) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -87,7 +87,15 @@ public class DaoPessoa extends BancoDeDadosMySQL {
     
     public ResultSet listarTodos(){
         try{
-            sql = "SELECT P.ID, E.NOME_RUA, EC.NOME, P.NOME, P.SOBRENOME, P.GENERO, P.TELEFONE, P.EMAIL FROM PESSOA P JOIN ENDERECO E ON P.ID_ENDERECO = E.ID JOIN ESTADO_CIVIL EC ON P.ID_EST_CIV = EC.ID ORDER BY P.ID";
+            sql = "SELECT P.ID, C.NOME, E.NOME_RUA, E.CEP, E.NUM_RESID, P.NOME, P.SOBRENOME, P.GENERO, P.TELEFONE, P.EMAIL, EC.NOME "
+                    + "FROM PESSOA P "
+                    + "JOIN ENDERECO E "
+                    + "ON P.ID_ENDERECO = E.ID "
+                    + "JOIN CIDADE C "
+                    + "ON E.ID_CIDADE = C.ID "
+                    + "JOIN ESTADO_CIVIL EC "
+                    + "ON P.ID_EST_CIV = EC.ID "
+                    + "ORDER BY P.ID";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -101,10 +109,13 @@ public class DaoPessoa extends BancoDeDadosMySQL {
     
     public ResultSet listarPorId(int id){
         try{
-            sql = "SELECT P.ID, E.NOME_RUA, EC.NOME, P.NOME, P.SOBRENOME, P.GENERO, P.TELEFONE, P.EMAIL "
+            sql = "SELECT P.ID, C.NOME, E.NOME_RUA, E.CEP, E.NUM_RESID, P.NOME, P.SOBRENOME, P.GENERO, P.TELEFONE, P.EMAIL, EC.NOME "
                     + "FROM PESSOA P "
                     + "JOIN ENDERECO E "
-                    + "ON P.ID_ENDERECO = E.ID JOIN ESTADO_CIVIL EC "
+                    + "ON P.ID_ENDERECO = E.ID "
+                     + "JOIN CIDADE C "
+                    + "ON E.ID_CIDADE = C.ID "
+                    + "JOIN ESTADO_CIVIL EC "
                     + "ON P.ID_EST_CIV = EC.ID "
                     + "WHERE P.ID = ? "
                     + "ORDER BY P.ID";
@@ -122,10 +133,13 @@ public class DaoPessoa extends BancoDeDadosMySQL {
     
     public ResultSet listarPorRua(String nomerua){
         try{
-        sql = "SELECT P.ID, E.NOME_RUA, EC.NOME, P.NOME, P.SOBRENOME, P.GENERO, P.TELEFONE, P.EMAIL "
+        sql = "SELECT P.ID, C.NOME, E.NOME_RUA, E.CEP, E.NUM_RESID, P.NOME, P.SOBRENOME, P.GENERO, P.TELEFONE, P.EMAIL, EC.NOME "
                     + "FROM PESSOA P "
                     + "JOIN ENDERECO E "
-                    + "ON P.ID_ENDERECO = E.ID JOIN ESTADO_CIVIL EC "
+                    + "ON P.ID_ENDERECO = E.ID "
+                     + "JOIN CIDADE C "
+                    + "ON E.ID_CIDADE = C.ID "
+                    + "JOIN ESTADO_CIVIL EC "
                     + "ON P.ID_EST_CIV = EC.ID "
                     + "WHERE E.NOME_RUA LIKE ? "
                     + "ORDER BY P.ID";
@@ -141,15 +155,66 @@ public class DaoPessoa extends BancoDeDadosMySQL {
         return getResultado();
     }
     
-    public ResultSet listarPorEstCiv(String ec){
+    public ResultSet listarPorCEP(String cep){
         try{
-            sql = "SELECT P.ID, E.NOME_RUA, EC.NOME, P.NOME, P.SOBRENOME, P.GENERO, P.TELEFONE, P.EMAIL "
+        sql = "SELECT P.ID, C.NOME, E.NOME_RUA, E.CEP, E.NUM_RESID, P.NOME, P.SOBRENOME, P.GENERO, P.TELEFONE, P.EMAIL, EC.NOME "
                     + "FROM PESSOA P "
                     + "JOIN ENDERECO E "
-                    + "ON P.ID_ENDERECO = E.ID JOIN ESTADO_CIVIL EC "
+                    + "ON P.ID_ENDERECO = E.ID "
+                     + "JOIN CIDADE C "
+                    + "ON E.ID_CIDADE = C.ID "
+                    + "JOIN ESTADO_CIVIL EC "
+                    + "ON P.ID_EST_CIV = EC.ID "
+                    + "WHERE E.CEP LIKE ? "
+                    + "ORDER BY P.ID";
+        
+            setStatement(getConexao().prepareStatement(sql));
+            
+            getStatement().setString(1, cep + "%");
+            
+            setResultado(getStatement().executeQuery());
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return getResultado();
+    }
+    
+    public ResultSet listarPorNumResid(String numR){
+        try{
+        sql = "SELECT P.ID, C.NOME, E.NOME_RUA, E.CEP, E.NUM_RESID, P.NOME, P.SOBRENOME, P.GENERO, P.TELEFONE, P.EMAIL, EC.NOME "
+                    + "FROM PESSOA P "
+                    + "JOIN ENDERECO E "
+                    + "ON P.ID_ENDERECO = E.ID "
+                     + "JOIN CIDADE C "
+                    + "ON E.ID_CIDADE = C.ID "
+                    + "JOIN ESTADO_CIVIL EC "
+                    + "ON P.ID_EST_CIV = EC.ID "
+                    + "WHERE E.NUM_RESID LIKE ? "
+                    + "ORDER BY P.ID";
+        
+            setStatement(getConexao().prepareStatement(sql));
+            
+            getStatement().setString(1, numR + "%");
+            
+            setResultado(getStatement().executeQuery());
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return getResultado();
+    }
+    
+    public ResultSet listarPorEstCiv(String ec){
+        try{
+            sql = "SELECT P.ID, C.NOME, E.NOME_RUA, E.CEP, E.NUM_RESID, P.NOME, P.SOBRENOME, P.GENERO, P.TELEFONE, P.EMAIL, EC.NOME "
+                    + "FROM PESSOA P "
+                    + "JOIN ENDERECO E "
+                    + "ON P.ID_ENDERECO = E.ID "
+                    + "JOIN CIDADE C "
+                    + "ON E.ID_CIDADE = C.ID "
+                    + "JOIN ESTADO_CIVIL EC "
                     + "ON P.ID_EST_CIV = EC.ID "
                     + "WHERE EC.NOME LIKE ? "
-                     + "ORDER BY P.ID";
+                    + "ORDER BY P.ID";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -164,13 +229,16 @@ public class DaoPessoa extends BancoDeDadosMySQL {
     
     public ResultSet listarPorNome(String nome){
         try{
-            sql = "SELECT P.ID, E.NOME_RUA, EC.NOME, P.NOME, P.SOBRENOME, P.GENERO, P.TELEFONE, P.EMAIL "
+            sql = "SELECT P.ID, C.NOME, E.NOME_RUA, E.CEP, E.NUM_RESID, P.NOME, P.SOBRENOME, P.GENERO, P.TELEFONE, P.EMAIL, EC.NOME "
                     + "FROM PESSOA P "
                     + "JOIN ENDERECO E "
-                    + "ON P.ID_ENDERECO = E.ID JOIN ESTADO_CIVIL EC "
+                    + "ON P.ID_ENDERECO = E.ID "
+                    + "JOIN CIDADE C "
+                    + "ON E.ID_CIDADE = C.ID "
+                    + "JOIN ESTADO_CIVIL EC "
                     + "ON P.ID_EST_CIV = EC.ID "
                     + "WHERE P.NOME LIKE ? "
-                     + "ORDER BY P.ID";
+                    + "ORDER BY P.ID";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -185,13 +253,16 @@ public class DaoPessoa extends BancoDeDadosMySQL {
     
     public ResultSet listarPorSob(String sobn){
         try{
-            sql = "SELECT P.ID, E.NOME_RUA, EC.NOME, P.NOME, P.SOBRENOME, P.GENERO, P.TELEFONE, P.EMAIL "
+            sql = "SELECT P.ID, C.NOME, E.NOME_RUA, E.CEP, E.NUM_RESID, P.NOME, P.SOBRENOME, P.GENERO, P.TELEFONE, P.EMAIL, EC.NOME "
                     + "FROM PESSOA P "
                     + "JOIN ENDERECO E "
-                    + "ON P.ID_ENDERECO = E.ID JOIN ESTADO_CIVIL EC "
+                    + "ON P.ID_ENDERECO = E.ID "
+                    + "JOIN CIDADE C "
+                    + "ON E.ID_CIDADE = C.ID "
+                    + "JOIN ESTADO_CIVIL EC "
                     + "ON P.ID_EST_CIV = EC.ID "
                     + "WHERE P.SOBRENOME LIKE ? "
-                     + "ORDER BY P.ID";
+                    + "ORDER BY P.ID";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -206,13 +277,15 @@ public class DaoPessoa extends BancoDeDadosMySQL {
     
     public ResultSet listarPorGen(String gen){
         try{
-            sql = "SELECT P.ID, E.NOME_RUA, EC.NOME, P.NOME, P.SOBRENOME, P.GENERO, P.TELEFONE, P.EMAIL "
+            sql = "SELECT P.ID, C.NOME, E.NOME_RUA, E.CEP, E.NUM_RESID, P.NOME, P.SOBRENOME, P.GENERO, P.TELEFONE, P.EMAIL, EC.NOME "
                     + "FROM PESSOA P "
                     + "JOIN ENDERECO E "
-                    + "ON P.ID_ENDERECO = E.ID JOIN ESTADO_CIVIL EC "
-                    + "ON P.ID_EST_CIV = EC.ID "
-                    + "WHERE P.GENERO LIKE ? "
-                     + "ORDER BY P.ID";
+                    + "ON P.ID_ENDERECO = E.ID "
+                    + "JOIN CIDADE C "
+                    + "ON E.ID_CIDADE = C.ID "
+                    + "JOIN ESTADO_CIVIL EC "
+                    + "ON P.ID_EST_CIV = EC.ID WHERE P.GENERO LIKE ? "
+                    + "ORDER BY P.ID";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -227,13 +300,16 @@ public class DaoPessoa extends BancoDeDadosMySQL {
     
     public ResultSet listarPorTel(String tel){
         try{
-            sql = "SELECT P.ID, E.NOME_RUA, EC.NOME, P.NOME, P.SOBRENOME, P.GENERO, P.TELEFONE, P.EMAIL "
+            sql = "SELECT P.ID, C.NOME, E.NOME_RUA, E.CEP, E.NUM_RESID, P.NOME, P.SOBRENOME, P.GENERO, P.TELEFONE, P.EMAIL, EC.NOME "
                     + "FROM PESSOA P "
                     + "JOIN ENDERECO E "
-                    + "ON P.ID_ENDERECO = E.ID JOIN ESTADO_CIVIL EC "
+                    + "ON P.ID_ENDERECO = E.ID "
+                    + "JOIN CIDADE C "
+                    + "ON E.ID_CIDADE = C.ID "
+                    + "JOIN ESTADO_CIVIL EC "
                     + "ON P.ID_EST_CIV = EC.ID "
                     + "WHERE P.TELEFONE LIKE ? "
-                     + "ORDER BY P.ID";
+                    + "ORDER BY P.ID";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -248,12 +324,15 @@ public class DaoPessoa extends BancoDeDadosMySQL {
     
     public ResultSet listarPorEmail(String email){
         try{
-            sql = "SELECT P.ID, E.NOME_RUA, EC.NOME, P.NOME, P.SOBRENOME, P.GENERO, P.TELEFONE, P.EMAIL "
+            sql = "SELECT P.ID, C.NOME, E.NOME_RUA, E.CEP, E.NUM_RESID, P.NOME, P.SOBRENOME, P.GENERO, P.TELEFONE, P.EMAIL, EC.NOME "
                     + "FROM PESSOA P "
                     + "JOIN ENDERECO E "
-                    + "ON P.ID_ENDERECO = E.ID JOIN ESTADO_CIVIL EC "
+                    + "ON P.ID_ENDERECO = E.ID "
+                    + "JOIN CIDADE C "
+                    + "ON E.ID_CIDADE = C.ID "
+                    + "JOIN ESTADO_CIVIL EC "
                     + "ON P.ID_EST_CIV = EC.ID "
-                    + "WHERE P.EMAIL LIKE ? " 
+                    + "WHERE P.EMAIL LIKE ?"
                     + "ORDER BY P.ID";
             
             setStatement(getConexao().prepareStatement(sql));
@@ -271,7 +350,7 @@ public class DaoPessoa extends BancoDeDadosMySQL {
         int id = -1;
         
         try{
-            sql = "SELECT MAX(ID) + 1 FROM PESSOA";
+            sql = "SELECT IFNULL (MAX(ID), 0) + 1 FROM PESSOA";
             
             setStatement(getConexao().prepareStatement(sql));
             
