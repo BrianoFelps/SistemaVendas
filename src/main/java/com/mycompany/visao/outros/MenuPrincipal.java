@@ -67,7 +67,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         CadCidade = new javax.swing.JMenuItem();
         CadEndereco = new javax.swing.JMenuItem();
         CadPessoa = new javax.swing.JMenuItem();
-        CadCliente = new javax.swing.JMenuItem();
         mbtncons = new javax.swing.JMenu();
         miConsCatg = new javax.swing.JMenuItem();
         ListPais = new javax.swing.JMenuItem();
@@ -147,14 +146,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
         mbtnCad.add(CadPessoa);
-
-        CadCliente.setText("Cliente");
-        CadCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CadClienteActionPerformed(evt);
-            }
-        });
-        mbtnCad.add(CadCliente);
 
         MenuBar.add(mbtnCad);
 
@@ -380,14 +371,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         Formularios.ListPessoa.setVisible(true);
     }//GEN-LAST:event_ListPessoaActionPerformed
 
-    private void CadClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadClienteActionPerformed
-        // TODO add your handling code here:
-        if (Formularios.CadCliente == null)
-            Formularios.CadCliente = new CadCliente();
-        
-        Formularios.CadCliente.setVisible(true);
-    }//GEN-LAST:event_CadClienteActionPerformed
-
     private void ListagemClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListagemClientesActionPerformed
         // TODO add your handling code here:
          if (Formularios.ListCliente == null)
@@ -433,7 +416,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem CadCidade;
-    private javax.swing.JMenuItem CadCliente;
     private javax.swing.JMenuItem CadEndereco;
     private javax.swing.JMenuItem CadEstado;
     private javax.swing.JMenuItem CadEstciv;

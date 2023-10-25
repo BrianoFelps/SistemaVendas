@@ -5,9 +5,6 @@
 package com.mycompany.visao.Cliente;
 
 import com.mycompany.dao.DaoCliente;
-import com.mycompany.dao.DaoPessoa;
-import com.mycompany.ferramentas.DadosTemporarios;
-import com.mycompany.modelo.ModCliente;
 import java.sql.ResultSet;
 import javax.swing.table.DefaultTableModel;
 
@@ -132,11 +129,6 @@ public class ListCliente extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tableCliente.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableClienteMouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(tableCliente);
 
         jcbTipoFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "ID", "Nome" }));
@@ -209,33 +201,6 @@ public class ListCliente extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void tableClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableClienteMouseClicked
-        try{
-            if (evt.getClickCount() == 2){
-                ModCliente modCli = new ModCliente();
-
-                modCli.setId(Integer.parseInt(String.valueOf(tableCliente.getValueAt(tableCliente.getSelectedRow(), 0))));
-
-                DaoPessoa daoPes = new DaoPessoa();
-                ResultSet resultset = daoPes.listarPorNome(String.valueOf(tableCliente.getValueAt(tableCliente.getSelectedRow(), 1)));
-
-                int idPes = -1;
-
-                while(resultset.next())
-                idPes = resultset.getInt("ID");
-
-                modCli.setIdpes(idPes);
-
-                DadosTemporarios.tempObject = (ModCliente) modCli;
-
-                CadCliente cadCli = new CadCliente();
-                cadCli.setVisible(true);
-            }
-        }catch (Exception e){
-            System.err.println(e.getMessage());
-        }
-    }//GEN-LAST:event_tableClienteMouseClicked
 
     private void jcbTipoFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTipoFiltroActionPerformed
         // TODO add your handling code here:
