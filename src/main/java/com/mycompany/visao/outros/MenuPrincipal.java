@@ -6,7 +6,6 @@ package com.mycompany.visao.outros;
 
 import com.mycompany.ferramentas.BancoDeDadosMySQL;
 import com.mycompany.ferramentas.Formularios;
-import com.mycompany.visao.Cliente.CadCliente;
 import com.mycompany.visao.Cliente.ListCliente;
 import com.mycompany.visao.Pessoa.CadPessoa;
 import com.mycompany.visao.Pessoa.ListPessoa;
