@@ -525,7 +525,8 @@ public class CadPessoa extends javax.swing.JFrame {
         if (btnAcao.getText() == Constantes.BTN_SALVAR_TEXT){
         inserirEndereco();
         inserir();
-//        inserirCliente();
+        inserirCliente();
+
         tfId.setText(String.valueOf(daoPes.buscarProximoId()));
         tfIdCli.setText(String.valueOf(daoCli.buscarProximoId()));
         tfIdEndereco.setText(String.valueOf(daoEnd.buscarProximoId()));
