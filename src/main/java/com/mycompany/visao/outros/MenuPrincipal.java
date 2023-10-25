@@ -6,7 +6,6 @@ package com.mycompany.visao.outros;
 
 import com.mycompany.ferramentas.BancoDeDadosMySQL;
 import com.mycompany.ferramentas.Formularios;
-import com.mycompany.visao.Cliente.ListCliente;
 import com.mycompany.visao.Pessoa.CadPessoa;
 import com.mycompany.visao.Pessoa.ListPessoa;
 import com.mycompany.visao.categoria.CadCategoria;
@@ -75,7 +74,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         ListCidade = new javax.swing.JMenuItem();
         ListEndereco = new javax.swing.JMenuItem();
         ListPessoa = new javax.swing.JMenuItem();
-        ListagemClientes = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal");
@@ -213,14 +211,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
         mbtncons.add(ListPessoa);
-
-        ListagemClientes.setText("Cliente");
-        ListagemClientes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ListagemClientesActionPerformed(evt);
-            }
-        });
-        mbtncons.add(ListagemClientes);
 
         MenuBar.add(mbtncons);
 
@@ -364,19 +354,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void ListPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListPessoaActionPerformed
         // TODO add your handling code here:
-        if (Formularios.ListPessoa == null)
-        Formularios.ListPessoa = new ListPessoa();
 
-        Formularios.ListPessoa.setVisible(true);
     }//GEN-LAST:event_ListPessoaActionPerformed
-
-    private void ListagemClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListagemClientesActionPerformed
-        // TODO add your handling code here:
-         if (Formularios.ListCliente == null)
-        Formularios.ListCliente = new ListCliente();
-
-        Formularios.ListCliente.setVisible(true);
-    }//GEN-LAST:event_ListagemClientesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -426,7 +405,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem ListEstado;
     private javax.swing.JMenuItem ListPais;
     private javax.swing.JMenuItem ListPessoa;
-    private javax.swing.JMenuItem ListagemClientes;
     private javax.swing.JMenuBar MenuBar;
     private javax.swing.JMenuItem listEstciv;
     private javax.swing.JMenu mbtnCad;

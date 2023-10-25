@@ -144,14 +144,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ListPessoaActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="ListagemClientes">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Cliente"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ListagemClientesActionPerformed"/>
-              </Events>
-            </MenuItem>
           </SubComponents>
         </Menu>
       </SubComponents>
