@@ -131,7 +131,7 @@ public class DaoCategoria extends BancoDeDadosMySQL{
         int id = -1;
         
         try{
-            sql = "SELECT MAX(ID) + 1 FROM CATEGORIA";
+            sql = "SELECT IFNULL(MAX(ID), 0) + 1 FROM CATEGORIA";
             
             setStatement(getConexao().prepareStatement(sql));
             

@@ -79,7 +79,7 @@ public class DaoMarca extends BancoDeDadosMySQL {
     public ResultSet listarTodos(){
         try {
             //se a descrição for nula, em vez de aparecer "null" aparece um espaço vazio.
-            sql = "SELECT ID, NOME FROM MARCA";
+            sql = "SELECT ID, NOME FROM MARCA ";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -124,7 +124,7 @@ public class DaoMarca extends BancoDeDadosMySQL {
         int id = -1;
         
         try{
-            sql = "SELECT MAX(ID) + 1 FROM MARCA";
+            sql = "SELECT IFNULL(MAX(ID), 0) + 1 FROM MARCA";
             
             setStatement(getConexao().prepareStatement(sql));
             

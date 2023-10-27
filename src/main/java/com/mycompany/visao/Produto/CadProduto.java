@@ -4,8 +4,15 @@
  */
 package com.mycompany.visao.Produto;
 
+import com.mycompany.dao.DaoCategoria;
+import com.mycompany.dao.DaoMarca;
+import com.mycompany.dao.DaoProduto;
+import com.mycompany.ferramentas.Constantes;
 import com.mycompany.ferramentas.DadosTemporarios;
+import com.mycompany.ferramentas.Formularios;
 import com.mycompany.modelo.ModProduto;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,6 +25,31 @@ public class CadProduto extends javax.swing.JFrame {
      */
     public CadProduto() {
         initComponents();
+        
+        carregarMar();
+        carregarCatg();
+        
+        if (!existeDadosTemporarios()) {
+            DaoProduto daoProd = new DaoProduto();
+            
+              int id = daoProd.buscarProximoId();
+            if (id>0)
+                tfId.setText(String.valueOf(id));
+            
+              btnAcao.setText(Constantes.BTN_SALVAR_TEXT);
+            btnExcluir.setVisible(false);
+            }else{
+            btnAcao.setText(Constantes.BTN_ALTERAR_TEXT);
+            btnExcluir.setVisible(true);
+        }
+         recuperaIdMar();
+         recuperaIdCatg();
+         
+        setLocationRelativeTo(null);
+        
+        tfId.setEnabled(false);
+        tfIdCatg.setVisible(true);
+        tfIdMar.setVisible(true);
     }
     
     private Boolean existeDadosTemporarios(){
@@ -30,27 +62,46 @@ public class CadProduto extends javax.swing.JFrame {
             String desc = ((ModProduto) DadosTemporarios.tempObject).getDesc();
 
             tfId.setText(String.valueOf(id));
-            tfidcid.setText(String.valueOf(idcid));
-            tfRua.setText(nmrua);
-            tfCEP.setText(String.valueOf(cep));
-            tfNum.setText(String.valueOf(num));
+            tfIdCatg.setText(String.valueOf(idcatg));
+            tfIdMar.setText(String.valueOf(idmar));
+            tfNm.setText(nome);
+            tfPre.setText(String.valueOf(preco));
+            taDesc.setText(desc);
 
             //
             try{
-                DaoCidade daocid = new DaoCidade();
-                ResultSet resultSet = daocid.listarPorId(idcid);
+                DaoCategoria daocat = new DaoCategoria();
+                ResultSet resultSet = daocat.listarPorId(idcatg);
                 resultSet.next();
-                String cid = resultSet.getString("C.NOME");
+                String cat = resultSet.getString("NOME");
                 int index = 0;
-                for(int i = 0; i < JcbCid.getItemCount(); i++){
-                    if(JcbCid.getItemAt(i).equals(cid)){
+                for(int i = 0; i < JcbCatg.getItemCount(); i++){
+                    if(JcbCatg.getItemAt(i).equals(cat)){
                         index = i;
                         break;
                     }
                 }
-                JcbCid.setSelectedIndex(index);
-            }catch(Exception e){}
-            //
+                JcbCatg.setSelectedIndex(index);
+            }catch(Exception e){
+            System.out.println(e.getMessage());
+            }
+            
+            try{
+                DaoMarca daoMar = new DaoMarca();
+                ResultSet resultSet = daoMar.listarPorId(idmar);
+                resultSet.next();
+                String marca = resultSet.getString("NOME");
+                int index = 0;
+                for(int i = 0; i < JcbMar.getItemCount(); i++){
+                    if(JcbMar.getItemAt(i).equals(marca)){
+                        index = i;
+                        break;
+                    }
+                } 
+                JcbMar.setSelectedIndex(index);
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+            }
             
             DadosTemporarios.tempObject = null;
             
@@ -58,6 +109,113 @@ public class CadProduto extends javax.swing.JFrame {
             }else 
                 return false;
 }
+    
+        private void inserir(){
+            DaoProduto daoProd = new DaoProduto();
+            
+            if (daoProd.inserir(Integer.parseInt(tfId.getText()), Integer.parseInt(tfIdCatg.getText()), Integer.parseInt(tfIdMar.getText()), tfNm.getText(), taDesc.getText(),tfPre.getText())){
+                JOptionPane.showMessageDialog(null, "Produto salvo com sucesso!");
+            
+                tfId.setText("" + daoProd.buscarProximoId());
+                tfNm.setText(" ");
+                tfPre.setText(" ");
+                taDesc.setText(" ");
+                
+            }else{
+                JOptionPane.showMessageDialog(null, "Não foi possível salvar o produto!");
+            }
+        }
+        
+        private void alterar(){
+             DaoProduto daoProd = new DaoProduto();
+            
+             if (daoProd.alterar(Integer.parseInt(tfId.getText()), Integer.parseInt(tfIdCatg.getText()), Integer.parseInt(tfIdMar.getText()), tfNm.getText(), taDesc.getText(),tfPre.getText())){
+                JOptionPane.showMessageDialog(null, "Produto alterado com sucesso!");
+            
+                tfId.setText("" + daoProd.buscarProximoId());
+                tfNm.setText(" ");
+                tfPre.setText(" ");
+                taDesc.setText(" ");
+                
+            }else{
+                JOptionPane.showMessageDialog(null, "Não foi possível alterar o produto!");
+            }
+            
+            ((ListProduto) Formularios.ListProduto).listarTodos();
+            
+            dispose();
+        }
+        
+        private void excluir(){
+           DaoProduto daoProd = new DaoProduto();
+            
+            if (daoProd.excluir(Integer.parseInt(tfId.getText()))){
+                JOptionPane.showMessageDialog(null, "Produto " + tfNm.getText() + " excluído com sucesso!");
+            
+                tfId.setText(" ");
+                tfNm.setText(" ");
+                tfPre.setText(" ");
+                taDesc.setText(" ");
+                
+            }else{
+                JOptionPane.showMessageDialog(null, "Não foi possível excluir o produto!");
+            }
+            
+            ((ListProduto) Formularios.ListProduto).listarTodos();
+            
+            dispose();
+        }
+        
+         private void carregarCatg(){
+        try{
+            DaoCategoria daoCat = new DaoCategoria();
+
+            ResultSet resultSet = daoCat.listarTodos();
+
+            while(resultSet.next()){
+                JcbCatg.addItem(resultSet.getString("NOME"));
+            }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+        
+        private void recuperaIdCatg(){
+        try{
+            DaoCategoria daoCat = new DaoCategoria();
+            ResultSet resultSet = daoCat.listarPorNome(JcbCatg.getSelectedItem().toString());
+            
+            resultSet.next();
+            tfIdCatg.setText(resultSet.getString("ID"));
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+        
+         private void carregarMar(){
+        try{
+            DaoMarca daoMar = new DaoMarca();
+
+            ResultSet resultSet = daoMar.listarTodos();
+
+            while(resultSet.next()){
+                JcbMar.addItem(resultSet.getString("NOME"));
+            }
+        }catch(Exception e){
+        }
+    }
+        
+        private void recuperaIdMar(){
+        try{
+            DaoMarca daoMar = new DaoMarca();
+            ResultSet resultSet = daoMar.listarPorNome(JcbMar.getSelectedItem().toString());
+           
+            resultSet.next();
+            tfIdMar.setText(resultSet.getString("ID"));
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -68,7 +226,7 @@ public class CadProduto extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        tfRua = new javax.swing.JTextField();
+        tfNm = new javax.swing.JTextField();
         LId = new javax.swing.JLabel();
         LNome = new javax.swing.JLabel();
         LDesc = new javax.swing.JLabel();
@@ -83,15 +241,20 @@ public class CadProduto extends javax.swing.JFrame {
         tfIdMar = new javax.swing.JTextField();
         LNome1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        taDesc = new javax.swing.JTextArea();
         LDesc1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de produto");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
-        tfRua.addActionListener(new java.awt.event.ActionListener() {
+        tfNm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfRuaActionPerformed(evt);
+                tfNmActionPerformed(evt);
             }
         });
 
@@ -152,9 +315,9 @@ public class CadProduto extends javax.swing.JFrame {
 
         LNome1.setText("Marca");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        taDesc.setColumns(20);
+        taDesc.setRows(5);
+        jScrollPane1.setViewportView(taDesc);
 
         LDesc1.setText("Descrição");
 
@@ -177,7 +340,7 @@ public class CadProduto extends javax.swing.JFrame {
                         .addComponent(tfIdMar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfRua, javax.swing.GroupLayout.PREFERRED_SIZE, 758, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfNm, javax.swing.GroupLayout.PREFERRED_SIZE, 758, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(LDesc)
                             .addComponent(LNome)
                             .addComponent(LId)
@@ -218,7 +381,7 @@ public class CadProduto extends javax.swing.JFrame {
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfRua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfNm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfPre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(LDesc1)
@@ -251,9 +414,9 @@ public class CadProduto extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tfRuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfRuaActionPerformed
+    private void tfNmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNmActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tfRuaActionPerformed
+    }//GEN-LAST:event_tfNmActionPerformed
 
     private void tfIdCatgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfIdCatgActionPerformed
         // TODO add your handling code here:
@@ -261,7 +424,7 @@ public class CadProduto extends javax.swing.JFrame {
 
     private void JcbCatgItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JcbCatgItemStateChanged
         // TODO add your handling code here:
-        recuperaIdCid();
+        recuperaIdCatg();
     }//GEN-LAST:event_JcbCatgItemStateChanged
 
     private void JcbCatgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JcbCatgActionPerformed
@@ -270,16 +433,24 @@ public class CadProduto extends javax.swing.JFrame {
 
     private void btnAcaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcaoActionPerformed
         // TODO add your handling code here:
-        if (btnAcao.getText().equals(Constantes.BTN_SALVAR_TEXT))
+        if (btnAcao.getText() == Constantes.BTN_SALVAR_TEXT){
         inserir();
-        else if (btnAcao.getText().equals(Constantes.BTN_ALTERAR_TEXT))
+        
+        if(Formularios.CadCategoria != null){
+            ((CadProduto) Formularios.CadProduto).carregarCatg();
+            dispose();
+        }else if (Formularios.CadMarca != null){
+        ((CadProduto) Formularios.CadProduto).carregarMar();
+        dispose();
+        }
+        }else if (btnAcao.getText().equals(Constantes.BTN_ALTERAR_TEXT))
         alterar();
     }//GEN-LAST:event_btnAcaoActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         // TODO add your handling code here:
         int escolha =
-        JOptionPane.showConfirmDialog(null, "Deseja realmente excluir a rua  " + tfRua.getText() + "?");
+        JOptionPane.showConfirmDialog(null, "Deseja realmente excluir o produto " + tfNm.getText() + "?");
 
         if (escolha == JOptionPane.YES_OPTION)
         excluir();
@@ -287,6 +458,7 @@ public class CadProduto extends javax.swing.JFrame {
 
     private void JcbMarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JcbMarItemStateChanged
         // TODO add your handling code here:
+        recuperaIdMar();
     }//GEN-LAST:event_JcbMarItemStateChanged
 
     private void JcbMarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JcbMarActionPerformed
@@ -296,6 +468,11 @@ public class CadProduto extends javax.swing.JFrame {
     private void tfIdMarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfIdMarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfIdMarActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        Formularios.CadProduto = null;
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -345,11 +522,11 @@ public class CadProduto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea taDesc;
     private javax.swing.JTextField tfId;
     private javax.swing.JTextField tfIdCatg;
     private javax.swing.JTextField tfIdMar;
+    private javax.swing.JTextField tfNm;
     private javax.swing.JTextField tfPre;
-    private javax.swing.JTextField tfRua;
     // End of variables declaration//GEN-END:variables
 }

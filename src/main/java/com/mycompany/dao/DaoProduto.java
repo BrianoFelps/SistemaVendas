@@ -83,7 +83,7 @@ public class DaoProduto extends BancoDeDadosMySQL {
     
      public ResultSet listarTodos(){
         try{
-            sql = "SELECT P.ID, C.NOME, M.NOME, P.NOME, P.DESCRICAO, P.PRECO FROM PRODUTO P JOIN CATEGORIA C ON P.ID_CATG = C.ID JOIN MARCA M ON P.ID_MARCA LIKE M.ID ORDER BY P.ID";
+            sql = "SELECT P.ID, C.NOME, M.NOME, P.NOME, P.DESCRICAO, P.PRECO FROM PRODUTO P JOIN CATEGORIA C ON P.ID_CATG = C.ID JOIN MARCA M ON P.ID_MARCA = M.ID ORDER BY P.ID";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -191,7 +191,7 @@ public class DaoProduto extends BancoDeDadosMySQL {
         int id = -1;
         
         try{
-            sql = "SELECT MAX(ID) + 1 FROM PRODUTO";
+            sql = "SELECT IFNULL (MAX(ID), 0) + 1 FROM PRODUTO";
             
             setStatement(getConexao().prepareStatement(sql));
             

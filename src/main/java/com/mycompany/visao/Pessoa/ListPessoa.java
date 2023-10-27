@@ -567,7 +567,7 @@ public class ListPessoa extends javax.swing.JFrame {
                 DadosTemporarios.tempObject2 = (ModEndereco) modEndereco;
                 DadosTemporarios.tempObject3 = (ModCliente) modCli;
 
-                CadPessoa cadpes = new CadPessoa();
+                    CadPessoa cadpes = new CadPessoa();
                 cadpes.setVisible(true);
             }
         }   catch (Exception e){

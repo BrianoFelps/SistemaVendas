@@ -8,6 +8,8 @@ import com.mycompany.ferramentas.BancoDeDadosMySQL;
 import com.mycompany.ferramentas.Formularios;
 import com.mycompany.visao.Pessoa.CadPessoa;
 import com.mycompany.visao.Pessoa.ListPessoa;
+import com.mycompany.visao.Produto.CadProduto;
+import com.mycompany.visao.Produto.ListProduto;
 import com.mycompany.visao.categoria.CadCategoria;
 import com.mycompany.visao.categoria.ListCategoria;
 import com.mycompany.visao.cidade.CadCidade;
@@ -65,6 +67,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         CadCidade = new javax.swing.JMenuItem();
         CadEndereco = new javax.swing.JMenuItem();
         CadPessoa = new javax.swing.JMenuItem();
+        CadProd = new javax.swing.JMenuItem();
         mbtncons = new javax.swing.JMenu();
         miConsCatg = new javax.swing.JMenuItem();
         ListPais = new javax.swing.JMenuItem();
@@ -74,6 +77,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         ListCidade = new javax.swing.JMenuItem();
         ListEndereco = new javax.swing.JMenuItem();
         ListPessoa = new javax.swing.JMenuItem();
+        ListProd = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal");
@@ -144,6 +148,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         mbtnCad.add(CadPessoa);
 
+        CadProd.setText("Produto");
+        CadProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CadProdActionPerformed(evt);
+            }
+        });
+        mbtnCad.add(CadProd);
+
         MenuBar.add(mbtnCad);
 
         mbtncons.setText("Consultas");
@@ -211,6 +223,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
         mbtncons.add(ListPessoa);
+
+        ListProd.setText("Produtos");
+        ListProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ListProdActionPerformed(evt);
+            }
+        });
+        mbtncons.add(ListProd);
 
         MenuBar.add(mbtncons);
 
@@ -354,8 +374,27 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void ListPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListPessoaActionPerformed
         // TODO add your handling code here:
-
+        if (Formularios.ListPessoa == null)
+            Formularios.ListPessoa = new ListPessoa();
+        
+        Formularios.ListPessoa.setVisible(true);
     }//GEN-LAST:event_ListPessoaActionPerformed
+
+    private void CadProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadProdActionPerformed
+        // TODO add your handling code here:
+        if (Formularios.CadProduto == null)
+            Formularios.CadProduto = new CadProduto();
+        
+        Formularios.CadProduto.setVisible(true);
+    }//GEN-LAST:event_CadProdActionPerformed
+
+    private void ListProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListProdActionPerformed
+        // TODO add your handling code here:
+        if (Formularios.ListProduto == null)
+            Formularios.ListProduto = new ListProduto();
+        
+        Formularios.ListProduto.setVisible(true);    
+    }//GEN-LAST:event_ListProdActionPerformed
 
     /**
      * @param args the command line arguments
@@ -399,12 +438,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem CadEstciv;
     private javax.swing.JMenuItem CadPais;
     private javax.swing.JMenuItem CadPessoa;
+    private javax.swing.JMenuItem CadProd;
     private javax.swing.JMenuItem ConsMarca;
     private javax.swing.JMenuItem ListCidade;
     private javax.swing.JMenuItem ListEndereco;
     private javax.swing.JMenuItem ListEstado;
     private javax.swing.JMenuItem ListPais;
     private javax.swing.JMenuItem ListPessoa;
+    private javax.swing.JMenuItem ListProd;
     private javax.swing.JMenuBar MenuBar;
     private javax.swing.JMenuItem listEstciv;
     private javax.swing.JMenu mbtnCad;

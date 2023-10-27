@@ -75,6 +75,6 @@ private String nm, desc;
     
     @Override
         public String toString(){
-            return "Produto{" + "id=" + id + ", id categoria=" + idcatg + ", id marca =" + idmar + ", Nome= " + nm + ", Descrição = " + desc + ", Preço=" + preco + "}";
+            return "ModProduto{" + "id=" + id + ", idCategoria=" + idcatg + ", idMarca=" + idmar + ", nome=" + nm + ", descricao=" + desc + ", preco=" + preco + '}';
         }
 }

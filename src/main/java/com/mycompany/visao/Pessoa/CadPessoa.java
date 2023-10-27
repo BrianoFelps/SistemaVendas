@@ -604,7 +604,7 @@ public class CadPessoa extends javax.swing.JFrame {
      private void inserirEndereco(){
          DaoEndereco daoEnd = new DaoEndereco();
          
-         if (daoEnd.inserir(Integer.parseInt(tfId.getText()), Integer.parseInt(tfidcid.getText()), tfRua.getText(),  Integer.parseInt(tfCEP.getText()),  Integer.parseInt(tfNum.getText()))){{}
+         if (daoEnd.inserir(Integer.parseInt(tfId.getText()), Integer.parseInt(tfidcid.getText()), tfRua.getText(),  Integer.parseInt(tfCEP.getText()),  Integer.parseInt(tfNum.getText()))){
                 JOptionPane.showMessageDialog(null, "Endereço salvo com sucesso!");
                 
                 tfRua.setText(" ");
