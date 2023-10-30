@@ -19,9 +19,9 @@ import java.sql.ResultSet;
 public class DaoPessoa extends BancoDeDadosMySQL {
     private String sql;
     
-    public Boolean inserir (int id, int idend, int idestciv, String nom, String sob, String gen, String tel, String ema){
+    public Boolean inserir (int id, int idend, int idestciv, String nom, String sob, String gen, String tel, String ema, String usua, String sen){
         try{
-            sql = "INSERT INTO PESSOA (ID, ID_ENDERECO, ID_EST_CIV, NOME, SOBRENOME, GENERO, TELEFONE, EMAIL) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            sql = "INSERT INTO PESSOA (ID, ID_ENDERECO, ID_EST_CIV, NOME, SOBRENOME, GENERO, TELEFONE, EMAIL, USUARIO, SENHA) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -33,7 +33,8 @@ public class DaoPessoa extends BancoDeDadosMySQL {
                     getStatement().setString(6, gen);
                     getStatement().setString(7, tel);
                     getStatement().setString(8, ema);
-                    
+                    getStatement().setString(9, usua);
+                    getStatement().setString(10, sen);
                     
                     getStatement().executeUpdate();
                     
@@ -44,9 +45,9 @@ public class DaoPessoa extends BancoDeDadosMySQL {
             return false;
         }
     }
-    public Boolean alterar (int id, int novoidend, int novoidestciv, String novonom, String novosob, String novogen, String novotel, String novoema){
+    public Boolean alterar (int id, int novoidend, int novoidestciv, String novonom, String novosob, String novogen, String novotel, String novoema, String novousu, String novasen){
         try{
-            sql = "UPDATE PESSOA SET ID_ENDERECO = ?, ID_EST_CIV = ?, NOME = ?, SOBRENOME = ?, GENERO = ?, TELEFONE = ?, EMAIL = ? WHERE ID = ?";
+            sql = "UPDATE PESSOA SET ID_ENDERECO = ?, ID_EST_CIV = ?, NOME = ?, SOBRENOME = ?, GENERO = ?, TELEFONE = ?, EMAIL = ?, USUARIO = ?, SENHA = ? WHERE ID = ?";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -57,8 +58,10 @@ public class DaoPessoa extends BancoDeDadosMySQL {
                 getStatement().setString(5, novogen);
                 getStatement().setString(6, novotel);
                 getStatement().setString(7, novoema);
-                getStatement().setInt(8, id);
-                
+                getStatement().setString(8, novousu);
+                getStatement().setString(9, novasen);
+                 getStatement().setInt(10, id);
+                 
                 getStatement().executeUpdate();
                 
                 return true;

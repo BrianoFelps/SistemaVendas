@@ -10,12 +10,12 @@ package com.mycompany.modelo;
  */
 public class ModPessoa {
     private int id, idend, idestciv;
-    private String nom, sob, gen, tel, ema;
+    private String nom, sob, gen, tel, ema, usua, sen;
 
     public ModPessoa() {
     }
 
-    public ModPessoa(int id, int idend, int idestciv, String nom, String sob, String gen, String tel, String ema) {
+    public ModPessoa(int id, int idend, int idestciv, String nom, String sob, String gen, String tel, String ema, String usua, String sen) {
         this.id = id;
         this.idend = idend;
         this.idestciv = idestciv;
@@ -24,6 +24,8 @@ public class ModPessoa {
         this.gen = gen;
         this.tel = tel;
         this.ema = ema;
+        this.usua = usua;
+        this.sen = sen;
     }
 
     public int getId() {
@@ -89,6 +91,23 @@ public class ModPessoa {
     public void setEma(String ema) {
         this.ema = ema;
     }
+
+    public String getUsua() {
+        return usua;
+    }
+
+    public void setUsua(String usua) {
+        this.usua = usua;
+    }
+
+    public String getSen() {
+        return sen;
+    }
+
+    public void setSen(String sen) {
+        this.sen = sen;
+    }
+
     @Override
     public String toString() {
         return "ModPessoa{" + "id=" + id + ", idEndereco=" + idend + ", idEstadoCivil=" + idestciv + ", nome=" + nom + ", sobrenome=" + sob + ", genero=" + gen + ", telefone=" + tel + ", email=" + ema + '}';

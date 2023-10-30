@@ -86,6 +86,8 @@ public class CadPessoa extends javax.swing.JFrame {
             String gen = ((ModPessoa) DadosTemporarios.tempObject).getGen();
             String tel = ((ModPessoa) DadosTemporarios.tempObject).getTel();
             String email = ((ModPessoa) DadosTemporarios.tempObject).getEma();
+            String usua = ((ModPessoa) DadosTemporarios.tempObject).getUsua();
+            String sen = ((ModPessoa) DadosTemporarios.tempObject).getSen();
 
             tfId.setText(String.valueOf(id));
             tfIdEndereco.setText(String.valueOf(idend));
@@ -94,7 +96,8 @@ public class CadPessoa extends javax.swing.JFrame {
             tfSob.setText(sob);
             tfTel.setText(tel);
             tfEmail.setText(email);
-           
+            tfUsuario.setText(usua);
+            tfSenha.setText(sen);
 
             try{
              DaoEstciv daoec = new DaoEstciv();
@@ -190,6 +193,12 @@ public class CadPessoa extends javax.swing.JFrame {
         tfEmail = new javax.swing.JTextField();
         jcbGenero = new javax.swing.JComboBox<>();
         tfIdCli = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        tfUsuario = new javax.swing.JTextField();
+        tfSenha = new javax.swing.JTextField();
+        tfConfSenha = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -272,6 +281,24 @@ public class CadPessoa extends javax.swing.JFrame {
 
         jcbGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masc", "Fem" }));
 
+        jLabel7.setText("Usuário *");
+
+        jLabel8.setText("Senha *");
+
+        jLabel12.setText("Confirmação de senha *");
+
+        tfSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfSenhaActionPerformed(evt);
+            }
+        });
+
+        tfConfSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfConfSenhaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -281,6 +308,29 @@ public class CadPessoa extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LDesc)
+                            .addComponent(jLabel5)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnAcao)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnExcluir)))
+                        .addGap(0, 14, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(tfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(36, 36, 36)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel8))
+                                .addGap(36, 36, 36)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tfConfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel12)))
                             .addComponent(jLabel3)
                             .addComponent(LId)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -301,18 +351,7 @@ public class CadPessoa extends javax.swing.JFrame {
                                     .addComponent(tfTel, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel2)
                                     .addComponent(jcbGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnAcao)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnExcluir))
-                            .addComponent(tfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(LDesc)
-                            .addComponent(jLabel5))
-                        .addGap(0, 14, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -345,15 +384,29 @@ public class CadPessoa extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jcbGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfSob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAcao)
-                    .addComponent(btnExcluir))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel12))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfConfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                        .addComponent(btnAcao)
+                        .addGap(15, 15, 15))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnExcluir)
+                        .addContainerGap())))
         );
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -489,12 +542,12 @@ public class CadPessoa extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -523,8 +576,8 @@ public class CadPessoa extends javax.swing.JFrame {
         
         if(camposObrigatoriosPreenchidos(new JTextField[]{tfRua, tfCEP, tfNum, tfNome, tfSob, tfTel, tfEmail})){
         if (btnAcao.getText() == Constantes.BTN_SALVAR_TEXT){
-        inserirEndereco();
         inserir();
+        inserirEndereco();
         inserirCliente();
 
         tfId.setText(String.valueOf(daoPes.buscarProximoId()));
@@ -585,17 +638,28 @@ public class CadPessoa extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfIdEnderecoActionPerformed
 
+    private void tfSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfSenhaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfSenhaActionPerformed
+
+    private void tfConfSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfConfSenhaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfConfSenhaActionPerformed
+
      private void inserir(){
             DaoPessoa daopes = new DaoPessoa();
             
-            if (daopes.inserir(Integer.parseInt(tfId.getText()), Integer.parseInt(tfIdEndereco.getText()), Integer.parseInt(tfidec.getText()), tfNome.getText(), tfSob.getText(), (String) jcbGenero.getSelectedItem(), tfTel.getText(), tfEmail.getText())){
+            if (daopes.inserir(Integer.parseInt(tfId.getText()), Integer.parseInt(tfIdEndereco.getText()), Integer.parseInt(tfidec.getText()), tfNome.getText(), tfSob.getText(), (String) jcbGenero.getSelectedItem(), tfTel.getText(), tfEmail.getText(), tfUsuario.getText(), tfSenha.getText())){
                 JOptionPane.showMessageDialog(null, "Pessoa salva com sucesso!");
             
                 tfNome.setText("");
                 tfSob.setText("");
                 tfTel.setText("");
                 tfEmail.setText("");
-                        
+                tfUsuario.setText("");
+                tfSenha.setText("");
+                tfConfSenha.setText("");
+
             }else{
                 JOptionPane.showMessageDialog(null, "Não foi possível salvar a pessoa!");
             }
@@ -629,7 +693,7 @@ public class CadPessoa extends javax.swing.JFrame {
         private void alterar(){
             DaoPessoa daopes = new DaoPessoa();
             
-            if (daopes.alterar(Integer.parseInt(tfId.getText()), Integer.parseInt(tfIdEndereco.getText()), Integer.parseInt(tfidec.getText()), tfNome.getText(), tfSob.getText(), (String) jcbGenero.getSelectedItem(), tfTel.getText(), tfEmail.getText())){
+            if (daopes.alterar(Integer.parseInt(tfId.getText()), Integer.parseInt(tfIdEndereco.getText()), Integer.parseInt(tfidec.getText()), tfNome.getText(), tfSob.getText(), (String) jcbGenero.getSelectedItem(), tfTel.getText(), tfEmail.getText(), tfUsuario.getText(), tfSenha.getText())){
                 JOptionPane.showMessageDialog(null, "Pessoa alterada com sucesso!");
             
 //                tfId.setText ("" + daopes.buscarProximoId());
@@ -637,6 +701,9 @@ public class CadPessoa extends javax.swing.JFrame {
                 tfSob.setText("");
                 tfTel.setText("");
                 tfEmail.setText("");
+                tfUsuario.setText("");
+                tfSenha.setText("");
+                tfConfSenha.setText("");
                 
             }else{
                 JOptionPane.showMessageDialog(null, "Não foi possível alterar a pessoa!");
@@ -809,11 +876,14 @@ public class CadPessoa extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
@@ -821,6 +891,7 @@ public class CadPessoa extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jcbGenero;
     private javax.swing.JComboBox<String> jcbec;
     private javax.swing.JTextField tfCEP;
+    private javax.swing.JTextField tfConfSenha;
     private javax.swing.JTextField tfEmail;
     private javax.swing.JTextField tfId;
     private javax.swing.JTextField tfIdCli;
@@ -828,8 +899,10 @@ public class CadPessoa extends javax.swing.JFrame {
     private javax.swing.JTextField tfNome;
     private javax.swing.JTextField tfNum;
     private javax.swing.JTextField tfRua;
+    private javax.swing.JTextField tfSenha;
     private javax.swing.JTextField tfSob;
     private javax.swing.JTextField tfTel;
+    private javax.swing.JTextField tfUsuario;
     private javax.swing.JTextField tfidcid;
     private javax.swing.JTextField tfidec;
     // End of variables declaration//GEN-END:variables
