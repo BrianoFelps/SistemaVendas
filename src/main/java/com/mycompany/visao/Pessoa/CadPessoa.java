@@ -97,7 +97,7 @@ public class CadPessoa extends javax.swing.JFrame {
             tfTel.setText(tel);
             tfEmail.setText(email);
             tfUsuario.setText(usua);
-            tfSenha.setText(sen);
+            pfSenha.setText(sen);
 
             try{
              DaoEstciv daoec = new DaoEstciv();
@@ -197,8 +197,8 @@ public class CadPessoa extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         tfUsuario = new javax.swing.JTextField();
-        tfSenha = new javax.swing.JTextField();
-        tfConfSenha = new javax.swing.JTextField();
+        pfSenha = new javax.swing.JPasswordField();
+        pfCSenha = new javax.swing.JPasswordField();
         jLabel6 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -287,18 +287,6 @@ public class CadPessoa extends javax.swing.JFrame {
 
         jLabel12.setText("Confirmação de senha *");
 
-        tfSenha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfSenhaActionPerformed(evt);
-            }
-        });
-
-        tfConfSenha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfConfSenhaActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -325,12 +313,12 @@ public class CadPessoa extends javax.swing.JFrame {
                                     .addComponent(tfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(36, 36, 36)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel8))
-                                .addGap(36, 36, 36)
+                                    .addComponent(jLabel8)
+                                    .addComponent(pfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tfConfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel12)))
+                                    .addComponent(jLabel12)
+                                    .addComponent(pfCSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel3)
                             .addComponent(LId)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -398,8 +386,8 @@ public class CadPessoa extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(tfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfConfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(pfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(pfCSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                         .addComponent(btnAcao)
                         .addGap(15, 15, 15))
@@ -570,14 +558,21 @@ public class CadPessoa extends javax.swing.JFrame {
 
     private void btnAcaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcaoActionPerformed
         // TODO add your handling code here:
-        DaoPessoa daoPes = new DaoPessoa();
-        DaoCliente daoCli = new DaoCliente();
-        DaoEndereco daoEnd = new DaoEndereco();
+        String senha = String.valueOf(pfSenha.getPassword());
+        String cSenha = String.valueOf(pfCSenha.getPassword());
+        
+        if (senha.equals(cSenha)) {
+            DaoPessoa daoPes = new DaoPessoa();
+            DaoCliente daoCli = new DaoCliente();
+            DaoEndereco daoEnd = new DaoEndereco();
+        
+        
+        
         
         if(camposObrigatoriosPreenchidos(new JTextField[]{tfRua, tfCEP, tfNum, tfNome, tfSob, tfTel, tfEmail})){
         if (btnAcao.getText() == Constantes.BTN_SALVAR_TEXT){
-        inserir();
         inserirEndereco();
+        inserir();
         inserirCliente();
 
         tfId.setText(String.valueOf(daoPes.buscarProximoId()));
@@ -588,6 +583,9 @@ public class CadPessoa extends javax.swing.JFrame {
          alterarEndereco();
          alterar();
     }//GEN-LAST:event_btnAcaoActionPerformed
+        }
+        } else {
+            JOptionPane.showMessageDialog(null, Constantes.CONFIRMACAO_SENHA_DIFERENTE);
         }
     }
     
@@ -638,18 +636,10 @@ public class CadPessoa extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfIdEnderecoActionPerformed
 
-    private void tfSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfSenhaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfSenhaActionPerformed
-
-    private void tfConfSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfConfSenhaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfConfSenhaActionPerformed
-
      private void inserir(){
             DaoPessoa daopes = new DaoPessoa();
             
-            if (daopes.inserir(Integer.parseInt(tfId.getText()), Integer.parseInt(tfIdEndereco.getText()), Integer.parseInt(tfidec.getText()), tfNome.getText(), tfSob.getText(), (String) jcbGenero.getSelectedItem(), tfTel.getText(), tfEmail.getText(), tfUsuario.getText(), tfSenha.getText())){
+            if (daopes.inserir(Integer.parseInt(tfId.getText()), Integer.parseInt(tfIdEndereco.getText()), Integer.parseInt(tfidec.getText()), tfNome.getText(), tfSob.getText(), (String) jcbGenero.getSelectedItem(), tfTel.getText(), tfEmail.getText(), tfUsuario.getText(), String.valueOf(pfSenha.getPassword()))){
                 JOptionPane.showMessageDialog(null, "Pessoa salva com sucesso!");
             
                 tfNome.setText("");
@@ -657,13 +647,14 @@ public class CadPessoa extends javax.swing.JFrame {
                 tfTel.setText("");
                 tfEmail.setText("");
                 tfUsuario.setText("");
-                tfSenha.setText("");
-                tfConfSenha.setText("");
+                pfSenha.setText("");
+                pfCSenha.setText("");
 
             }else{
                 JOptionPane.showMessageDialog(null, "Não foi possível salvar a pessoa!");
             }
-        }
+            }
+        
      
      private void inserirEndereco(){
          DaoEndereco daoEnd = new DaoEndereco();
@@ -693,7 +684,7 @@ public class CadPessoa extends javax.swing.JFrame {
         private void alterar(){
             DaoPessoa daopes = new DaoPessoa();
             
-            if (daopes.alterar(Integer.parseInt(tfId.getText()), Integer.parseInt(tfIdEndereco.getText()), Integer.parseInt(tfidec.getText()), tfNome.getText(), tfSob.getText(), (String) jcbGenero.getSelectedItem(), tfTel.getText(), tfEmail.getText(), tfUsuario.getText(), tfSenha.getText())){
+            if (daopes.alterar(Integer.parseInt(tfId.getText()), Integer.parseInt(tfIdEndereco.getText()), Integer.parseInt(tfidec.getText()), tfNome.getText(), tfSob.getText(), (String) jcbGenero.getSelectedItem(), tfTel.getText(), tfEmail.getText(), tfUsuario.getText(), String.valueOf(pfSenha.getPassword()))){
                 JOptionPane.showMessageDialog(null, "Pessoa alterada com sucesso!");
             
 //                tfId.setText ("" + daopes.buscarProximoId());
@@ -702,8 +693,8 @@ public class CadPessoa extends javax.swing.JFrame {
                 tfTel.setText("");
                 tfEmail.setText("");
                 tfUsuario.setText("");
-                tfSenha.setText("");
-                tfConfSenha.setText("");
+                pfSenha.setText("");
+                pfCSenha.setText("");
                 
             }else{
                 JOptionPane.showMessageDialog(null, "Não foi possível alterar a pessoa!");
@@ -830,6 +821,8 @@ public class CadPessoa extends javax.swing.JFrame {
             }
             return b;
         }
+        
+
     /**
      * @param args the command line arguments
      */
@@ -890,8 +883,9 @@ public class CadPessoa extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JComboBox<String> jcbGenero;
     private javax.swing.JComboBox<String> jcbec;
+    private javax.swing.JPasswordField pfCSenha;
+    private javax.swing.JPasswordField pfSenha;
     private javax.swing.JTextField tfCEP;
-    private javax.swing.JTextField tfConfSenha;
     private javax.swing.JTextField tfEmail;
     private javax.swing.JTextField tfId;
     private javax.swing.JTextField tfIdCli;
@@ -899,7 +893,6 @@ public class CadPessoa extends javax.swing.JFrame {
     private javax.swing.JTextField tfNome;
     private javax.swing.JTextField tfNum;
     private javax.swing.JTextField tfRua;
-    private javax.swing.JTextField tfSenha;
     private javax.swing.JTextField tfSob;
     private javax.swing.JTextField tfTel;
     private javax.swing.JTextField tfUsuario;

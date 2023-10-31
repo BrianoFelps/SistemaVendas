@@ -4,6 +4,17 @@
  */
 package com.mycompany.visao.outros.cliente;
 
+import com.mycompany.dao.DaoProduto;
+import com.mycompany.ferramentas.BancoDeDadosMySQL;
+import com.mycompany.ferramentas.Constantes;
+import com.mycompany.ferramentas.DadosTemporarios;
+import com.mycompany.ferramentas.Formularios;
+import com.mycompany.modelo.ModProduto;
+import com.mycompany.visao.Pessoa.CadPessoa;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author brian.7908
@@ -15,8 +26,77 @@ public class MenuCliente extends javax.swing.JFrame {
      */
     public MenuCliente() {
         initComponents();
+        
+        Formularios.MenuCliente = this;
+        
+        setLocationRelativeTo(null);
+        
+        setExtendedState(MAXIMIZED_BOTH);
+        
+        if(!BancoDeDadosMySQL.conectar()){
+            JOptionPane.showMessageDialog(null, "Não foi possível conectar ao banco de dados. O sistema será finalizado.");
+            System.exit(0);
+        }   
+        
+        labelUsuarioLogado.setText(" ");
+        
     }
 
+    public void listarTodos(){
+        try{
+            DefaultTableModel dtm = (DefaultTableModel) tableProduto.getModel();
+            
+            tableProduto.setModel(dtm);
+            
+            DaoProduto daoProd = new DaoProduto();
+            
+            ResultSet rS = daoProd.listarTodos();
+            
+            dtm.setRowCount(0);
+            
+            while(rS.next()){
+                String nome = rS.getString(4);
+                String preco = rS.getString(6);
+                
+                dtm.addRow(new Object[]{nome, preco});
+            }
+        }
+        catch (Exception e)
+        {
+        }
+    }
+    
+    public void listarPorProduto(String pProd){
+        try{
+            DefaultTableModel dtm = (DefaultTableModel) tableProduto.getModel();
+            
+            tableProduto.setModel(dtm);
+            
+            DaoProduto daoProd = new DaoProduto();
+            
+            ResultSet rS = daoProd.listarPorNome(pProd);
+            
+            dtm.setRowCount(0);
+            
+            while(rS.next()){
+                String nome = rS.getString(4);
+                String preco = rS.getString(6);
+                
+                dtm.addRow(new Object[]{nome, preco});
+            }
+        }
+        catch (Exception e){
+        }
+    }
+    
+    public void verificaUsuarioLogado(){
+        if (!DadosTemporarios.usuarioLogado.equals(" ")) {
+            labelUsuarioLogado.setText(Constantes.PREFIXO_USUARIO_LOGADO + DadosTemporarios.usuarioLogado);
+            
+            labelLogin.setText(Constantes.LABEL_SAIR);
+            labelCadastro.setVisible(false);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,96 +108,135 @@ public class MenuCliente extends javax.swing.JFrame {
 
         jToggleButton1 = new javax.swing.JToggleButton();
         jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        tfPesqProd = new javax.swing.JTextField();
+        labelUsuarioLogado = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableProduto = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        labelCadastro = new javax.swing.JLabel();
+        labelLogin = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
 
         jToggleButton1.setText("jToggleButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Menu principal");
 
-        jPanel1.setBackground(new java.awt.Color(102, 0, 102));
+        jPanel1.setBackground(new java.awt.Color(0, 204, 204));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel2.setText("Usuário: Brian");
+        tfPesqProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfPesqProdActionPerformed(evt);
+            }
+        });
+
+        labelUsuarioLogado.setBackground(java.awt.Color.white);
+        labelUsuarioLogado.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableProduto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
+
             },
             new String [] {
-                ""
+                "Produto", "Preço"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tableProduto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableProdutoMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tableProduto);
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        jButton2.setBackground(new java.awt.Color(102, 0, 102));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton2.setText("Cadastro");
+        labelCadastro.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        labelCadastro.setText("Cadastro");
+        labelCadastro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelCadastroMouseClicked(evt);
+            }
+        });
 
-        jButton3.setBackground(new java.awt.Color(102, 0, 102));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton3.setText("Login");
+        labelLogin.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        labelLogin.setText("Entrar");
+        labelLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelLoginMouseClicked(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setText("O que deseja procurar?");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(302, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(20, 20, 20))))
+            .addComponent(jSeparator2)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jTextField1))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(0, 719, Short.MAX_VALUE))
+                            .addComponent(tfPesqProd))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 824, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(labelCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelLogin)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)
-                        .addGap(6, 6, 6)))
-                .addContainerGap())
+                        .addComponent(labelUsuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                    .addComponent(jSeparator1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(labelCadastro))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(labelLogin)
+                                .addComponent(labelUsuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tfPesqProd, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 713, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(jButton1)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -134,6 +253,108 @@ public class MenuCliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void labelLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLoginMouseClicked
+        // TODO add your handling code here:
+        if(labelLogin.getText().equals(Constantes.LABEL_ENTRAR)){
+            if(Formularios.MenuLogin == null)
+                Formularios.MenuLogin = new MenuLogin();
+            
+            Formularios.MenuLogin.setModal(true);
+            Formularios.MenuLogin.setVisible(true);
+        }else{
+            int escolha = JOptionPane.showConfirmDialog(null, Constantes.PERGUNTA_ENCERRAR_SESSAO);
+            
+            if(escolha == JOptionPane.YES_OPTION){
+                DadosTemporarios.idUsuarioLogado = -1;
+                DadosTemporarios.usuarioLogado = null;
+                labelLogin.setText(Constantes.LABEL_ENTRAR);
+                labelUsuarioLogado.setText("");
+                labelCadastro.setVisible(true);
+                
+                ((DefaultTableModel) tableProduto.getModel()).setNumRows(0);
+            }
+        }
+    }//GEN-LAST:event_labelLoginMouseClicked
+
+    private void labelCadastroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelCadastroMouseClicked
+        // TODO add your handling code here:
+        if (Formularios.CadPessoa == null)
+            Formularios.CadPessoa = new CadPessoa();
+        
+        Formularios.CadPessoa.setVisible(true);
+    }//GEN-LAST:event_labelCadastroMouseClicked
+
+    private void tableProdutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableProdutoMouseClicked
+        // TODO add your handling code here:
+        try{
+            if (evt.getClickCount() == 2){
+                ModProduto modProd = new ModProduto();
+                DaoProduto daoProd = new DaoProduto();
+                
+                ResultSet rS = daoProd.listarPorNome(String.valueOf(tableProduto.getValueAt(tableProduto.getSelectedRow(), 0)));
+                
+                rS.next();
+                
+                int id = rS.getInt("P.ID");
+                String catg = rS.getString("C.NOME");
+                String mar = rS.getString("M.NOME");
+                String desc = rS.getString("P.DESCRICAO");
+                
+                System.out.println(catg);
+                System.out.println(mar);
+                
+                modProd.setId(id);
+                modProd.setNm(String.valueOf(tableProduto.getValueAt(tableProduto.getSelectedRow(), 0)));
+                modProd.setPreco(String.valueOf(tableProduto.getValueAt(tableProduto.getSelectedRow(), 1)));
+                modProd.setDesc(desc);
+                
+                DadosTemporarios.tempObject = (ModProduto) modProd;
+                DadosTemporarios.categoriaProdutoVenda = catg;
+                DadosTemporarios.marcaProdutoVenda = mar;
+                
+                if(Formularios.MenuVenda == null){
+                    Formularios.MenuVenda = new MenuVenda();
+                    Formularios.MenuVenda.setVisible(true);
+                }else{
+                    int escolha = 
+                            JOptionPane.showConfirmDialog(null, "Existe uma compra em andamento, deseja cancelá-la?");
+                    
+                    if(escolha == JOptionPane.YES_OPTION){
+                        Formularios.MenuVenda.dispose();
+                        Formularios.MenuVenda = null;
+                        
+                        Formularios.MenuVenda = new MenuVenda();
+                        Formularios.MenuVenda.setVisible(true);
+                    }else{
+                        Formularios.MenuVenda.setVisible(true);
+                    }
+                }
+            }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }//GEN-LAST:event_tableProdutoMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tfPesqProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfPesqProdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfPesqProdActionPerformed
+    
+    private void JButton1ActionPerformed (java.awt.event.ActionEvent evt){
+        if(DadosTemporarios.usuarioLogado != null){
+            if(tfPesqProd.getText().equals(" "))
+                listarTodos();
+            else
+                listarPorProduto(tfPesqProd.getText());
+        }else{
+        JOptionPane.showMessageDialog(null, "Você ainda não está logado. Por favor, realize o login antes de realizar esta operação!");
+        }
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -171,14 +392,16 @@ public class MenuCliente extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JLabel labelCadastro;
+    private javax.swing.JLabel labelLogin;
+    private javax.swing.JLabel labelUsuarioLogado;
+    private javax.swing.JTable tableProduto;
+    private javax.swing.JTextField tfPesqProd;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,6 +4,7 @@
  */
 package com.mycompany.ferramentas;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 /**
@@ -33,4 +34,17 @@ public class Formularios {
     public static JFrame ListProduto;
     public static JFrame CadPedido;
     public static JFrame ListPedido;
+    
+    //Front-end
+    //Menu principal
+    public static JFrame MenuCliente;
+    
+    //Tela login
+    public static JDialog MenuLogin;
+    
+    //Tela venda
+    public static JFrame MenuVenda;
+    
+    //Tela rec. senha
+    public static JFrame MenuAltSenha;
 }
