@@ -41,7 +41,7 @@ public class MenuLogin extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        lEsqSenha = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         tfUsuario = new javax.swing.JTextField();
         btnEntrar = new javax.swing.JButton();
@@ -52,12 +52,19 @@ public class MenuLogin extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(0, 204, 204));
 
+        jLabel2.setBackground(java.awt.Color.white);
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel2.setText("Senha");
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel1.setText("Esqueceu sua senha?");
+        lEsqSenha.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lEsqSenha.setText("Esqueceu sua senha?");
+        lEsqSenha.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lEsqSenhaMouseClicked(evt);
+            }
+        });
 
+        jLabel4.setBackground(java.awt.Color.white);
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel4.setText("Nome do usuário");
 
@@ -85,7 +92,7 @@ public class MenuLogin extends javax.swing.JDialog {
                         .addComponent(jLabel2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel1))
+                        .addComponent(lEsqSenha))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(tfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -100,16 +107,16 @@ public class MenuLogin extends javax.swing.JDialog {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(27, 27, 27)
                 .addComponent(jLabel4)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel1)
+                .addComponent(lEsqSenha)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(12, Short.MAX_VALUE))
@@ -166,6 +173,18 @@ public class MenuLogin extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnEntrarActionPerformed
 
+    private void lEsqSenhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lEsqSenhaMouseClicked
+        // TODO add your handling code here:
+        if (Formularios.MenuAltSenha == null)
+            Formularios.MenuAltSenha = new MenuAltSenha();
+        
+        Formularios.MenuAltSenha.setModal(true);
+        Formularios.MenuAltSenha.setVisible(true);
+    }//GEN-LAST:event_lEsqSenhaMouseClicked
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt){
+        Formularios.MenuLogin = null;
+    }
     /**
      * @param args the command line arguments
      */
@@ -203,10 +222,10 @@ public class MenuLogin extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEntrar;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lEsqSenha;
     private javax.swing.JPasswordField pfSenha;
     private javax.swing.JTextField tfUsuario;
     // End of variables declaration//GEN-END:variables

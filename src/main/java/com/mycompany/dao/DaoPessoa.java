@@ -71,6 +71,24 @@ public class DaoPessoa extends BancoDeDadosMySQL {
         }
     }
     
+     public Boolean alterarSenha(int id, String novaSenha){
+        try{
+            sql = "UPDATE PESSOA SET SENHA = ? WHERE ID = ?";
+            
+            setStatement(getConexao().prepareStatement(sql));
+            
+            getStatement().setInt(2, id);
+            getStatement().setString(1, novaSenha);
+            
+            getStatement().executeUpdate();
+            
+            return true;
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+     
     public Boolean excluir (int id){
         try{
             sql = "DELETE FROM PESSOA WHERE ID = ?";
@@ -362,6 +380,35 @@ public class DaoPessoa extends BancoDeDadosMySQL {
             setStatement(getConexao().prepareStatement(sql));
             
             getStatement().setString(1, usuario);
+            
+            setResultado(getStatement().executeQuery());
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        
+        return getResultado();
+    }
+    
+    public ResultSet listarPorUsuario(String usuario, boolean buscaParcial){
+        try{
+            sql = 
+                    "SELECT P.ID, C. NOME, E.NOME_RUA, E.CEP, E.NUM_RESID, P.NOME, "
+                    + "P.SOBRENOME, P.GENERO, P.TELEFONE, P.EMAIL, EC.NOME, P.USUARIO "
+                    + "FROM PESSOA P "
+                    + "JOIN ENDERECO E "
+                    + "ON E.ID = P.ID_ENDERECO "
+                    + "JOIN CIDADE C "
+                    + "ON C.ID = E.ID_CIDADE "
+                    + "JOIN ESTADO_CIVIL EC "
+                    + "ON EC.ID = P.ID_EST_CIV "
+                    + "WHERE P.USUARIO LIKE ?";
+            
+            setStatement(getConexao().prepareStatement(sql));
+            
+            if(buscaParcial)
+                getStatement().setString(1, usuario + "%");
+            else
+                getStatement().setString(1, usuario);
             
             setResultado(getStatement().executeQuery());
         }catch(Exception e){

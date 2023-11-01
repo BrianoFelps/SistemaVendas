@@ -46,5 +46,5 @@ public class Formularios {
     public static JFrame MenuVenda;
     
     //Tela rec. senha
-    public static JFrame MenuAltSenha;
+    public static JDialog MenuAltSenha;
 }
